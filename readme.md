@@ -12,7 +12,7 @@ Projet final - Base de données
 <a id="section1"></a>
 ## 1. Diagramme Entité-Association
 
-![](img/modeleEA.png)
+![](modeleEA/modeleEA.png)
 
 <a id="section2"></a>
 ## 2. Modèle relationnel
