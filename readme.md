@@ -83,3 +83,11 @@ CREATE TABLE categories (
      FOREIGN KEY (maincategory) REFERENCES maincategories(maincategoriesid) 
   ); 
 ~~~~
+
+## 4. L'ensemble des requêtes en SQL et explications des résultats attendus
+
+~~~~sql
+SELECT * FROM offers;
+~~~~
+
+## 5. Guide utilisateur
