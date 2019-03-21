@@ -1,8 +1,7 @@
 Projet final - Base de données
 =======================================
 
-### Sommaire :
-------------------
+## Sommaire :
 
 1. [Diagramme Entité-Association](#section1)
 2. [Modèle relationnel](#section2)
