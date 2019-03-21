@@ -17,7 +17,7 @@ Projet final - Base de données
 <a id="section2"></a>
 ## 2. Modèle relationnel
 
-* Buyer (<u>buyerID</u>,  username, password, firstname, lastname, phone) 
+* Buyer (__buyerID__,  username, password, firstname, lastname, phone) 
 
 * Seller(__sellerID__, username, password, firstname, lastname, phone) 
 
