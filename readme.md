@@ -1,7 +1,8 @@
 Projet final - Base de données
 =======================================
 
-Sommaire :
+### Sommaire :
+------------------
 
 1. [Diagramme Entité-Association](#section1)
 2. [Modèle relationnel](#section2)
@@ -9,11 +10,13 @@ Sommaire :
 4. [Ensemble des requêtes en SQL et explications des résultats attendus](#section4)
 5. [Guide utilisateur](#section5)
 
-## 1. Diagramme Entité-Association<a id="section1"></a>
+<a id="section1"></a>
+## 1. Diagramme Entité-Association
 
 ![](img/modeleEA.png)
 
-## 2. Modèle relationnel<a id="section2"></a>
+<a id="section2"></a>
+## 2. Modèle relationnel
 
 * Buyer (__buyerID__,  username, password, firstname, lastname, phone) 
 
@@ -93,10 +96,12 @@ CREATE TABLE categories (
   ); 
 ~~~~
 
-## 4. L'ensemble des requêtes en SQL et explications des résultats attendus<a id="section4"></a>
+<a id="section4"></a>
+## 4. L'ensemble des requêtes en SQL et explications des résultats attendus
 
 ~~~~sql
 SELECT * FROM offers;
 ~~~~
 
-## 5. Guide utilisateur<a id="section5"></a>
+<a id="section5"></a>
+## 5. Guide utilisateur
