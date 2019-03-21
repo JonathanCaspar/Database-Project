@@ -27,7 +27,8 @@ Sommaire :
 
 * Category(__categoryID__, #mainCategoryID, name) 
 
-## 3. Définition de la base de données ([DDL.sql](DDL.sql))<a id="section3"></a>
+<a id="section3"></a>
+## 3. Définition de la base de données ([DDL.sql](DDL.sql))
 
 ~~~~sql
 DROP TABLE IF EXISTS buyers, sellers, products, offers, maincategories, categories; 
