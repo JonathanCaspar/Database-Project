@@ -22,8 +22,7 @@ Projet final - Base de données
 ## 3. Définition de la base de données ([DDL.sql](DDL.sql))
 
 ~~~~sql
-DROP TABLE IF EXISTS buyers, sellers, products, offers, maincategories, 
-categories; 
+DROP TABLE IF EXISTS buyers, sellers, products, offers, maincategories, categories; 
 
 CREATE TABLE buyers ( 
      buyerid     INT auto_increment, 
@@ -57,14 +56,7 @@ CREATE TABLE products (
      PRIMARY KEY (refid), 
      FOREIGN KEY (sellerid) REFERENCES sellers(sellerid), 
      FOREIGN KEY (categoryid) REFERENCES categories(categoryid) 
-  ); 
-
-CREATE TABLE activeproducts ( 
-     refid     INT auto_increment, 
-     productid INT NOT NULL, 
-     PRIMARY KEY (refid), 
-     FOREIGN KEY (productid) REFERENCES products(refid) 
-  ); 
+  );
 
 CREATE TABLE offers ( 
      offerid   INT auto_increment, 
