@@ -1,11 +1,19 @@
 Projet final - Base de données
 =======================================
 
-## 1. Diagramme Entité-Association
+Sommaire :
+
+1. [Diagramme Entité-Association](#section1)
+2.
+3.
+4. [Ensemble des requêtes en SQL et explications des résultats attendus](#section4)
+5.
+
+## 1. Diagramme Entité-Association  <a id="section1"></a>
 
 ![](img/modeleEA.png)
 
-## 2. Modèle relationnel
+## 2. Modèle relationnel <a id="section2"></a>
 
 * Buyer (__buyerID__,  username, password, firstname, lastname, phone) 
 
@@ -19,7 +27,7 @@ Projet final - Base de données
 
 * Category(__categoryID__, #mainCategoryID, name) 
 
-## 3. Définition de la base de données ([DDL.sql](DDL.sql))
+## 3. Définition de la base de données ([DDL.sql](DDL.sql)) <a id="section3"></a>
 
 ~~~~sql
 DROP TABLE IF EXISTS buyers, sellers, products, offers, maincategories, categories; 
@@ -84,10 +92,10 @@ CREATE TABLE categories (
   ); 
 ~~~~
 
-## 4. L'ensemble des requêtes en SQL et explications des résultats attendus
+## 4. L'ensemble des requêtes en SQL et explications des résultats attendus <a id="section4"></a>
 
 ~~~~sql
 SELECT * FROM offers;
 ~~~~
 
-## 5. Guide utilisateur
+## 5. Guide utilisateur <a id="section5"></a>
