@@ -17,17 +17,17 @@ Projet final - Base de données
 <a id="section2"></a>
 ## 2. Modèle relationnel
 
-* Buyer (__buyerID__,  username, password, firstname, lastname, phone) 
+* Buyer (<u>buyerID</u>,  username, password, firstname, lastname, phone) 
 
-* Seller(__sellerID__, username, password, firstname, lastname, phone) 
+* Seller(<u>sellerID</u>, username, password, firstname, lastname, phone) 
 
-* Product(__refID__, #sellerID, #categoryID, estimatedPrice, sellingPrice, date) 
+* Product(<u>refID</u>, #sellerID, #categoryID, estimatedPrice, sellingPrice, date) 
 
-* Offer(__offerID__, #buyerID, #productID, price, date) 
+* Offer(<u>offerID</u>, #buyerID, #productID, price, date) 
 
-* MainCategory(__mainCategoryID__, name) 
+* MainCategory(<u>mainCategoryID</u>, name) 
 
-* Category(__categoryID__, #mainCategoryID, name) 
+* Category(<u>categoryID</u>, #mainCategoryID, name) 
 
 <a id="section3"></a>
 ## 3. Définition de la base de données ([DDL.sql](DDL.sql))
