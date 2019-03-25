@@ -21,7 +21,7 @@ Projet final - Base de données
 
 * Seller(__sellerID__, username, password, firstname, lastname, phone) 
 
-* Product(__refID__, #sellerID, #categoryID, estimatedPrice, sellingPrice, date) 
+* Product(__refID__, #sellerID, #categoryID, estimatedPrice, sellingPrice, description, date) 
 
 * Offer(__offerID__, #buyerID, #productID, price, date) 
 
