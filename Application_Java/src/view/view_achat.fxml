@@ -23,14 +23,22 @@
 
 <VBox prefHeight="600.0" prefWidth="900.0" stylesheets="@style_achat.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.ControleurAchat">
   <children>
-    <MenuBar VBox.vgrow="NEVER">
+    <MenuBar prefHeight="29.0" prefWidth="806.0" VBox.vgrow="NEVER">
       <menus>
-        <Menu mnemonicParsing="false" text="File">
+        <Menu mnemonicParsing="false" text="Client">
           <items>
-            <MenuItem mnemonicParsing="false" text="Déconnexion" />
-            <MenuItem mnemonicParsing="false" text="Quit" />
+            <MenuItem fx:id="inscription" mnemonicParsing="false" text="Inscription" />
+            <MenuItem fx:id="connexion" mnemonicParsing="false" onAction="#goToLogin" text="Connexion" />
+                  <MenuItem fx:id="deconnexion" mnemonicParsing="false" text="Déconnexion" visible="false" />
+                  <MenuItem mnemonicParsing="false" text="Quitter" />
           </items>
         </Menu>
+            <Menu fx:id="vendre" mnemonicParsing="false" text="Vendre" visible="false">
+              <items>
+                <MenuItem fx:id="annonces" mnemonicParsing="false" onAction="#afficherAnnonces" text="Mes annonces" />
+                  <MenuItem mnemonicParsing="false" text="Vendre un produit" />
+              </items>
+            </Menu>
       </menus>
     </MenuBar>
     <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">

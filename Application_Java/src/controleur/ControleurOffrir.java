@@ -40,11 +40,11 @@ public class ControleurOffrir {
 
 	@FXML
 	void offreButtonAction(ActionEvent event) {
-		// TODO Ajouter l'action de fare une offre
+		// TODO Ajouter l'action de faire une offre
 	}
 
 	/**
-	 * Cree le stage selon le prouit et le satge qui le contient
+	 * Cree le stage selon le produit et le stage qui le contient
 	 * 
 	 * @param primaryStage Le stage contenant le tout.
 	 * @param produit      Le produit a afficher

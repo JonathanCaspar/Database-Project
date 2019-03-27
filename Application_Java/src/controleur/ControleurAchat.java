@@ -4,15 +4,18 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 
 import application.Produit;
+import application.User;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
 import javafx.event.Event;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Insets;
 import javafx.scene.Group;
 import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
@@ -32,6 +35,8 @@ import javafx.scene.layout.VBox;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
+import javafx.scene.control.MenuItem;
+import javafx.scene.control.Menu;
 
 public class ControleurAchat {
 
@@ -79,14 +84,86 @@ public class ControleurAchat {
 	private CheckBox cbDateMax;
 	@FXML
 	private DatePicker choiceDateMax;
-
 	@FXML
 	private Button MettreAJour;
-
 	@FXML
 	private Font x3;
 	@FXML
 	private Color x4;
+	
+	
+	@FXML
+	private MenuItem inscription;
+	@FXML
+	private MenuItem connexion;
+	@FXML
+	private MenuItem deconnexion;
+	@FXML
+	private MenuItem annonces;
+	@FXML
+	private Menu vendre;
+	private ControleurConnexion controleurConnexion;
+	private ControleurAnnonces controleurAnnonces;
+	
+	private User utilisateur = null;
+	
+	@FXML
+	void goToLogin(ActionEvent event) {
+		
+		try {
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
+			Scene scene = new Scene(loader.load());
+
+			controleurConnexion = (ControleurConnexion) loader.getController();
+
+			primaryStage.setScene(scene);
+			primaryStage.setTitle("AUTHENTIFICATION");
+			primaryStage.showAndWait();
+			
+			//recupère ici l'utilisateur authentifié
+			setUtilisateur(controleurConnexion.getUser());
+			
+			vendre.setVisible(true);
+			deconnexion.setVisible(true);
+			connexion.setVisible(false);
+			inscription.setVisible(false);
+			
+			if(this.utilisateur != null) {
+				
+			} 
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+	}
+	
+	@FXML
+	void afficherAnnonces(ActionEvent event) {
+		try {
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/view_annonces.fxml"));
+			Scene scene = new Scene(loader.load());
+
+			controleurAnnonces = (ControleurAnnonces) loader.getController();
+
+			primaryStage.setScene(scene);
+			primaryStage.setTitle("Annonces");
+			primaryStage.showAndWait();
+			 
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
+	}
+	
+	public void setUtilisateur(User utilisateur) {
+		this.utilisateur = utilisateur;
+	}
+	
+	
 
 	@FXML
 	void actionMettreAJour(ActionEvent event) {
