@@ -1,24 +1,13 @@
-DROP TABLE IF EXISTS buyers, sellers, products, offers, maincategories, categories; 
+DROP TABLE IF EXISTS users, products, offers, maincategories, categories; 
 
-CREATE TABLE buyers ( 
-     buyerid     INT auto_increment, 
+CREATE TABLE users ( 
+     userid    INT auto_increment, 
      username    VARCHAR(32) NOT NULL, 
      password    VARCHAR(32) NOT NULL, 
      firstname   VARCHAR(20) NOT NULL, 
      lastname    VARCHAR(20), 
      phonenumber VARCHAR(10), 
-     PRIMARY KEY (buyerid), 
-     UNIQUE (username) 
-  ); 
-
-CREATE TABLE sellers ( 
-     sellerid    INT auto_increment, 
-     username    VARCHAR(32) NOT NULL, 
-     password    VARCHAR(32) NOT NULL, 
-     firstname   VARCHAR(20) NOT NULL, 
-     lastname    VARCHAR(20), 
-     phonenumber VARCHAR(10), 
-     PRIMARY KEY (sellerid), 
+     PRIMARY KEY (userid), 
      UNIQUE (username) 
   ); 
 
@@ -30,9 +19,9 @@ CREATE TABLE products (
      categoryid     INT NOT NULL, 
      date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (refid), 
-     FOREIGN KEY (sellerid) REFERENCES sellers(sellerid), 
+     FOREIGN KEY (sellerid) REFERENCES users(userid), 
      FOREIGN KEY (categoryid) REFERENCES categories(categoryid) 
-  ); 
+  );
 
 CREATE TABLE offers ( 
      offerid   INT auto_increment, 
@@ -41,7 +30,7 @@ CREATE TABLE offers (
      price     NUMERIC(10, 2) NOT NULL, 
      date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (offerid), 
-     FOREIGN KEY (buyerid) REFERENCES buyers(buyerid), 
+     FOREIGN KEY (buyerid) REFERENCES users(userid), 
      FOREIGN KEY (productid) REFERENCES products(refid) 
   ); 
 
