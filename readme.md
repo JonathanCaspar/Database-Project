@@ -17,13 +17,11 @@ Projet final - Base de données
 <a id="section2"></a>
 ## 2. Modèle relationnel
 
-* Buyer (__buyerID__,  username, password, firstname, lastname, phone) 
+* User(__userID__, username, password, firstname, lastname, phone) 
 
-* Seller(__sellerID__, username, password, firstname, lastname, phone) 
+* Product(__refID__, #userID, #categoryID, estimatedPrice, sellingPrice, description, date) 
 
-* Product(__refID__, #sellerID, #categoryID, estimatedPrice, sellingPrice, description, date) 
-
-* Offer(__offerID__, #buyerID, #productID, price, date) 
+* Offer(__offerID__, #userID, #productID, price, date) 
 
 * MainCategory(__mainCategoryID__, name) 
 
@@ -33,27 +31,16 @@ Projet final - Base de données
 ## 3. Définition de la base de données ([DDL.sql](DDL.sql))
 
 ~~~~sql
-DROP TABLE IF EXISTS buyers, sellers, products, offers, maincategories, categories; 
+DROP TABLE IF EXISTS users, products, offers, maincategories, categories; 
 
-CREATE TABLE buyers ( 
-     buyerid     INT auto_increment, 
+CREATE TABLE users ( 
+     userid    INT auto_increment, 
      username    VARCHAR(32) NOT NULL, 
      password    VARCHAR(32) NOT NULL, 
      firstname   VARCHAR(20) NOT NULL, 
      lastname    VARCHAR(20), 
      phonenumber VARCHAR(10), 
-     PRIMARY KEY (buyerid), 
-     UNIQUE (username) 
-  ); 
-
-CREATE TABLE sellers ( 
-     sellerid    INT auto_increment, 
-     username    VARCHAR(32) NOT NULL, 
-     password    VARCHAR(32) NOT NULL, 
-     firstname   VARCHAR(20) NOT NULL, 
-     lastname    VARCHAR(20), 
-     phonenumber VARCHAR(10), 
-     PRIMARY KEY (sellerid), 
+     PRIMARY KEY (userid), 
      UNIQUE (username) 
   ); 
 
@@ -65,7 +52,7 @@ CREATE TABLE products (
      categoryid     INT NOT NULL, 
      date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (refid), 
-     FOREIGN KEY (sellerid) REFERENCES sellers(sellerid), 
+     FOREIGN KEY (sellerid) REFERENCES users(userid), 
      FOREIGN KEY (categoryid) REFERENCES categories(categoryid) 
   );
 
@@ -76,7 +63,7 @@ CREATE TABLE offers (
      price     NUMERIC(10, 2) NOT NULL, 
      date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (offerid), 
-     FOREIGN KEY (buyerid) REFERENCES buyers(buyerid), 
+     FOREIGN KEY (buyerid) REFERENCES users(userid), 
      FOREIGN KEY (productid) REFERENCES products(refid) 
   ); 
 
