@@ -15,15 +15,15 @@ CREATE TABLE products (
      refid          INT auto_increment, 
      estimatedprice NUMERIC(10, 2) NOT NULL, 
      sellingprice   NUMERIC(10, 2) NOT NULL, 
-     sellerid       INT             NOT NULL, 
-     categoryid     VARCHAR(40)     NOT NULL,
-     description    VARCHAR(150)    NOT NULL,
-     name           VARCHAR(40)     NOT NULL,
+     sellerid       INT NOT NULL, 
+     categoryid     INT NOT NULL, 
+     description    VARCHAR(150) NOT NULL, 
+     name           VARCHAR(40) NOT NULL, 
      date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (refid), 
      FOREIGN KEY (sellerid) REFERENCES users(userid), 
-     FOREIGN KEY (categoryid) REFERENCES categories(catID) 
-  );
+     FOREIGN KEY (categoryid) REFERENCES categories(catid) 
+  ); 
 
 CREATE TABLE offers ( 
      offerid   INT auto_increment, 
@@ -37,30 +37,30 @@ CREATE TABLE offers (
   ); 
 
 CREATE TABLE maincategories ( 
-     mainCatName    VARCHAR(40) NOT NULL, 
-     PRIMARY KEY (mainCatName) 
+     maincatname VARCHAR(40) NOT NULL, 
+     PRIMARY KEY (maincatname) 
   ); 
 
-CREATE TABLE categories (
-     catID      INT auto_increment,                    
-     catName     VARCHAR(40) NOT NULL, 
-     mainCatName   VARCHAR(40) NOT NULL, 
-     PRIMARY KEY (catID),
-     FOREIGN KEY (mainCatName) REFERENCES maincategories(mainCatName) 
+CREATE TABLE categories ( 
+     catid       INT auto_increment, 
+     catname     VARCHAR(40) NOT NULL, 
+     maincatname VARCHAR(40) NOT NULL, 
+     PRIMARY KEY (catid), 
+     FOREIGN KEY (maincatname) REFERENCES maincategories(maincatname) 
   ); 
 
 CREATE TABLE soldproducts ( 
-     id          		INT auto_increment, 
-     sellerid    		INT NOT NULL,
-     buyerid     		INT NOT NULL,
-     name               VARCHAR(40) NOT NULL, 
-     categoryid     	VARCHAR(40) NOT NULL,
-     estimatedprice 	NUMERIC(10, 2) NOT NULL, 
-     sellingprice   	NUMERIC(10, 2) NOT NULL, 
-     soldprice   		NUMERIC(10, 2) NOT NULL, 
-     dateTransaction	TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+     id              INT auto_increment, 
+     sellerid        INT NOT NULL, 
+     buyerid         INT NOT NULL, 
+     name            VARCHAR(40) NOT NULL, 
+     categoryid      INT NOT NULL, 
+     estimatedprice  NUMERIC(10, 2) NOT NULL, 
+     sellingprice    NUMERIC(10, 2) NOT NULL, 
+     soldprice       NUMERIC(10, 2) NOT NULL, 
+     datetransaction TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (id), 
      FOREIGN KEY (sellerid) REFERENCES users(userid), 
-     FOREIGN KEY (buyerid) 	REFERENCES users(userid), 
-     FOREIGN KEY (categoryid) REFERENCES categories(catID) 
-  );
+     FOREIGN KEY (buyerid) REFERENCES users(userid), 
+     FOREIGN KEY (categoryid) REFERENCES categories(catid) 
+  ); 

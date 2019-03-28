@@ -112,7 +112,7 @@ INSERT INTO `maincategories` (`mainCatName`) VALUES
 ('Téléphones'),
 ('Jeux vidéo et consoles'),
 ('Vélos'),
-('Écrans'),
+('Ecrans'),
 ('Maison - Intérieur'),
 ('Outils'),
 ('Ordinateurs et tablettes');
@@ -124,7 +124,7 @@ INSERT INTO `categories` (`mainCatName`, `catName`) VALUES
 ('Immobilier', 'Maison'),
 ('Audio', 'Haut-parleurs'),
 ('Audio', 'Chaînes stéréo'),
-('Audio', 'Écouteurs'),
+('Audio', 'Ecouteurs'),
 ('Audio', 'iPod et MP3'),
 ('Appareils électroménagers', 'Réfrigérateurs'),
 ('Appareils électroménagers', 'Laveuses et sécheuses'),
@@ -164,17 +164,17 @@ INSERT INTO `categories` (`mainCatName`, `catName`) VALUES
 ('Vélos', 'Vélos électriques'),
 ('Vélos', 'Fixie'),
 ('Écrans', 'Téléviseurs'),
-('Écrans', 'Écrans d\'ordinateur'),
+('Écrans', 'Ecrans d\'ordinateur'),
 ('Maison - Intérieur', 'Décoration intérieure et accessoires'),
 ('Maison - Intérieur', 'Vaisselle et articles de cuisine'),
-('Maison - Intérieur', 'Éclairage intérieur et plafonniers'),
+('Maison - Intérieur', 'Eclairage intérieur et plafonniers'),
 ('Maison - Intérieur', 'Literie'),
 ('Maison - Intérieur', 'Rangement et organisation'),
 ('Maison - Intérieur', 'Tapis et moquettes'),
 ('Outils', 'Outils électriques'),
 ('Outils', 'Outils à main'),
 ('Outils', 'Rangement pour outils et établis'),
-('Outils', 'Échelles et échafaudages'),
+('Outils', 'Echelles et échafaudages'),
 ('Ordinateurs et tablettes', 'Ordinateurs Apple'),
 ('Ordinateurs et tablettes', 'Ordinateurs Acer'),
 ('Ordinateurs et tablettes', 'Ordinateurs Samsung'),
@@ -183,65 +183,57 @@ INSERT INTO `categories` (`mainCatName`, `catName`) VALUES
 ('Ordinateurs et tablettes', 'Tablettes');
 
 -- Insertion Products
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (1, 1, 25, 54.1, 54.1, 'Chaises IKEA', 'Chaises IKEA');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (2, 1, 45, 201.34, 201.34, 'Téléviseur Sony', 'Téléviseur Sony');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (3, 1, 25, 68.17, 68.17, 'Fauteuil IKEA', 'Fauteuil IKEA');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (4, 1, 12, 112.09, 112.09, 'Four micro-ondes Samsung bon état', 'Four micro-ondes Samsung bon état');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (5, 2, 9, 174.88, 174.88, 'Laveuse abimée Samsung', 'Laveuse abimée Samsung');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (6, 2, 62, 139.88, 139.88, 'Tablette Amazon Fire 8', 'Tablette Amazon Fire 8');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (7, 3, 62, 179.68, 179.68, 'Samsung Galaxy Tab', 'Samsung Galaxy Tab');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (8, 4, 52, 75.84, 75.84, 'Tapis antique', 'Tapis antique');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (9, 5, 44, 219.65, 219.65, 'Fixie fibre de carbone', 'Fixie fibre de carbone');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (10, 6, 54, 11.99, 11.99, 'Tournevis', 'Tournevis');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (11, 7, 28, 237.09, 237.09, 'Matelas taille King', 'Matelas taille King');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (12, 7, 11, 113.93, 113.93, 'Machine Keurig 2 Tasses', 'Machine Keurig 2 Tasses');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (13, 8, 17, 65.28, 65.28, 'Sac en cuir véritable', 'Sac en cuir véritable');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (14, 9, 22, 15.69, 15.69, 'Magazine Sciences', 'Magazine Sciences');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (15, 10, 47, 93.74, 93.74, 'Tableau 12x28', 'Tableau 12x28');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (16, 10, 39, 171.39, 171.39, 'Nintendo 3DS blanche', 'Nintendo 3DS blanche');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (17, 11, 37, 213.23, 213.23, 'Playstation 3 non fonctionnelle', 'Playstation 3 non fonctionnelle');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (18, 15, 36, 165.49, 165.49, 'XBOX 360 neuve', 'XBOX 360 neuve');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (19, 19, 57, 81.81, 500, 'MacBook 2018', 'MacBook 2018');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (20, 26, 47, 94.08, 94.08, 'Rideau blanc', 'Rideau blanc');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (21, 28, 47, 92.3, 92.3, 'Rideau noir', 'Rideau noir');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (22, 28, 25, 131.43, 131.43, 'Chaise haute', 'Chaise haute');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (23, 29, 45, 132.27, 132.27, 'TV 60 pouces', 'TV 60 pouces');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (24, 30, 38, 170.7, 170.7, 'Wii avec 2 manettes', 'Wii avec 2 manettes');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (25, 45, categoryID, 31.67, 31.67, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (26, 56, categoryID, 167.66, 167.66, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (27, 57, categoryID, 120.8, 120.8, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (28, 57, categoryID, 151.34, 151.34, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (29, 57, categoryID, 258.37, 258.37, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (30, 58, categoryID, 17.93, 17.93, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (31, 58, categoryID, 285.77, 285.77, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (32, 67, categoryID, 14.22, 14.22, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (33, 67, categoryID, 242.22, 242.22, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (34, 68, categoryID, 144.7, 144.7, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (35, 75, categoryID, 299.64, 299.64, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (36, 79, categoryID, 102.1, 102.1, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (37, 85, categoryID, 138.22, 138.22, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (38, 87, categoryID, 74.87, 74.87, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (39, 87, categoryID, 65.49, 65.49, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (40, 92, categoryID, 75.7, 75.7, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (41, 92, categoryID, 80.11, 80.11, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (42, 93, categoryID, 196.1, 196.1, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (43, 94, categoryID, 40.56, 40.56, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (44, 96, categoryID, 143.95, 143.95, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (45, 98, categoryID, 158.39, 158.39, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (46, 98, categoryID, 209.28, 209.28, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (47, 98, categoryID, 120.79, 120.79, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (48, 98, categoryID, 188.41, 188.41, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (49, 99, categoryID, 17.56, 17.56, 'nomProduit');
-INSERT INTO products (refID, sellerID, categoryID, estimatedPrice, sellingPrice, name, description) VALUES (50, 100, categoryID, 38.69, 38.69, 'nomProduit');
-
+INSERT INTO `products` (`estimatedprice`, `sellingprice`, `sellerid`, `categoryid`, `description`, `name`) VALUES
+('54.10', '54.10', 1, 25, 'Chaises IKEA', 'Chaises IKEA'),
+('201.34', '201.34', 1, 45, 'Téléviseur Sony', 'Téléviseur Sony'),
+('68.17', '68.17', 1, 25, 'Fauteuil IKEA', 'Fauteuil IKEA'),
+('112.09', '112.09', 1, 12, 'Four micro-ondes Samsung bon état', 'Four micro-ondes Samsung bon état'),
+('174.88', '174.88', 2, 9, 'Laveuse abimée Samsung', 'Laveuse abimée Samsung'),
+('139.88', '139.88', 2, 62, 'Tablette Amazon Fire 8', 'Tablette Amazon Fire 8'),
+('179.68', '179.68', 3, 62, 'Samsung Galaxy Tab', 'Samsung Galaxy Tab'),
+('75.84', '75.84', 4, 52, 'Tapis antique', 'Tapis antique'),
+('219.65', '219.65', 5, 44, 'Fixie fibre de carbone', 'Fixie fibre de carbone'),
+('11.99', '11.99', 6, 54, 'Tournevis', 'Tournevis'),
+('237.09', '237.09', 7, 28, 'Matelas taille King', 'Matelas taille King'),
+('113.93', '113.93', 7, 11, 'Machine Keurig 2 Tasses', 'Machine Keurig 2 Tasses'),
+('65.28', '65.28', 8, 17, 'Sac en cuir véritable', 'Sac en cuir véritable'),
+('15.69', '15.69', 9, 22, 'Magazine Sciences', 'Magazine Sciences'),
+('93.74', '93.74', 10, 47, 'Tableau 12x28', 'Tableau 12x28'),
+('171.39', '171.39', 10, 39, 'Nintendo 3DS blanche', 'Nintendo 3DS blanche'),
+('213.23', '213.23', 11, 37, 'Playstation 3 non fonctionnelle', 'Playstation 3 non fonctionnelle'),
+('165.49', '165.49', 15, 36, 'XBOX 360 neuve', 'XBOX 360 neuve'),
+('81.81', '500.00', 19, 57, 'MacBook 2018', 'MacBook 2018'),
+('94.08', '94.08', 26, 47, 'Rideau blanc', 'Rideau blanc'),
+('92.30', '92.30', 28, 47, 'Rideau noir', 'Rideau noir'),
+('131.43', '131.43', 28, 25, 'Chaise haute', 'Chaise haute'),
+('132.27', '132.27', 29, 45, 'TV 60 pouces', 'TV 60 pouces'),
+('170.70', '170.70', 30, 38, 'Wii avec 2 manettes', 'Wii avec 2 manettes'),
+('31.67', '31.67', 45, 16, 'Chandail bleu', 'Chandail bleu'),
+('5.66', '5.66', 56, 16, 'Tuque en laine rouge', 'Tuque en laine rouge'),
+('810.00', '810.00', 57, 2, 'Appartement 4 1/2 ensoleillé', 'Appartement 4 1/2 ensoleillé'),
+('560.00', '560.00', 57, 2, 'Studio à Verdun', 'Studio à Verdun'),
+('750.00', '750.00', 57, 2, '3 1/2 avec balcon', '3 1/2 avec balcon'),
+('1150.00', '1150.00', 58, 1, 'Condo Ile des Soeurs', 'Condo Ile des Soeurs'),
+('1300.00', '1300.00', 58, 1, 'Condo centre ville', 'Condo centre ville'),
+('1200.00', '1200.00', 67, 3, 'Maison 5 1/2 avec piscine', 'Maison 5 1/2 avec piscine'),
+('1450.00', '1450.00', 67, 3, 'Maison Westmount avec mezannine', 'Maison Westmount avec mezannine'),
+('1450.00', '1450.00', 68, 3, 'Maison avec demi sous-sol', 'Maison avec demi sous-sol'),
+('299.64', '299.64', 75, 17, 'Sac à main Gucci', 'Sac à main Gucci'),
+('1021.00', '1021.00', 79, 60, 'Laptop Lenovo 17 pouces', 'Laptop Lenovo 17 pouces'),
+('400.00', '400.00', 85, 57, 'iMac', 'iMac'),
+('349.00', '349.00', 87, 62, 'iPad 64 Gb', 'iPad 64 Gb'),
+('25.49', '25.49', 87, 16, 'Jeans bleu pour homme', 'Jeans bleu pour homme'),
+('75.70', '75.70', 92, 19, 'Chaussures Nike', 'Chaussures Nike'),
+('80.11', '80.11', 92, 18, 'Talons hauts', 'Talons hauts'),
+('16.00', '16.00', 93, 19, 'Gougounnes Homme', 'Gougounnes Homme'),
+('40.56', '40.56', 94, 18, 'Gougounnes Femme', 'Gougounnes Femme'),
+('850.00', '850.00', 96, 8, 'Frigo americain LG', 'Frigo americain LG'),
+('900.00', '900.00', 98, 9, 'Laveuse Samsung', 'Laveuse Samsung'),
+('15.00', '15.00', 98, 12, 'Four micro ondes defectueux', 'Four micro ondes defectueux'),
+('120.79', '120.79', 98, 26, 'Comptoir blanc IKEA', 'Comptoir blanc IKEA'),
+('188.41', '188.41', 98, 26, 'Table en bois massif', 'Table en bois massif'),
+('299.00', '299.00', 99, 27, 'Sofa en cuir', 'Sofa en cuir'),
+('38.69', '38.69', 100, 14, 'Robe blanche', 'Robe blanche');
 
 -- REQUETES
 -- * Catégories sur colonne gauche :
-WITH sortMainCat AS (SELECT * FROM maincategories ORDER BY mainCatName), 
-     sortCat  AS (SELECT * FROM categories ORDER BY catName)
-     
-SELECT maincategories.maincategoryid, mainCatName, categoryid, catName FROM sortMainCat JOIN sortCat USING maincategoryid;
-
-
--- Création d'une vue qui regroupe catégories principales et sous catégories par ordre alphabétique
-CREATE VIEW summarycategories AS SELECT maincategoryid, mainCatName, categoryid, catName FROM mainCategories NATURAL JOIN categories ORDER BY mainCatName, catName;
