@@ -36,7 +36,7 @@ SoldProducts est une table de __log__ conservant l'historique des produits vendu
 ## 3. Définition de la base de données ([DDL.sql](DDL.sql))
 
 ~~~~sql
-DROP TABLE IF EXISTS users, products, offers, maincategories, categories; 
+DROP TABLE IF EXISTS users, products, offers, maincategories, categories, soldproducts; 
 
 CREATE TABLE users ( 
      userid    INT auto_increment, 
