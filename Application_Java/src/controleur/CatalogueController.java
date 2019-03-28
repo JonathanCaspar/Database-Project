@@ -38,7 +38,7 @@ import javafx.stage.Stage;
 import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
 
-public class ControleurAchat {
+public class CatalogueController {
 
 	private static final String[] categories = { "Immobilier", "Informatique", "Musique" };
 
@@ -102,8 +102,8 @@ public class ControleurAchat {
 	private MenuItem annonces;
 	@FXML
 	private Menu vendre;
-	private ControleurConnexion controleurConnexion;
-	private ControleurAnnonces controleurAnnonces;
+	private ConnexionController controleurConnexion;
+	private AnnoncesController controleurAnnonces;
 	
 	private User utilisateur = null;
 	
@@ -115,7 +115,7 @@ public class ControleurAchat {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
 			Scene scene = new Scene(loader.load());
 
-			controleurConnexion = (ControleurConnexion) loader.getController();
+			controleurConnexion = (ConnexionController) loader.getController();
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("AUTHENTIFICATION");
@@ -142,11 +142,14 @@ public class ControleurAchat {
 	@FXML
 	void afficherAnnonces(ActionEvent event) {
 		try {
-			Stage primaryStage = new Stage();
+			
+			
+			//recuperer la stage, change la scene
+			Stage primaryStage = (Stage) rightVBox.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/view_annonces.fxml"));
 			Scene scene = new Scene(loader.load());
 
-			controleurAnnonces = (ControleurAnnonces) loader.getController();
+			controleurAnnonces = (AnnoncesController) loader.getController();
 
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Annonces");
@@ -258,7 +261,21 @@ public class ControleurAchat {
 		creatTable(t);
 		createTreeView();
 	}
-
+	
+	
+	/**
+	 * Methode appeler a la creation de l'application
+	 * 
+	 * @param primaryStage Le stage.
+	 */
+	public void setStage() {
+		Produit[] t = { new Produit("Vélo", "Un fix de la mort qui tue.", 15, 10.25f, 500, 10, 12, 1998, "Sport", "George"),
+				new Produit("Magnetophone", "Magnetophone magnifique pas trop vieux.", 100.25f, 30, 135, 5, 8, 2016,
+						"Musique", "Georgette") };
+		creatTablecolmns();
+		creatTable(t);
+		createTreeView();
+	}
 	private void creatTablecolmns() {
 		produits.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		prix.setCellValueFactory(new PropertyValueFactory("prix"));

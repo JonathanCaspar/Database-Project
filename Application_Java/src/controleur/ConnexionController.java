@@ -11,7 +11,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.stage.Stage;
 
-public class ControleurConnexion {
+public class ConnexionController {
 
 	@FXML
 	private TextField idUser;
@@ -33,6 +33,9 @@ public class ControleurConnexion {
 		String pssw = password.getText();
 		
 		if(id.equals(dummyID)) {
+			
+			
+			
 			Stage stage = (Stage) connect.getScene().getWindow(); 
 		    // do what you have to do 
 		    stage.close();

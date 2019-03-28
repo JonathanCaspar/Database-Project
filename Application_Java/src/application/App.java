@@ -1,7 +1,8 @@
 package application;
 
-import controleur.ControleurAchat;
+import controleur.MainControleur;
 import javafx.application.Application;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
@@ -15,7 +16,12 @@ import javafx.stage.Stage;
  *
  */
 public class App extends Application {
-	private ControleurAchat ctlPageTitre = null;
+	
+//	@FXML
+//	private ControleurCatalogue ctlPageTitre = null;
+	@FXML
+	private MainControleur mainCntrl = null;
+	
 
 	public static void main(String[] args) {
 		launch(args);
@@ -24,17 +30,17 @@ public class App extends Application {
 	public void start(Stage primaryStage) throws Exception {
 		try {
 
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/view_achat.fxml"));
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
 			Scene scene = new Scene(loader.load());
 
-			ctlPageTitre = (ControleurAchat) loader.getController();
+			mainCntrl = (MainControleur) loader.getController();
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Spend money");
 			primaryStage.show();
-			ctlPageTitre.setStage(primaryStage);
+//			mainCntrl.initialize();
+//			ctlPageTitre.setStage(primaryStage);
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 
 	}
