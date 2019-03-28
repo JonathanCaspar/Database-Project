@@ -47,3 +47,18 @@ CREATE TABLE categories (
      PRIMARY KEY (categoryid), 
      FOREIGN KEY (maincategory) REFERENCES maincategories(maincategoriesid) 
   ); 
+
+CREATE TABLE soldproducts ( 
+     id          		INT auto_increment, 
+     sellerid    		INT NOT NULL,
+     buyerid     		INT NOT NULL,
+     categoryid     	INT NOT NULL,
+     estimatedprice 	NUMERIC(10, 2) NOT NULL, 
+     sellingprice   	NUMERIC(10, 2) NOT NULL, 
+     soldprice   		NUMERIC(10, 2) NOT NULL, 
+     dateTransaction	TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+     PRIMARY KEY (id), 
+     FOREIGN KEY (sellerid) REFERENCES users(userid), 
+     FOREIGN KEY (buyerid) 	REFERENCES users(userid), 
+     FOREIGN KEY (categoryid) REFERENCES categories(categoryid) 
+  );
