@@ -25,7 +25,7 @@ Projet final - Base de données
 
 * MainCategory(__mainCategoryID__, name) 
 
-* Category(__categoryID__, #mainCategoryID, name) 
+* Category(__catID__, #mainCatName, catName) 
 
 * SoldProducts(__id__, #sellerID, #buyerID, #categoryID, estimatedPrice, sellingPrice, soldPrice, dateTransaction) 
 
@@ -44,7 +44,7 @@ CREATE TABLE users (
      password    VARCHAR(32) NOT NULL, 
      firstname   VARCHAR(20) NOT NULL, 
      lastname    VARCHAR(20), 
-     phonenumber VARCHAR(10), 
+     phonenumber VARCHAR(12), 
      PRIMARY KEY (userid), 
      UNIQUE (username) 
   ); 
@@ -54,14 +54,14 @@ CREATE TABLE products (
      estimatedprice NUMERIC(10, 2) NOT NULL, 
      sellingprice   NUMERIC(10, 2) NOT NULL, 
      sellerid       INT NOT NULL, 
-     categoryid     INT NOT NULL,
-     description    VARCHAR(150)    NOT NULL,
-     name           VARCHAR(30)     NOT NULL,
+     categoryid     INT NOT NULL, 
+     description    VARCHAR(150) NOT NULL, 
+     name           VARCHAR(40) NOT NULL, 
      date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (refid), 
      FOREIGN KEY (sellerid) REFERENCES users(userid), 
-     FOREIGN KEY (categoryid) REFERENCES categories(categoryid) 
-  );
+     FOREIGN KEY (categoryid) REFERENCES categories(catid) 
+  ); 
 
 CREATE TABLE offers ( 
      offerid   INT auto_increment, 
@@ -75,33 +75,33 @@ CREATE TABLE offers (
   ); 
 
 CREATE TABLE maincategories ( 
-     maincategoryid INT auto_increment, 
-     name           INT NOT NULL, 
-     PRIMARY KEY (maincategoryid) 
+     maincatname VARCHAR(40) NOT NULL, 
+     PRIMARY KEY (maincatname) 
   ); 
 
 CREATE TABLE categories ( 
-     categoryid   INT auto_increment, 
-     maincategory INT NOT NULL, 
-     name         INT NOT NULL, 
-     PRIMARY KEY (categoryid), 
-     FOREIGN KEY (maincategory) REFERENCES maincategories(maincategoriesid) 
+     catid       INT auto_increment, 
+     catname     VARCHAR(40) NOT NULL, 
+     maincatname VARCHAR(40) NOT NULL, 
+     PRIMARY KEY (catid), 
+     FOREIGN KEY (maincatname) REFERENCES maincategories(maincatname) 
   ); 
 
 CREATE TABLE soldproducts ( 
-     id          		INT auto_increment, 
-     sellerid    		INT NOT NULL,
-     buyerid     		INT NOT NULL,
-     categoryid     	INT NOT NULL,
-     estimatedprice 	NUMERIC(10, 2) NOT NULL, 
-     sellingprice   	NUMERIC(10, 2) NOT NULL, 
-     soldprice   		NUMERIC(10, 2) NOT NULL, 
-     dateTransaction	TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+     id              INT auto_increment, 
+     sellerid        INT NOT NULL, 
+     buyerid         INT NOT NULL, 
+     name            VARCHAR(40) NOT NULL, 
+     categoryid      INT NOT NULL, 
+     estimatedprice  NUMERIC(10, 2) NOT NULL, 
+     sellingprice    NUMERIC(10, 2) NOT NULL, 
+     soldprice       NUMERIC(10, 2) NOT NULL, 
+     datetransaction TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (id), 
      FOREIGN KEY (sellerid) REFERENCES users(userid), 
-     FOREIGN KEY (buyerid) 	REFERENCES users(userid), 
-     FOREIGN KEY (categoryid) REFERENCES categories(categoryid) 
-  );
+     FOREIGN KEY (buyerid) REFERENCES users(userid), 
+     FOREIGN KEY (categoryid) REFERENCES categories(catid) 
+  ); 
 ~~~~
 
 <a id="section4"></a>
