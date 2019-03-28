@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users, products, offers, maincategories, categories; 
+DROP TABLE IF EXISTS users, products, offers, maincategories, categories, soldproducts; 
 
 CREATE TABLE users ( 
      userid    INT auto_increment, 
