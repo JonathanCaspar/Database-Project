@@ -19,7 +19,7 @@ Projet final - Base de données
 
 * User(__userID__, username, password, firstname, lastname, phone) 
 
-* Product(__refID__, #userID, #categoryID, estimatedPrice, sellingPrice, description, date) 
+* Product(__refID__, #userID, #categoryID, estimatedPrice, sellingPrice, name, description, date) 
 
 * Offer(__offerID__, #userID, #productID, price, date) 
 
@@ -39,7 +39,7 @@ SoldProducts est une table de __log__ conservant l'historique des produits vendu
 DROP TABLE IF EXISTS users, products, offers, maincategories, categories, soldproducts; 
 
 CREATE TABLE users ( 
-     userid    INT auto_increment, 
+     userid      INT auto_increment, 
      username    VARCHAR(32) NOT NULL, 
      password    VARCHAR(32) NOT NULL, 
      firstname   VARCHAR(20) NOT NULL, 
@@ -54,7 +54,9 @@ CREATE TABLE products (
      estimatedprice NUMERIC(10, 2) NOT NULL, 
      sellingprice   NUMERIC(10, 2) NOT NULL, 
      sellerid       INT NOT NULL, 
-     categoryid     INT NOT NULL, 
+     categoryid     INT NOT NULL,
+     description    VARCHAR(150)    NOT NULL,
+     name           VARCHAR(30)     NOT NULL,
      date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (refid), 
      FOREIGN KEY (sellerid) REFERENCES users(userid), 
@@ -85,7 +87,7 @@ CREATE TABLE categories (
      PRIMARY KEY (categoryid), 
      FOREIGN KEY (maincategory) REFERENCES maincategories(maincategoriesid) 
   ); 
-  
+
 CREATE TABLE soldproducts ( 
      id          		INT auto_increment, 
      sellerid    		INT NOT NULL,
@@ -99,7 +101,7 @@ CREATE TABLE soldproducts (
      FOREIGN KEY (sellerid) REFERENCES users(userid), 
      FOREIGN KEY (buyerid) 	REFERENCES users(userid), 
      FOREIGN KEY (categoryid) REFERENCES categories(categoryid) 
-);
+  );
 ~~~~
 
 <a id="section4"></a>
