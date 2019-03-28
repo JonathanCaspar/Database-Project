@@ -27,6 +27,11 @@ Projet final - Base de données
 
 * Category(__categoryID__, #mainCategoryID, name) 
 
+* SoldProducts(__id__, #sellerID, #buyerID, #categoryID, estimatedPrice, sellingPrice, soldPrice, dateTransaction) 
+
+SoldProducts est une table de __log__ conservant l'historique des produits vendus.
+  
+
 <a id="section3"></a>
 ## 3. Définition de la base de données ([DDL.sql](DDL.sql))
 
@@ -80,6 +85,21 @@ CREATE TABLE categories (
      PRIMARY KEY (categoryid), 
      FOREIGN KEY (maincategory) REFERENCES maincategories(maincategoriesid) 
   ); 
+  
+CREATE TABLE soldproducts ( 
+     id          		INT auto_increment, 
+     sellerid    		INT NOT NULL,
+     buyerid     		INT NOT NULL,
+     categoryid     	INT NOT NULL,
+     estimatedprice 	NUMERIC(10, 2) NOT NULL, 
+     sellingprice   	NUMERIC(10, 2) NOT NULL, 
+     soldprice   		NUMERIC(10, 2) NOT NULL, 
+     dateTransaction	TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+     PRIMARY KEY (id), 
+     FOREIGN KEY (sellerid) REFERENCES users(userid), 
+     FOREIGN KEY (buyerid) 	REFERENCES users(userid), 
+     FOREIGN KEY (categoryid) REFERENCES categories(categoryid) 
+);
 ~~~~
 
 <a id="section4"></a>
