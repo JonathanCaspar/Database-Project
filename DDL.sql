@@ -1,4 +1,5 @@
-DROP TABLE IF EXISTS users, products, offers, maincategories, categories, soldproducts; 
+DROP TABLE IF EXISTS soldproducts, offers, products, categories, maincategories, 
+users; 
 
 CREATE TABLE users ( 
      userid      INT auto_increment, 
@@ -9,31 +10,6 @@ CREATE TABLE users (
      phonenumber VARCHAR(12), 
      PRIMARY KEY (userid), 
      UNIQUE (username) 
-  ); 
-
-CREATE TABLE products ( 
-     refid          INT auto_increment, 
-     estimatedprice NUMERIC(10, 2) NOT NULL, 
-     sellingprice   NUMERIC(10, 2) NOT NULL, 
-     sellerid       INT NOT NULL, 
-     categoryid     INT NOT NULL, 
-     description    VARCHAR(150) NOT NULL, 
-     name           VARCHAR(40) NOT NULL, 
-     date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-     PRIMARY KEY (refid), 
-     FOREIGN KEY (sellerid) REFERENCES users(userid), 
-     FOREIGN KEY (categoryid) REFERENCES categories(catid) 
-  ); 
-
-CREATE TABLE offers ( 
-     offerid   INT auto_increment, 
-     buyerid   INT NOT NULL, 
-     productid INT NOT NULL, 
-     price     NUMERIC(10, 2) NOT NULL, 
-     date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
-     PRIMARY KEY (offerid), 
-     FOREIGN KEY (buyerid) REFERENCES users(userid), 
-     FOREIGN KEY (productid) REFERENCES products(refid) 
   ); 
 
 CREATE TABLE maincategories ( 
@@ -49,11 +25,37 @@ CREATE TABLE categories (
      FOREIGN KEY (maincatname) REFERENCES maincategories(maincatname) 
   ); 
 
+CREATE TABLE products ( 
+     refid          INT auto_increment, 
+     name           VARCHAR(40) NOT NULL, 
+     description    VARCHAR(150) NOT NULL, 
+     sellerid       INT NOT NULL, 
+     categoryid     INT NOT NULL, 
+     estimatedprice NUMERIC(10, 2) NOT NULL, 
+     sellingprice   NUMERIC(10, 2) NOT NULL, 
+     date           TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+     PRIMARY KEY (refid), 
+     FOREIGN KEY (sellerid) REFERENCES users(userid), 
+     FOREIGN KEY (categoryid) REFERENCES categories(catid) 
+  ); 
+
+CREATE TABLE offers ( 
+     offerid   INT auto_increment, 
+     buyerid   INT NOT NULL, 
+     productid INT NOT NULL, 
+     price     NUMERIC(10, 2) NOT NULL, 
+     date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
+     PRIMARY KEY (offerid), 
+     FOREIGN KEY (buyerid) REFERENCES users(userid), 
+     FOREIGN KEY (productid) REFERENCES products(refid) ON DELETE CASCADE 
+  ); 
+
 CREATE TABLE soldproducts ( 
      id              INT auto_increment, 
+     name            VARCHAR(40) NOT NULL, 
+     description     VARCHAR(150) NOT NULL, 
      sellerid        INT NOT NULL, 
      buyerid         INT NOT NULL, 
-     name            VARCHAR(40) NOT NULL, 
      categoryid      INT NOT NULL, 
      estimatedprice  NUMERIC(10, 2) NOT NULL, 
      sellingprice    NUMERIC(10, 2) NOT NULL, 

@@ -1,0 +1,15 @@
+--- CLIENT
+Connection à la base 'casparjo_DB' :
+-----------------------------
+mysql -u casparjo_web -p casparjo_DB -h mysql
+	avec mot de passe =   5j2$C9a3kJT@NH
+
+Chargement de données :
+-----------------------------
+mysql -h mysql -u casparjo_web -p casparjo_DB < <fichierSQL>.sql
+
+
+Dans le prompt MySQL : 
+-----------------------------
+Afficher listes des tables : show tables;
+
