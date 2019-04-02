@@ -1,6 +1,7 @@
 package application;
 
 import controleur.MainControleur;
+import dbstuff.DbAdapter;
 import javafx.application.Application;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
@@ -24,7 +25,11 @@ public class App extends Application {
 	
 
 	public static void main(String[] args) {
-		launch(args);
+		DbAdapter db = new DbAdapter();
+		
+		db.connecter();
+		db.deconnecter();
+		//launch(args);
 	}
 	@Override
 	public void start(Stage primaryStage) throws Exception {

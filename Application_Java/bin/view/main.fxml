@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Menu?>
+<?import javafx.scene.control.MenuBar?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.Tab?>
+<?import javafx.scene.control.TabPane?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.MainControleur">
+   <children>
+      <VBox prefHeight="688.0" prefWidth="898.0">
+         <children>
+            <MenuBar maxWidth="-Infinity" prefHeight="34.0" prefWidth="901.0">
+              <menus>
+                <Menu mnemonicParsing="false" text="Client">
+                  <items>
+                    <MenuItem fx:id="inscription" mnemonicParsing="false" text="Inscription" />
+                        <MenuItem fx:id="connexion" mnemonicParsing="false" onAction="#goToLogin" text="Connexion" />
+                        <MenuItem fx:id="deconnexion" mnemonicParsing="false" text="Deconnexion" visible="false" />
+                  </items>
+                </Menu>
+                <Menu mnemonicParsing="false" text="Quitter">
+                  <items>
+                    <MenuItem mnemonicParsing="false" text="Delete" />
+                  </items>
+                </Menu>
+              </menus>
+            </MenuBar>
+            <TabPane maxWidth="-Infinity" prefHeight="655.0" prefWidth="901.0" tabClosingPolicy="UNAVAILABLE">
+              <tabs>
+                <Tab text="Catalogue">
+                     <content>
+                        <fx:include fx:id="catalogue" source="view_catalogue.fxml" />
+                     </content>
+                </Tab>
+                <Tab text="Mes annonces">
+                     <content>
+                        <fx:include fx:id="annonces" source="view_annonces.fxml" />
+                     </content>
+                </Tab>
+                  <Tab text="Mes achats" />
+              </tabs>
+            </TabPane>
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>
