@@ -2,7 +2,7 @@ DROP TABLE IF EXISTS soldproducts, offers, products, categories, maincategories,
 users; 
 
 CREATE TABLE users ( 
-     userid      INT auto_increment, 
+     userid      SERIAL, 
      username    VARCHAR(32) NOT NULL, 
      password    VARCHAR(32) NOT NULL, 
      firstname   VARCHAR(20) NOT NULL, 
@@ -13,20 +13,23 @@ CREATE TABLE users (
   ); 
 
 CREATE TABLE maincategories ( 
+     maincatid   SERIAL, 
      maincatname VARCHAR(40) NOT NULL, 
-     PRIMARY KEY (maincatname) 
+     PRIMARY KEY (maincatid),
+     UNIQUE(maincatname)
   ); 
 
 CREATE TABLE categories ( 
-     catid       INT auto_increment, 
+     catid       SERIAL, 
      catname     VARCHAR(40) NOT NULL, 
-     maincatname VARCHAR(40) NOT NULL, 
-     PRIMARY KEY (catid), 
-     FOREIGN KEY (maincatname) REFERENCES maincategories(maincatname) 
+     maincatid   SERIAL NOT NULL, 
+     PRIMARY KEY (catid),
+     UNIQUE(catname, maincatid),
+     FOREIGN KEY (maincatid) REFERENCES maincategories(maincatid) 
   ); 
 
 CREATE TABLE products ( 
-     refid          INT auto_increment, 
+     refid          SERIAL, 
      name           VARCHAR(40) NOT NULL, 
      description    VARCHAR(150) NOT NULL, 
      sellerid       INT NOT NULL, 
@@ -40,18 +43,19 @@ CREATE TABLE products (
   ); 
 
 CREATE TABLE offers ( 
-     offerid   INT auto_increment, 
+     offerid   SERIAL, 
      buyerid   INT NOT NULL, 
      productid INT NOT NULL, 
      price     NUMERIC(10, 2) NOT NULL, 
      date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (offerid), 
      FOREIGN KEY (buyerid) REFERENCES users(userid), 
-     FOREIGN KEY (productid) REFERENCES products(refid) ON DELETE CASCADE 
+     FOREIGN KEY (productid) REFERENCES products(refid) ON DELETE CASCADE,
+     UNIQUE(offerid, buyerid)
   ); 
 
 CREATE TABLE soldproducts ( 
-     id              INT auto_increment, 
+     id              SERIAL, 
      name            VARCHAR(40) NOT NULL, 
      description     VARCHAR(150) NOT NULL, 
      sellerid        INT NOT NULL, 
