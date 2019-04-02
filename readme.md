@@ -115,7 +115,6 @@ CREATE TABLE soldproducts (
 
 ### Insertion d'utilisateurs
 ~~~~sql
--- Insertion USERS
 INSERT INTO users (userid, username, password, firstname, lastname, phonenumber) VALUES
 (1, 'rkirmond0', '6H7Znp5e', 'Roxi', 'Kirmond', '828-346-4552'),
 (2, 'clevicount1', 'R2DK20yrhX', 'Costa', 'Levicount', '858-452-1250'),
@@ -217,8 +216,10 @@ INSERT INTO users (userid, username, password, firstname, lastname, phonenumber)
 (98, 'emiddiff2p', 'emx4T34rW', 'Eulalie', 'Middiff', '373-882-3954'),
 (99, 'bmyhan2q', 'SClyDi3As', 'Brock', 'Myhan', '706-407-2891'),
 (100, 'lconyers2r', 'vW059AXw', 'Lucas', 'Conyers', '626-363-4727');
+~~~~
 
--- Insertion MainCategories
+### Insertion MainCategories
+~~~~sql
 INSERT INTO maincategories (maincatid, maincatname) VALUES
 (1, 'Immobilier'),
 (2, 'Audio'),
@@ -233,8 +234,10 @@ INSERT INTO maincategories (maincatid, maincatname) VALUES
 (11, 'Maison - Intérieur'),
 (12, 'Outils'),
 (13, 'Ordinateurs et tablettes');
+~~~~
 
--- Insertion Categories
+### Insertion Categories
+~~~~sql
 INSERT INTO categories (maincatid, catname) VALUES
 (1, 'Condo'),
 (1, 'Appartement'),
@@ -298,8 +301,10 @@ INSERT INTO categories (maincatid, catname) VALUES
 (13, 'Ordinateurs Lenovo'),
 (13, 'Autres ordinateurs'),
 (13, 'Tablettes');
+~~~~
 
--- Insertion Products
+### Insertion Products
+~~~~sql
 INSERT INTO products (estimatedprice, sellingprice, sellerid, categoryid, description, name) VALUES
 ('54.10', '54.10', 1, 25, 'Chaises IKEA', 'Chaises IKEA'),
 ('201.34', '201.34', 1, 45, 'Téléviseur Sony', 'Téléviseur Sony'),
@@ -351,8 +356,10 @@ INSERT INTO products (estimatedprice, sellingprice, sellerid, categoryid, descri
 ('188.41', '188.41', 98, 26, 'Table en bois massif', 'Table en bois massif'),
 ('299.00', '299.00', 99, 27, 'Sofa en cuir', 'Sofa en cuir'),
 ('38.69', '38.69', 100, 14, 'Robe blanche', 'Robe blanche');
+~~~~
 
--- Insertion Offers
+### Insertion Offers
+~~~~sql
 INSERT INTO offers (buyerid, productid, price) VALUES 
 (25, 50, 33.0),
 (26, 4, 99.37),
@@ -404,8 +411,10 @@ INSERT INTO offers (buyerid, productid, price) VALUES
 (15, 1, 40),
 (9, 31, 1175),
 (17,32, 1080.50);
+~~~~
 
--- Insertion Products
+### Insertion Products
+~~~~sql
 INSERT INTO soldproducts (estimatedprice, sellingprice, sellerid, categoryid, description, name, buyerid, soldprice) VALUES
 ('54.10', '54.10', 1, 25, 'Chaises IKEA', 'Chaises IKEA', 2, 55.10),
 ('201.34', '201.34', 1, 45, 'Téléviseur Sony', 'Téléviseur Sony', 2, 180),
@@ -489,10 +498,10 @@ LANGUAGE plpgsql;
 ~~~~
 
 ### Requêtes-type utilisées par l'application
-## 1) Catalogue
+#### 1) Catalogue
 * Catégories sur colonne gauche :
 ~~~~sql
-	SELECT * FROM maincategories;
+SELECT * FROM maincategories;
 ~~~~
 
 Pour chaque catégorie principale : récupérer les sous-catégories et les ajouter dans la colonne de gauche (exemple avec Meubles - id = 6) :
@@ -507,11 +516,12 @@ WITH allProducts AS (SELECT * FROM products WHERE categoryid = 25 AND sellerid <
 SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date FROM allProducts;
 ~~~~
 
-## 2) Mes annonces (avec utilisateur actuel id=28)
+#### 2) Mes annonces (avec utilisateur actuel id=28)
 
 * Objets en vente 
 ~~~~sql
-SELECT getOffersCount(refid) as nboffers, name, refid AS productid, categoryid, sellingprice, estimatedprice, description FROM products WHERE sellerid=28;
+SELECT getOffersCount(refid) as nboffers, name, refid AS productid, categoryid, sellingprice, estimatedprice, description 
+FROM products WHERE sellerid=28;
 ~~~~
 
 * Propositions liées à l'objet selectionné (exemple produitid = 21)
@@ -520,7 +530,7 @@ SELECT * FROM offers WHERE productid = 21;
 ~~~~
 
 
-## 3) Mes achats (si utilisateur courant id = 28)
+#### 3) Mes achats (si utilisateur courant id = 28)
 
 ~~~~sql
 SELECT * FROM soldproducts WHERE buyerid = 28;
