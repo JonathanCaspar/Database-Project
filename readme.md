@@ -40,7 +40,7 @@ DROP TABLE IF EXISTS soldproducts, offers, products, categories, maincategories,
 users; 
 
 CREATE TABLE users ( 
-     userid      INT auto_increment, 
+     userid      SERIAL, 
      username    VARCHAR(32) NOT NULL, 
      password    VARCHAR(32) NOT NULL, 
      firstname   VARCHAR(20) NOT NULL, 
@@ -51,20 +51,23 @@ CREATE TABLE users (
   ); 
 
 CREATE TABLE maincategories ( 
+     maincatid   SERIAL, 
      maincatname VARCHAR(40) NOT NULL, 
-     PRIMARY KEY (maincatname) 
+     PRIMARY KEY (maincatid),
+     UNIQUE(maincatname)
   ); 
 
 CREATE TABLE categories ( 
-     catid       INT auto_increment, 
+     catid       SERIAL, 
      catname     VARCHAR(40) NOT NULL, 
-     maincatname VARCHAR(40) NOT NULL, 
-     PRIMARY KEY (catid), 
-     FOREIGN KEY (maincatname) REFERENCES maincategories(maincatname) 
+     maincatid   SERIAL NOT NULL, 
+     PRIMARY KEY (catid),
+     UNIQUE(catname, maincatid),
+     FOREIGN KEY (maincatid) REFERENCES maincategories(maincatid) 
   ); 
 
 CREATE TABLE products ( 
-     refid          INT auto_increment, 
+     refid          SERIAL, 
      name           VARCHAR(40) NOT NULL, 
      description    VARCHAR(150) NOT NULL, 
      sellerid       INT NOT NULL, 
@@ -78,18 +81,19 @@ CREATE TABLE products (
   ); 
 
 CREATE TABLE offers ( 
-     offerid   INT auto_increment, 
+     offerid   SERIAL, 
      buyerid   INT NOT NULL, 
      productid INT NOT NULL, 
      price     NUMERIC(10, 2) NOT NULL, 
      date      TIMESTAMP DEFAULT CURRENT_TIMESTAMP, 
      PRIMARY KEY (offerid), 
      FOREIGN KEY (buyerid) REFERENCES users(userid), 
-     FOREIGN KEY (productid) REFERENCES products(refid) ON DELETE CASCADE 
+     FOREIGN KEY (productid) REFERENCES products(refid) ON DELETE CASCADE,
+     UNIQUE(offerid, buyerid)
   ); 
 
 CREATE TABLE soldproducts ( 
-     id              INT auto_increment, 
+     id              SERIAL, 
      name            VARCHAR(40) NOT NULL, 
      description     VARCHAR(150) NOT NULL, 
      sellerid        INT NOT NULL, 
@@ -112,7 +116,7 @@ CREATE TABLE soldproducts (
 ### Insertion d'utilisateurs
 ~~~~sql
 -- Insertion USERS
-INSERT INTO `users` (`userid`, `username`, `password`, `firstname`, `lastname`, `phonenumber`) VALUES
+INSERT INTO users (userid, username, password, firstname, lastname, phonenumber) VALUES
 (1, 'rkirmond0', '6H7Znp5e', 'Roxi', 'Kirmond', '828-346-4552'),
 (2, 'clevicount1', 'R2DK20yrhX', 'Costa', 'Levicount', '858-452-1250'),
 (3, 'nscoular2', 'USZPh0l', 'Niel', 'Scoular', '468-513-7460'),
@@ -215,88 +219,88 @@ INSERT INTO `users` (`userid`, `username`, `password`, `firstname`, `lastname`, 
 (100, 'lconyers2r', 'vW059AXw', 'Lucas', 'Conyers', '626-363-4727');
 
 -- Insertion MainCategories
-INSERT INTO `maincategories` (`mainCatName`) VALUES
-('Immobilier'),
-('Audio'),
-('Appareils électroménagers'),
-('Vêtements'),
-('Livres'),
-('Meubles'),
-('Téléphones'),
-('Jeux vidéo et consoles'),
-('Vélos'),
-('Ecrans'),
-('Maison - Intérieur'),
-('Outils'),
-('Ordinateurs et tablettes');
+INSERT INTO maincategories (maincatid, maincatname) VALUES
+(1, 'Immobilier'),
+(2, 'Audio'),
+(3, 'Appareils électroménagers'),
+(4, 'Vêtements'),
+(5, 'Livres'),
+(6, 'Meubles'),
+(7, 'Téléphones'),
+(8, 'Jeux vidéo et consoles'),
+(9, 'Vélos'),
+(10, 'Ecrans'),
+(11, 'Maison - Intérieur'),
+(12, 'Outils'),
+(13, 'Ordinateurs et tablettes');
 
 -- Insertion Categories
-INSERT INTO `categories` (`mainCatName`, `catName`) VALUES
-('Immobilier', 'Condo'),
-('Immobilier', 'Appartement'),
-('Immobilier', 'Maison'),
-('Audio', 'Haut-parleurs'),
-('Audio', 'Chaînes stéréo'),
-('Audio', 'Ecouteurs'),
-('Audio', 'iPod et MP3'),
-('Appareils électroménagers', 'Réfrigérateurs'),
-('Appareils électroménagers', 'Laveuses et sécheuses'),
-('Appareils électroménagers', 'Cuisinières, fours et fourneaux'),
-('Appareils électroménagers', 'Machines à café'),
-('Appareils électroménagers', 'Fours à micro-ondes'),
-('Appareils électroménagers', 'Aspirateurs'),
-('Vêtements', 'Femmes - Hauts'),
-('Vêtements', 'Enfants'),
-('Vêtements', 'Hommes'),
-('Vêtements', 'Femmes - Sacs'),
-('Vêtements', 'Chaussures pour femmes'),
-('Vêtements', 'Chaussures pour hommes'),
-('Livres', 'Manuels'),
-('Livres', 'Bandes dessinéees'),
-('Livres', 'Magazines'),
-('Livres', 'Ouvrages de fiction'),
-('Livres', 'Essais'),
-('Meubles', 'Chaises, Fauteuils'),
-('Meubles', 'Mobilier de cuisine et salle à manger'),
-('Meubles', 'Sofas'),
-('Meubles', 'Lits et matelas'),
-('Meubles', 'Commodes et armoires'),
-('Téléphones', 'Téléphones cellulaires'),
-('Téléphones', 'Accessoires pour cellulaires'),
-('Téléphones', 'Téléphones résidentiels et répondeurs'),
-('Jeux vidéo et consoles', 'Sony PlayStation 4'),
-('Jeux vidéo et consoles', 'Consoles classiques'),
-('Jeux vidéo et consoles', 'XBOX One'),
-('Jeux vidéo et consoles', 'XBOX 360'),
-('Jeux vidéo et consoles', 'Sony PlayStation 3'),
-('Jeux vidéo et consoles', 'Nintendo Wii'),
-('Jeux vidéo et consoles', 'Nintendo DS'),
-('Vélos', 'De route'),
-('Vélos', 'Enfants'),
-('Vélos', 'Randonné, ville'),
-('Vélos', 'Vélos électriques'),
-('Vélos', 'Fixie'),
-('Écrans', 'Téléviseurs'),
-('Écrans', 'Ecrans d\'ordinateur'),
-('Maison - Intérieur', 'Décoration intérieure et accessoires'),
-('Maison - Intérieur', 'Vaisselle et articles de cuisine'),
-('Maison - Intérieur', 'Eclairage intérieur et plafonniers'),
-('Maison - Intérieur', 'Literie'),
-('Maison - Intérieur', 'Rangement et organisation'),
-('Maison - Intérieur', 'Tapis et moquettes'),
-('Outils', 'Outils électriques'),
-('Outils', 'Outils à main'),
-('Outils', 'Rangement pour outils et établis'),
-('Outils', 'Echelles et échafaudages'),
-('Ordinateurs et tablettes', 'Ordinateurs Apple'),
-('Ordinateurs et tablettes', 'Ordinateurs Acer'),
-('Ordinateurs et tablettes', 'Ordinateurs Samsung'),
-('Ordinateurs et tablettes', 'Ordinateurs Lenovo'),
-('Ordinateurs et tablettes', 'Autres ordinateurs'),
-('Ordinateurs et tablettes', 'Tablettes');
+INSERT INTO categories (maincatid, catname) VALUES
+(1, 'Condo'),
+(1, 'Appartement'),
+(1, 'Maison'),
+(2, 'Haut-parleurs'),
+(2, 'Chaînes stéréo'),
+(2, 'Ecouteurs'),
+(2, 'iPod et MP3'),
+(3, 'Réfrigérateurs'),
+(3, 'Laveuses et sécheuses'),
+(3, 'Cuisinières, fours et fourneaux'),
+(3, 'Machines à café'),
+(3, 'Fours à micro-ondes'),
+(3, 'Aspirateurs'),
+(4, 'Femmes - Hauts'),
+(4, 'Enfants'),
+(4, 'Hommes'),
+(4, 'Femmes - Sacs'),
+(4, 'Chaussures pour femmes'),
+(4, 'Chaussures pour hommes'),
+(5, 'Manuels'),
+(5, 'Bandes dessinéees'),
+(5, 'Magazines'),
+(5, 'Ouvrages de fiction'),
+(5, 'Essais'),
+(6, 'Chaises, Fauteuils'),
+(6, 'Mobilier de cuisine et salle à manger'),
+(6, 'Sofas'),
+(6, 'Lits et matelas'),
+(6, 'Commodes et armoires'),
+(7, 'Téléphones cellulaires'),
+(7, 'Accessoires pour cellulaires'),
+(7, 'Téléphones résidentiels et répondeurs'),
+(8, 'Sony PlayStation 4'),
+(8, 'Consoles classiques'),
+(8, 'XBOX One'),
+(8, 'XBOX 360'),
+(8, 'Sony PlayStation 3'),
+(8, 'Nintendo Wii'),
+(8, 'Nintendo DS'),
+(9, 'De route'),
+(9, 'Enfants'),
+(9, 'Randonné, ville'),
+(9, 'Vélos électriques'),
+(9, 'Fixie'),
+(10, 'Téléviseurs'),
+(10, 'Ecrans d''ordinateur'),
+(11, 'Décoration intérieure et accessoires'),
+(11, 'Vaisselle et articles de cuisine'),
+(11, 'Eclairage intérieur et plafonniers'),
+(11, 'Literie'),
+(11, 'Rangement et organisation'),
+(11, 'Tapis et moquettes'),
+(12, 'Outils électriques'),
+(12, 'Outils à main'),
+(12, 'Rangement pour outils et établis'),
+(12, 'Echelles et échafaudages'),
+(13, 'Ordinateurs Apple'),
+(13, 'Ordinateurs Acer'),
+(13, 'Ordinateurs Samsung'),
+(13, 'Ordinateurs Lenovo'),
+(13, 'Autres ordinateurs'),
+(13, 'Tablettes');
 
 -- Insertion Products
-INSERT INTO `products` (`estimatedprice`, `sellingprice`, `sellerid`, `categoryid`, `description`, `name`) VALUES
+INSERT INTO products (estimatedprice, sellingprice, sellerid, categoryid, description, name) VALUES
 ('54.10', '54.10', 1, 25, 'Chaises IKEA', 'Chaises IKEA'),
 ('201.34', '201.34', 1, 45, 'Téléviseur Sony', 'Téléviseur Sony'),
 ('68.17', '68.17', 1, 25, 'Fauteuil IKEA', 'Fauteuil IKEA'),
@@ -349,7 +353,7 @@ INSERT INTO `products` (`estimatedprice`, `sellingprice`, `sellerid`, `categoryi
 ('38.69', '38.69', 100, 14, 'Robe blanche', 'Robe blanche');
 
 -- Insertion Offers
-INSERT INTO `offers` (`buyerid`, `productid`, `price`) VALUES 
+INSERT INTO offers (buyerid, productid, price) VALUES 
 (25, 50, 33.0),
 (26, 4, 99.37),
 (93, 21, 80.16),
@@ -402,7 +406,7 @@ INSERT INTO `offers` (`buyerid`, `productid`, `price`) VALUES
 (17,32, 1080.50);
 
 -- Insertion Products
-INSERT INTO `soldproducts` (`estimatedprice`, `sellingprice`, `sellerid`, `categoryid`, `description`, `name`, `buyerid`, `soldprice`) VALUES
+INSERT INTO soldproducts (estimatedprice, sellingprice, sellerid, categoryid, description, name, buyerid, soldprice) VALUES
 ('54.10', '54.10', 1, 25, 'Chaises IKEA', 'Chaises IKEA', 2, 55.10),
 ('201.34', '201.34', 1, 45, 'Téléviseur Sony', 'Téléviseur Sony', 2, 180),
 ('68.17', '68.17', 1, 25, 'Fauteuil IKEA', 'Fauteuil IKEA', 5, 60),
@@ -453,49 +457,73 @@ INSERT INTO `soldproducts` (`estimatedprice`, `sellingprice`, `sellerid`, `categ
 ('188.41', '188.41', 98, 26, 'Table en bois massif', 'Table en bois massif', 90, 180),
 ('299.00', '299.00', 99, 27, 'Sofa en cuir', 'Sofa en cuir', 92, 285.00),
 ('38.69', '38.69', 100, 14, 'Robe blanche', 'Robe blanche', 95, 33);
+~~~~
 
--- REQUETES
+### Fonctions :
 
--- 1) CATALOGUE
--- * Catégories sur colonne gauche :
-SELECT * FROM maincategories;
--- pour chaque catégorie principale : récupérer les sous-catégories et les ajouter dans la colonne de gauche
--- exemple avec Meubles :
-SELECT catid, catname FROM categories WHERE mainCatName = 'Meubles' ORDER BY catName;
-
-
--- * En cliquant sur une catégorie : afficher tous les produits (hormis ceux vendus par l'utilisateur lui même)
--- exemple avec catégorie cliquée : Chaises, Fauteils (catID = 25) et utilisateur actuel = (id=28, Dacey, Lomasny)
-
-DELIMITER $$
-CREATE PROCEDURE getSellerName (sellerid integer) 
-BEGIN 
-	SELECT CONCAT(firstname, ', ', lastname) AS sellername FROM users WHERE userid = sellerid; 
-END$$
-DELIMITER ;
+* Récupérer le nom et prénom concaténé selon l'id fourni :
+~~~~sql
+CREATE OR REPLACE FUNCTION getUserFullName(id integer)
+	RETURNS varchar(60) AS $$
+	DECLARE
+	userfullname varchar(60);
+BEGIN
+	userfullname := (SELECT CONCAT(firstname, ', ', lastname) FROM users WHERE userid = id);
+	RETURN userfullname;
+END; $$
+LANGUAGE plpgsql;
+~~~~
 
 
-WITH allProducts AS (SELECT * FROM products WHERE categoryid = 25 AND sellerid <> 28)
-SELECT refid, name, description, sellingprice, getSellerName(sellerid), date FROM allProducts JOIN users ON allProducts.sellerid = users.userid;
-
-
--- 2) MES ANNONCES (avec utilisateur actuel id=28)
--- fonction pour comptabiliser le nombre d'offres associées au produit
-CREATE FUNCTION getOffersCount(integer) RETURNS integer AS $$
-	SELECT COUNT(*) FROM offers WHERE productid = $1; 
-$$ LANGUAGE SQL;
-
--- * Objets en vente 
-WITH 
-SELECT getOffersCount(refid) as nboffers, name, category, sellingprice, estimatedprice, description FROM products WHERE sellerid=28;
-
-
--- 3) MES ACHATS
+* Comptabilise le nombre d'offres associées au produit en vente (avec refid)
+~~~~sql
+CREATE OR REPLACE FUNCTION getOffersCount(refid integer)
+	RETURNS integer AS $$
+	DECLARE
+	offercount integer;
+BEGIN
+	offercount := (SELECT COUNT(*) FROM offers WHERE productid = refid);
+	RETURN offercount;
+END; $$
+LANGUAGE plpgsql;
 ~~~~
 
 ### Requêtes-type utilisées par l'application
+## 1) Catalogue
+* Catégories sur colonne gauche :
 ~~~~sql
-SELECT * FROM offers;
+	SELECT * FROM maincategories;
+~~~~
+
+Pour chaque catégorie principale : récupérer les sous-catégories et les ajouter dans la colonne de gauche (exemple avec Meubles - id = 6) :
+~~~~sql
+SELECT catid, catname FROM categories WHERE maincatid = 6 ORDER BY catname;
+~~~~
+
+* En cliquant sur une catégorie : afficher tous les produits (hormis ceux vendus par l'utilisateur lui même)
+Exemple avec catégorie cliquée : Chaises, Fauteils (catID = 25) et utilisateur actuel = (id=28, Dacey, Lomasny)
+~~~~sql
+WITH allProducts AS (SELECT * FROM products WHERE categoryid = 25 AND sellerid <> 28)
+SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date FROM allProducts;
+~~~~
+
+## 2) Mes annonces (avec utilisateur actuel id=28)
+
+* Objets en vente 
+~~~~sql
+SELECT getOffersCount(refid) as nboffers, name, refid AS productid, categoryid, sellingprice, estimatedprice, description FROM products WHERE sellerid=28;
+~~~~
+
+* Propositions liées à l'objet selectionné (exemple produitid = 21)
+~~~~sql
+SELECT * FROM offers WHERE productid = 21;
+~~~~
+
+
+## 3) Mes achats (si utilisateur courant id = 28)
+
+~~~~sql
+SELECT * FROM soldproducts WHERE buyerid = 28;
 ~~~~
 
 <a id="section5"></a>
