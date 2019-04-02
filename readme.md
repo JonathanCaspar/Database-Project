@@ -498,6 +498,7 @@ LANGUAGE plpgsql;
 ~~~~
 
 ### Requêtes-type utilisées par l'application
+
 #### 1) Catalogue
 * Catégories sur colonne gauche :
 ~~~~sql
