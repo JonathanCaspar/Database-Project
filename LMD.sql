@@ -1,3 +1,4 @@
+START TRANSACTION;
 -- Insertion USERS
 INSERT INTO users (userid, username, password, firstname, lastname, phonenumber) VALUES
 (1, 'rkirmond0', '6H7Znp5e', 'Roxi', 'Kirmond', '828-346-4552'),
@@ -393,3 +394,5 @@ LANGUAGE plpgsql;
 -- 3) MES ACHATS (si utilisateur courant id = 28)
 	
 	SELECT * FROM soldproducts WHERE buyerid = 28;
+
+	COMMIT;

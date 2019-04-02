@@ -1,3 +1,4 @@
+START TRANSACTION;
 DROP TABLE IF EXISTS soldproducts, offers, products, categories, maincategories, 
 users; 
 
@@ -70,3 +71,5 @@ CREATE TABLE soldproducts (
      FOREIGN KEY (buyerid) REFERENCES users(userid), 
      FOREIGN KEY (categoryid) REFERENCES categories(catid) 
   ); 
+
+COMMIT;

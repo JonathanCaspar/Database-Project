@@ -1,15 +1,28 @@
---- CLIENT
-Connection à la base 'casparjo_DB' :
+Connection à la base de données 'casparjo' :
 -----------------------------
-mysql -u casparjo_web -p casparjo_DB -h mysql
-	avec mot de passe =   5j2$C9a3kJT@NH
+	1) Par ligne de commande 
+		psql -h postgres -U casparjo_app casparjo
+		pwd = projetdb2935
 
-Chargement de données :
+	2) Via SSH dans JDBC
+		serveur : postgres.iro.umontreal.ca
+		port : 5432
+		nom d'usager: casparjo_app
+		mot de passe: projetdb2935
+
+Pour avoir accès aux tables !!! (important)
+----------------------------
+set search_path to casparjo;
+
+Commandes SQL :
 -----------------------------
-mysql -h mysql -u casparjo_web -p casparjo_DB < <fichierSQL>.sql
+ \i <fichierSQL>.sql 	----- charger fichier sql
+ \dt 					----- affiche listes des tables 
 
 
-Dans le prompt MySQL : 
------------------------------
-Afficher listes des tables : show tables;
-
+Schéma de permission :
+------------------------
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON SCHEMA casparjo TO casparjo_app;
