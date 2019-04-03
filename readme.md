@@ -497,6 +497,19 @@ END; $$
 LANGUAGE plpgsql;
 ~~~~
 
+* Retourne le montant de l'offre la plus elevée pour un produit en vente (avec refid)
+~~~~sql
+CREATE OR REPLACE FUNCTION getMaxOfferValue(refid integer)
+	RETURNS NUMERIC(10, 2) AS $$
+	DECLARE
+	offercount NUMERIC(10, 2);
+BEGIN
+	offercount := (SELECT COALESCE(MAX(price), 0) FROM offers WHERE productid = refid);
+	RETURN offercount;
+END; $$
+LANGUAGE plpgsql;
+~~~~
+
 ### Requêtes-type utilisées par l'application
 
 #### 1) Catalogue
