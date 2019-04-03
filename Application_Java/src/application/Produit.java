@@ -1,5 +1,8 @@
 package application;
 
+import java.sql.Date;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 
 import controleur.ControleurOffrir;
@@ -14,11 +17,30 @@ public class Produit {
 	private float prix = 0;
 	private float oMax = 0;
 	private float estimation = 0;
+	
+	private int refid = 0;
 
-	private LocalDate date = null;
+	private Date date = null;
 	private String categorie = null;
 	private String vendeur = null;
 
+	
+	public Produit(ResultSet temp) {
+		try {
+			nomProduit = temp.getString("name");
+			description = temp.getString("description");
+			refid = temp.getInt("refid");
+			prix = temp.getFloat("sellingprice");
+			estimation = temp.getFloat("estimatedprice");
+			date = temp.getDate("date");
+			vendeur = temp.getString("sellername");
+			categorie = temp.getString("catname");
+			oMax = temp.getFloat("maxoffer");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		
+	}
 	/**
 	 * Constructeur de produit selon la date en tant que LocalDate
 	 * 
@@ -31,7 +53,7 @@ public class Produit {
 	 * @param categorie   La categorie du produit.
 	 * @param vendeur     Le nom du vendeur.
 	 */
-	public Produit(String produit, String description, float prix, float oMax, float estimation, LocalDate date,
+	public Produit(String produit, String description, float prix, float oMax, float estimation, Date date,
 			String categorie, String vendeur) {
 		super();
 		this.nomProduit = produit;
@@ -64,7 +86,7 @@ public class Produit {
 		this.prix = prix;
 		this.oMax = oMax;
 		this.estimation = estimation;
-		this.date = LocalDate.of(annee, mois, jour);
+		this.date = new Date(annee, mois, jour);
 		this.description = description;
 		this.categorie = categorie;
 		this.vendeur = vendeur;

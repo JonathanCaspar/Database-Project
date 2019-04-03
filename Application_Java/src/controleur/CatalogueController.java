@@ -1,10 +1,16 @@
 package controleur;
 
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Iterator;
 
+import application.App;
 import application.Produit;
 import application.User;
+import dbstuff.DbAdapter;
+import dbstuff.QueriesItr;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.event.ActionEvent;
@@ -90,8 +96,7 @@ public class CatalogueController {
 	private Font x3;
 	@FXML
 	private Color x4;
-	
-	
+
 	@FXML
 	private MenuItem inscription;
 	@FXML
@@ -104,12 +109,12 @@ public class CatalogueController {
 	private Menu vendre;
 	private ConnexionController controleurConnexion;
 	private AnnoncesController controleurAnnonces;
-	
+
 	private User utilisateur = null;
-	
+
 	@FXML
 	void goToLogin(ActionEvent event) {
-		
+
 		try {
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
@@ -120,31 +125,30 @@ public class CatalogueController {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("AUTHENTIFICATION");
 			primaryStage.showAndWait();
-			
-			//recupère ici l'utilisateur authentifié
+
+			// recupère ici l'utilisateur authentifié
 			setUtilisateur(controleurConnexion.getUser());
-			
+
 			vendre.setVisible(true);
 			deconnexion.setVisible(true);
 			connexion.setVisible(false);
 			inscription.setVisible(false);
-			
-			if(this.utilisateur != null) {
-				
-			} 
-		
+
+			if (this.utilisateur != null) {
+
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 	}
-	
+
 	@FXML
 	void afficherAnnonces(ActionEvent event) {
 		try {
-			
-			
-			//recuperer la stage, change la scene
+
+			// recuperer la stage, change la scene
 			Stage primaryStage = (Stage) rightVBox.getScene().getWindow();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/view_annonces.fxml"));
 			Scene scene = new Scene(loader.load());
@@ -154,19 +158,16 @@ public class CatalogueController {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Annonces");
 			primaryStage.showAndWait();
-			 
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 	}
-	
+
 	public void setUtilisateur(User utilisateur) {
 		this.utilisateur = utilisateur;
 	}
-	
-	
 
 	@FXML
 	void actionMettreAJour(ActionEvent event) {
@@ -239,9 +240,11 @@ public class CatalogueController {
 	 * 
 	 * @param table La table de produit.
 	 */
-	public void creatTable(Produit[] table) {
+	public void creatTable(Iterable<Produit> table) {
 		objetsView.getItems().clear();
-		objetsView.getItems().addAll(table);
+		for (Produit o : table) {
+			objetsView.getItems().add(o);
+		}
 
 		objetsView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
 			Float offre = new_val.OpenWindow();
@@ -254,28 +257,30 @@ public class CatalogueController {
 	 * @param primaryStage Le stage.
 	 */
 	public void setStage(Stage primaryStage) {
-		Produit[] t = { new Produit("Vélo", "Un fix de la mort qui tue.", 15, 10.25f, 500, 10, 12, 1998, "Sport", "George"),
-				new Produit("Magnetophone", "Magnetophone magnifique pas trop vieux.", 100.25f, 30, 135, 5, 8, 2016,
-						"Musique", "Georgette") };
+		QueriesItr qt = new QueriesItr(
+				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
+						+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid  FROM products,) "
+						+ "SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname date FROM allProducts JOIN categories ON categoryid = catid;");
 		creatTablecolmns();
-		creatTable(t);
+		creatTable(QueriesItr.iteratorProduit(qt));
 		createTreeView();
 	}
-	
-	
+
 	/**
 	 * Methode appeler a la creation de l'application
 	 * 
 	 * @param primaryStage Le stage.
 	 */
 	public void setStage() {
-		Produit[] t = { new Produit("Vélo", "Un fix de la mort qui tue.", 15, 10.25f, 500, 10, 12, 1998, "Sport", "George"),
-				new Produit("Magnetophone", "Magnetophone magnifique pas trop vieux.", 100.25f, 30, 135, 5, 8, 2016,
-						"Musique", "Georgette") };
+		QueriesItr qt = new QueriesItr(
+				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
+						+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products) "
+						+ "SELECT refid, name, description, sellingprice, sellername, date, maxoffer, estimatedprice, catname, date FROM allProducts JOIN categories ON categoryid = catid;");
 		creatTablecolmns();
-		creatTable(t);
+		creatTable(QueriesItr.iteratorProduit(qt));
 		createTreeView();
 	}
+
 	private void creatTablecolmns() {
 		produits.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		prix.setCellValueFactory(new PropertyValueFactory("prix"));
@@ -294,9 +299,6 @@ public class CatalogueController {
 		switch (name) {
 		case parent:
 			creatCategoriesView();
-			break;
-		case "Appartement":
-			createAppartement();
 			break;
 		default:
 			break;
@@ -320,18 +322,44 @@ public class CatalogueController {
 	 */
 	private void createTreeView() {
 		TreeItem<String> root = new TreeItem<String>("Catégories");
-		for (int i = 0; i < categories.length; i++) {
 
-			TreeItem<String> rootItem = new TreeItem<String>(categories[i]);
-			rootItem.setExpanded(true);
+		ArrayList<TreeItem<String>> mainCats = new ArrayList<TreeItem<String>>();
+		ArrayList<Integer> mainCatsId = new ArrayList<Integer>();
 
-			for (int j = 0; j < sousCategories[i].length; j++) {
-				TreeItem<String> childItem = new TreeItem<String>(sousCategories[i][j]);
-				rootItem.getChildren().add(childItem);
+		QueriesItr QT = new QueriesItr("SELECT * FROM " + DbAdapter.DB_TABLES[1] + " ORDER BY maincatname;");
+		ResultSet rs = QT.getResultSet();
+
+		try {
+			if (rs != null)
+
+				while (QT.next()) {
+					String maincatname = rs.getString("maincatname");
+					int catid = rs.getInt("maincatid");
+
+					TreeItem<String> rootItem = new TreeItem<String>(maincatname);
+					mainCats.add(rootItem);
+					mainCatsId.add(catid);
+
+					rootItem.setExpanded(true);
+					root.getChildren().add(rootItem);
+				}
+			for (int i = 0; i < mainCats.size(); i++) {
+				QT = new QueriesItr("SELECT catname FROM " + DbAdapter.DB_TABLES[2] + " WHERE maincatid = "
+						+ mainCatsId.get(i) + " ORDER BY catname;");
+				ResultSet rs2 = QT.getResultSet();
+				if (rs2 != null) {
+					while (QT.next()) {
+						String catname = rs2.getString("catname");
+						TreeItem<String> childItem = new TreeItem<String>(catname);
+						mainCats.get(i).getChildren().add(childItem);
+					}
+				}
 			}
-
-			root.getChildren().add(rootItem);
+		} catch (SQLException e) {
+			QT.quitter();
+			e.printStackTrace();
 		}
+
 		root.setExpanded(true);
 		rightTreeView.setRoot(root);
 
@@ -344,27 +372,6 @@ public class CatalogueController {
 			}
 
 		});
-	}
-
-	/**
-	 * Update le Vbox a droite lorsque l'on clique sur Appartement
-	 */
-	private void createAppartement() {
-		Node[] l = new Node[8];
-		l[0] = createLabel("Taille");
-
-		String[] tailles = { "1 1/2", "2 1/2", "3 1/2", "4 1/2", "5 1/2", "6 1/2", "7 1/2 et +" };
-		CheckBox[] cbs = CreateCheckBoxList(tailles, null);
-
-		for (int i = 0; i < tailles.length; i++) {
-			cbs[i].setSelected(true);
-			cbs[i].setPadding(new Insets(0, 0, 0, 10));
-
-			l[i + 1] = cbs[i];
-		}
-
-		createRightVBox(l);
-
 	}
 
 	/**
@@ -453,6 +460,7 @@ public class CatalogueController {
 
 	/**
 	 * Retourne le nom d'un checkBox
+	 * 
 	 * @param cb Le checkBox
 	 * @return Le nom du checkBox
 	 */

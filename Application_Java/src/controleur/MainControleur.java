@@ -28,7 +28,7 @@ public class MainControleur {
 	private ConnexionController connexionController;
 	
 	@FXML
-	private void initialize() {
+	public void initialize() {
 		this.catalogueController.setStage();
 	}
 	
