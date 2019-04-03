@@ -218,7 +218,7 @@ INSERT INTO users (userid, username, password, firstname, lastname, phonenumber)
 (100, 'lconyers2r', 'vW059AXw', 'Lucas', 'Conyers', '626-363-4727');
 ~~~~
 
-### Insertion MainCategories
+### Insertion de catégories principales
 ~~~~sql
 INSERT INTO maincategories (maincatid, maincatname) VALUES
 (1, 'Immobilier'),
@@ -236,7 +236,7 @@ INSERT INTO maincategories (maincatid, maincatname) VALUES
 (13, 'Ordinateurs et tablettes');
 ~~~~
 
-### Insertion Categories
+### Insertion de sous-catégories
 ~~~~sql
 INSERT INTO categories (maincatid, catname) VALUES
 (1, 'Condo'),
@@ -303,7 +303,7 @@ INSERT INTO categories (maincatid, catname) VALUES
 (13, 'Tablettes');
 ~~~~
 
-### Insertion Products
+### Insertion de produits
 ~~~~sql
 INSERT INTO products (estimatedprice, sellingprice, sellerid, categoryid, description, name) VALUES
 ('54.10', '54.10', 1, 25, 'Chaises IKEA', 'Chaises IKEA'),
@@ -358,7 +358,7 @@ INSERT INTO products (estimatedprice, sellingprice, sellerid, categoryid, descri
 ('38.69', '38.69', 100, 14, 'Robe blanche', 'Robe blanche');
 ~~~~
 
-### Insertion Offers
+### Insertion d'offres
 ~~~~sql
 INSERT INTO offers (buyerid, productid, price) VALUES 
 (25, 50, 33.0),
@@ -413,7 +413,7 @@ INSERT INTO offers (buyerid, productid, price) VALUES
 (17,32, 1080.50);
 ~~~~
 
-### Insertion Products
+### Insertion de produits déjà vendus
 ~~~~sql
 INSERT INTO soldproducts (estimatedprice, sellingprice, sellerid, categoryid, description, name, buyerid, soldprice) VALUES
 ('54.10', '54.10', 1, 25, 'Chaises IKEA', 'Chaises IKEA', 2, 55.10),
