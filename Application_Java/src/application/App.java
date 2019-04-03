@@ -21,13 +21,14 @@ public class App extends Application {
 //	@FXML
 //	private ControleurCatalogue ctlPageTitre = null;
 	@FXML
-	private MainControleur mainCntrl = null;
+	//private MainControleur mainCntrl = null;
 	
 
 	public static void main(String[] args) {
-		DbAdapter db = new DbAdapter();
+		DbAdapter db = new DbAdapter("jdbc:postgresql://postgres.iro.umontreal.ca:5432/casparjo", "casparjo_app", "projetdb2935");
 		
 		db.connecter();
+		db.afficher();
 		db.deconnecter();
 		//launch(args);
 	}
@@ -38,7 +39,7 @@ public class App extends Application {
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/main.fxml"));
 			Scene scene = new Scene(loader.load());
 
-			mainCntrl = (MainControleur) loader.getController();
+			//mainCntrl = (MainControleur) loader.getController();
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Spend money");
 			primaryStage.show();
