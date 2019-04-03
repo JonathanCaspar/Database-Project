@@ -4,17 +4,20 @@ import java.sql.*;
 
 public class DbAdapter {
 	//variables de connexion a la db 
-	String jdbUrl = "jdbc:postgresql://postgres.iro.umontreal.ca/5432/";
-	String username = "casparjo_app";
-	String password = "projetdb2935";
+	String jdbUrl;
+	String username;
+	String password;
 		
-	
+
 	Connection con = null;
 	Statement stt = null; 
 	ResultSet rs = null;
 	
 	//Constructeur
-	public DbAdapter() {
+	public DbAdapter(String jdbUrl, String username, String password) {
+		this.jdbUrl=jdbUrl;
+		this.username=username;
+		this.password=password;
 		
 	}
 	
@@ -24,8 +27,8 @@ public class DbAdapter {
 	public void connecter() {
 		try {
 			con = DriverManager.getConnection(jdbUrl, username, password);
-			
 			System.out.println("Connexion établie");
+			
 			
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
