@@ -1,0 +1,28 @@
+Connection à la base de données 'casparjo' :
+-----------------------------
+	1) Par ligne de commande 
+		psql -h postgres -U casparjo_app casparjo
+		pwd = projetdb2935
+
+	2) Via SSH dans JDBC
+		serveur : postgres.iro.umontreal.ca
+		port : 5432
+		nom d'usager: casparjo_app
+		mot de passe: projetdb2935
+
+Pour avoir accès aux tables !!! (important)
+----------------------------
+set search_path to casparjo;
+
+Commandes SQL :
+-----------------------------
+ \i <fichierSQL>.sql 	----- charger fichier sql
+ \dt 					----- affiche listes des tables 
+
+
+Schéma de permission :
+------------------------
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON SCHEMA casparjo TO casparjo_app;
