@@ -345,6 +345,10 @@ INSERT INTO soldproducts (estimatedprice, sellingprice, sellerid, categoryid, de
 -- REQUETES
 
 -- FONCTIONS :
+DROP FUNCTION IF EXISTS getUserFullName(integer);
+DROP FUNCTION IF EXISTS getOffersCount(integer);
+DROP FUNCTION IF EXISTS getMaxOfferValue(integer);
+
 CREATE OR REPLACE FUNCTION getUserFullName(id integer)
 	RETURNS varchar(60) AS $$
 	DECLARE
@@ -356,6 +360,7 @@ END; $$
 LANGUAGE plpgsql;
 
 --Comptabilise le nombre d'offres associées au produit en vente (avec refid)
+
 CREATE OR REPLACE FUNCTION getOffersCount(refid integer)
 	RETURNS integer AS $$
 	DECLARE
@@ -365,6 +370,18 @@ BEGIN
 	RETURN offercount;
 END; $$
 LANGUAGE plpgsql;
+
+--Retourne le montant de l'offre la plus elevée pour un produit en vente (avec refid)
+CREATE OR REPLACE FUNCTION getMaxOfferValue(refid integer)
+	RETURNS NUMERIC(10, 2) AS $$
+	DECLARE
+	offercount NUMERIC(10, 2);
+BEGIN
+	offercount := (SELECT COALESCE(MAX(price), 0) FROM offers WHERE productid = refid);
+	RETURN offercount;
+END; $$
+LANGUAGE plpgsql;
+
 
 
 -- 1) CATALOGUE
@@ -379,7 +396,7 @@ LANGUAGE plpgsql;
 	-- * En cliquant sur une catégorie : afficher tous les produits (hormis ceux vendus par l'utilisateur lui même)
 	-- exemple avec catégorie cliquée : Chaises, Fauteils (catID = 25) et utilisateur actuel = (id=28, Dacey, Lomasny)
 	WITH allProducts AS (SELECT * FROM products WHERE categoryid = 25 AND sellerid <> 28)
-	SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date FROM allProducts;
+	SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, getMaxOfferValue(refid) AS maxoffer, date FROM allProducts;
 
 
 -- 2) MES ANNONCES (avec utilisateur actuel id=28)
