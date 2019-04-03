@@ -70,6 +70,11 @@ CREATE TABLE soldproducts (
      FOREIGN KEY (sellerid) REFERENCES users(userid), 
      FOREIGN KEY (buyerid) REFERENCES users(userid), 
      FOREIGN KEY (categoryid) REFERENCES categories(catid) 
-  ); 
+  );
+
+GRANT ALL PRIVILEGES ON ALL TABLES IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON ALL SEQUENCES IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON ALL FUNCTIONS IN SCHEMA casparjo TO casparjo_app;
+GRANT ALL PRIVILEGES ON SCHEMA casparjo TO casparjo_app;
 
 COMMIT;
