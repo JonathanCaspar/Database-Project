@@ -348,6 +348,9 @@ INSERT INTO soldproducts (estimatedprice, sellingprice, sellerid, categoryid, de
 DROP FUNCTION IF EXISTS getUserFullName(integer);
 DROP FUNCTION IF EXISTS getOffersCount(integer);
 DROP FUNCTION IF EXISTS getMaxOfferValue(integer);
+DROP FUNCTION IF EXISTS getMainCategoriesName(integer);
+DROP FUNCTION IF EXISTS getCategoriesName(integer);
+DROP FUNCTION IF EXISTS check_password(VARCHAR(32), VARCHAR(32));
 
 CREATE OR REPLACE FUNCTION getUserFullName(id integer)
 	RETURNS varchar(60) AS $$
@@ -382,6 +385,38 @@ BEGIN
 END; $$
 LANGUAGE plpgsql;
 
+-- Retourne le nom de la categorie principale d identification id
+CREATE OR REPLACE FUNCTION getMainCategoriesName(id integer)
+	RETURNS varchar(40) AS $$
+	DECLARE
+	name varchar(40);
+BEGIN
+	name := (SELECT catname FROM maincategories WHERE catid = id);
+	RETURN name;
+END; $$
+LANGUAGE plpgsql;
+
+-- Retourne le nom de la categories principale d identification id
+CREATE OR REPLACE FUNCTION getCategoriesName(id integer)
+	RETURNS varchar(40) AS $$
+	DECLARE
+	name varchar(40);
+BEGIN
+	name := (SELECT catname FROM categories WHERE catid = id);
+	RETURN name;
+END; $$
+LANGUAGE plpgsql;
+
+-- Retourne vrai si l'utilisateur id a le mot de passe pwd
+CREATE OR REPLACE FUNCTION check_password(id VARCHAR(32), pwd VARCHAR(32))
+	RETURNS BOOLEAN AS $$
+	DECLARE
+	passed BOOLEAN;
+BEGIN
+	SELECT (password = pwd) INTO passed FROM users WHERE username = id;
+	RETURN passed;
+END; $$
+LANGUAGE plpgsql;
 
 
 -- 1) CATALOGUE
