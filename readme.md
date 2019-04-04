@@ -123,6 +123,9 @@ CREATE TABLE soldproducts (
 ## 4. L'ensemble des requêtes en SQL et explications des résultats attendus ([LMD.sql](LMD.sql))
 <a id="section4-1"></a>
 ### Insertion d'utilisateurs
+<details>
+  	<summary>Cliquer ici pour tout afficher.</summary>
+	
 ~~~~sql
 INSERT INTO users (userid, username, password, firstname, lastname, phonenumber) VALUES
 (1, 'rkirmond0', '6H7Znp5e', 'Roxi', 'Kirmond', '828-346-4552'),
@@ -226,6 +229,8 @@ INSERT INTO users (userid, username, password, firstname, lastname, phonenumber)
 (99, 'bmyhan2q', 'SClyDi3As', 'Brock', 'Myhan', '706-407-2891'),
 (100, 'lconyers2r', 'vW059AXw', 'Lucas', 'Conyers', '626-363-4727');
 ~~~~
+</details>
+
 <a id="section4-2"></a>
 ### Insertion de catégories principales
 ~~~~sql
