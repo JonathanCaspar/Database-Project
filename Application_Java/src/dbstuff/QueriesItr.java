@@ -1,11 +1,13 @@
 package dbstuff;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 
 import application.Produit;
+import controleur.CatalogueController;
 
 public class QueriesItr {
 	private Statement stmt = null;
@@ -90,7 +92,9 @@ public class QueriesItr {
 					public boolean hasNext() {
 						boolean hn = false;
 						try {
-							hn = !temp.isClosed();
+							if (temp != null) {
+								hn = !temp.isClosed();
+							}
 						} catch (SQLException e) {
 							e.printStackTrace();
 						}
@@ -110,5 +114,42 @@ public class QueriesItr {
 			}
 		};
 
+	}
+
+	public static QueriesItr creatListProductQuery(String mainCatActuelle, String catActuelle, Float prixMinimum,
+			Float prixMaximum, Date minDate, Date maxDate) {
+		String allProducts = "WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
+				+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products) \n";
+		String prixMin = "";
+		if (prixMinimum != null) {
+			prixMin = " sellingprice >= " + prixMinimum + " AND";
+		}
+		String prixMax = "";
+		if (prixMaximum != null) {
+			prixMin = " sellingprice <= " + prixMaximum + " AND";
+		}
+		
+		String dateMin = "";
+		if (minDate != null) {
+			dateMin = " date >='" + minDate.toString() + "' AND";
+		}
+		String dateMax = "";
+		if (maxDate != null) {
+			dateMax = " date >='" + maxDate.toString() + "' AND";
+		}
+		
+		if (!(prixMin.isEmpty() && prixMax.isEmpty() && dateMin.isEmpty() && dateMax.isEmpty())) {
+			allProducts = "WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
+					+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE";
+			allProducts += prixMin;
+			allProducts += prixMax;
+			allProducts += dateMin;
+			allProducts += dateMax;
+			
+			allProducts = allProducts.substring(0, allProducts.length() - 3) + ")\n";
+		}
+		String query = allProducts + "SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts JOIN categories ON categoryid = catid;";
+		QueriesItr t = new QueriesItr(query);
+		return t;
 	}
 }

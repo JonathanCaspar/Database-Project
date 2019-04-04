@@ -1,5 +1,6 @@
 package controleur;
 
+import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
@@ -45,13 +46,11 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.Menu;
 
 public class CatalogueController {
-
-	private static final String[] categories = { "Immobilier", "Informatique", "Musique" };
-
-	private static final String[][] sousCategories = { { "Maison", "Appartement", "Condo" },
-			{ "Ordinateur", "Telephone", "Accessoires" }, { "Guitare", "Piano", "Ukulele" } };
-	private static final String parent = "Catégories";
-
+	public static final String parent = "Catégories";
+	
+	private String mainCatActuelle = "Catégories";
+	private String catActuelle = "Catégories";
+	
 	@FXML
 	private Font x1;
 
@@ -187,17 +186,19 @@ public class CatalogueController {
 				afficherErreur("Le prix maximum n'est pas valide, aucune limite est ajouter.");
 			}
 		}
-		LocalDate minDate = null;
+		Date minDate = null;
 		if (cbDateMin.isSelected()) {
-			minDate = choiceDateMin.getValue();
+			minDate = Date.valueOf(choiceDateMin.getValue());
 		}
 
-		LocalDate maxDate = null;
-		if (cbDateMin.isSelected()) {
-			maxDate = choiceDateMax.getValue();
+		Date maxDate = null;
+		if (cbDateMax.isSelected()) {
+			maxDate = Date.valueOf(choiceDateMax.getValue());
 		}
 
-		// TODO Ajouter les querry d'update
+		QueriesItr qt = QueriesItr.creatListProductQuery(mainCatActuelle, catActuelle, 
+				prixMinimum, prixMaximum, minDate, maxDate);
+		creatTable(QueriesItr.iteratorProduit(qt));
 	}
 
 	/**
@@ -259,7 +260,7 @@ public class CatalogueController {
 	public void setStage(Stage primaryStage) {
 		QueriesItr qt = new QueriesItr(
 				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
-						+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid  FROM products,) "
+						+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid  FROM products) "
 						+ "SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname date FROM allProducts JOIN categories ON categoryid = catid;");
 		creatTablecolmns();
 		creatTable(QueriesItr.iteratorProduit(qt));
@@ -272,14 +273,11 @@ public class CatalogueController {
 	 * @param primaryStage Le stage.
 	 */
 	public void setStage() {
-		QueriesItr qt = new QueriesItr(
-				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
-						+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products) "
-						+ "SELECT refid, name, description, sellingprice, sellername, date, maxoffer, estimatedprice, catname, date FROM allProducts JOIN categories ON categoryid = catid;");
+		actionMettreAJour(null);
 		creatTablecolmns();
-		creatTable(QueriesItr.iteratorProduit(qt));
 		createTreeView();
 	}
+	
 
 	private void creatTablecolmns() {
 		produits.setCellValueFactory(new PropertyValueFactory("nomProduit"));
@@ -288,21 +286,6 @@ public class CatalogueController {
 		categorie.setCellValueFactory(new PropertyValueFactory("categorie"));
 		vendeur.setCellValueFactory(new PropertyValueFactory("vendeur"));
 		oMax.setCellValueFactory(new PropertyValueFactory("oMax"));
-	}
-
-	/**
-	 * Fonction appeler lors de la selection d'une categories.
-	 * 
-	 * @param name Le nom de la categorie selectionner.
-	 */
-	protected void handleCategories(String name) {
-		switch (name) {
-		case parent:
-			creatCategoriesView();
-			break;
-		default:
-			break;
-		}
 	}
 
 	/**
@@ -321,7 +304,7 @@ public class CatalogueController {
 	 * Cree le TreeView a gauche selon les list categories et souscategories
 	 */
 	private void createTreeView() {
-		TreeItem<String> root = new TreeItem<String>("Catégories");
+		TreeItem<String> root = new TreeItem<String>(parent);
 
 		ArrayList<TreeItem<String>> mainCats = new ArrayList<TreeItem<String>>();
 		ArrayList<Integer> mainCatsId = new ArrayList<Integer>();
@@ -368,7 +351,14 @@ public class CatalogueController {
 			@Override
 			public void changed(ObservableValue<? extends TreeItem<String>> observable, TreeItem<String> old_val,
 					TreeItem<String> new_val) {
-				handleCategories(new_val.getValue());
+				catActuelle = new_val.getValue();
+				if (new_val.getParent() != null) {
+					mainCatActuelle = new_val.getParent().getValue();
+				}
+				else {
+					mainCatActuelle = null;
+				}
+				actionMettreAJour(null);
 			}
 
 		});
