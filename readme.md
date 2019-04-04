@@ -7,6 +7,15 @@ Projet final - Base de données
 2. [Modèle relationnel](#section2)
 3. [Définition de la base de données](#section3)
 4. [Ensemble des requêtes en SQL et explications des résultats attendus](#section4)
+	1. [Insertion d'utilisateurs](#section4-1)
+	2. [Insertion de catégories principales](#section4-2)
+	3. [Insertion de sous-catégories](#section4-3)
+	4. [Insertion de produits](#section4-4)
+	5. [Insertion d'offres](#section4-5)
+	6. [Insertion de produits déjà vendus](#section4-6)
+	7. [Fonctions](#section4-7)
+	8. [Requêtes-type utilisées par l'application](#section4-8)
+	
 5. [Guide utilisateur](#section5)
 
 <a id="section1"></a>
@@ -112,7 +121,7 @@ CREATE TABLE soldproducts (
 
 <a id="section4"></a>
 ## 4. L'ensemble des requêtes en SQL et explications des résultats attendus ([LMD.sql](LMD.sql))
-
+<a id="section4-1"></a>
 ### Insertion d'utilisateurs
 ~~~~sql
 INSERT INTO users (userid, username, password, firstname, lastname, phonenumber) VALUES
@@ -217,7 +226,7 @@ INSERT INTO users (userid, username, password, firstname, lastname, phonenumber)
 (99, 'bmyhan2q', 'SClyDi3As', 'Brock', 'Myhan', '706-407-2891'),
 (100, 'lconyers2r', 'vW059AXw', 'Lucas', 'Conyers', '626-363-4727');
 ~~~~
-
+<a id="section4-2"></a>
 ### Insertion de catégories principales
 ~~~~sql
 INSERT INTO maincategories (maincatid, maincatname) VALUES
@@ -235,7 +244,7 @@ INSERT INTO maincategories (maincatid, maincatname) VALUES
 (12, 'Outils'),
 (13, 'Ordinateurs et tablettes');
 ~~~~
-
+<a id="section4-3"></a>
 ### Insertion de sous-catégories
 ~~~~sql
 INSERT INTO categories (maincatid, catname) VALUES
@@ -302,7 +311,7 @@ INSERT INTO categories (maincatid, catname) VALUES
 (13, 'Autres ordinateurs'),
 (13, 'Tablettes');
 ~~~~
-
+<a id="section4-4"></a>
 ### Insertion de produits
 ~~~~sql
 INSERT INTO products (estimatedprice, sellingprice, sellerid, categoryid, description, name) VALUES
@@ -357,7 +366,7 @@ INSERT INTO products (estimatedprice, sellingprice, sellerid, categoryid, descri
 ('299.00', '299.00', 99, 27, 'Sofa en cuir', 'Sofa en cuir'),
 ('38.69', '38.69', 100, 14, 'Robe blanche', 'Robe blanche');
 ~~~~
-
+<a id="section4-5"></a>
 ### Insertion d'offres
 ~~~~sql
 INSERT INTO offers (buyerid, productid, price) VALUES 
@@ -412,7 +421,7 @@ INSERT INTO offers (buyerid, productid, price) VALUES
 (9, 31, 1175),
 (17,32, 1080.50);
 ~~~~
-
+<a id="section4-6"></a>
 ### Insertion de produits déjà vendus
 ~~~~sql
 INSERT INTO soldproducts (estimatedprice, sellingprice, sellerid, categoryid, description, name, buyerid, soldprice) VALUES
@@ -467,7 +476,7 @@ INSERT INTO soldproducts (estimatedprice, sellingprice, sellerid, categoryid, de
 ('299.00', '299.00', 99, 27, 'Sofa en cuir', 'Sofa en cuir', 92, 285.00),
 ('38.69', '38.69', 100, 14, 'Robe blanche', 'Robe blanche', 95, 33);
 ~~~~
-
+<a id="section4-7"></a>
 ### Fonctions :
 
 * Récupérer le nom et prénom concaténé selon l'id fourni :
@@ -509,7 +518,7 @@ BEGIN
 END; $$
 LANGUAGE plpgsql;
 ~~~~
-
+<a id="section4-8"></a>
 ### Requêtes-type utilisées par l'application
 
 #### 1) Catalogue
