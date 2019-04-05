@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.ButtonBar?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: WHITE;" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.InscriptionController">
+   <children>
+      <Label layoutX="151.0" layoutY="168.0" text="Nom : " />
+      <Label layoutX="149.0" layoutY="225.0" text="Prénom : " />
+      <Label layoutX="151.0" layoutY="286.0" text="Téléphone : " />
+      <Label layoutX="240.0" layoutY="20.0" text="INSCRIPTION" textFill="#081a94">
+         <font>
+            <Font name="System Bold" size="19.0" />
+         </font>
+      </Label>
+      <Label layoutX="148.0" layoutY="64.0" text="Nom d'utilisateur :" />
+      <TextField fx:id="usernameTF" layoutX="148.0" layoutY="81.0" prefHeight="27.0" prefWidth="304.0" />
+      <TextField fx:id="nomTF" layoutX="149.0" layoutY="185.0" prefHeight="27.0" prefWidth="304.0" />
+      <TextField fx:id="prenomTF" layoutX="149.0" layoutY="242.0" prefHeight="27.0" prefWidth="304.0" />
+      <TextField fx:id="telTF" layoutX="151.0" layoutY="303.0" prefHeight="27.0" prefWidth="304.0" />
+      <ButtonBar layoutX="7.0" prefHeight="40.0" prefWidth="200.0" />
+      <Button layoutX="263.0" layoutY="341.0" mnemonicParsing="false" style="-fx-background-color: #081a94;" text="S'inscrire" textFill="WHITE" onAction= "#inscrire" />
+      <PasswordField fx:id="passwordTF" layoutX="149.0" layoutY="135.0" prefHeight="27.0" prefWidth="304.0" />
+      <Label layoutX="148.0" layoutY="118.0" text="Mot de passe:" />
+   </children>
+</AnchorPane>

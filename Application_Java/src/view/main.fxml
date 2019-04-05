@@ -16,7 +16,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Client">
                   <items>
-                    <MenuItem fx:id="inscription" mnemonicParsing="false" text="Inscription" />
+                    <MenuItem fx:id="inscription" mnemonicParsing="false" text="Inscription" onAction="#inscription"/>
                         <MenuItem fx:id="connexion" mnemonicParsing="false" onAction="#goToLogin" text="Connexion" />
                         <MenuItem fx:id="deconnexion" mnemonicParsing="false" text="Deconnexion" visible="false" />
                   </items>

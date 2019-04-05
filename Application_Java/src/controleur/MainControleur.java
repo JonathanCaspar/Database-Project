@@ -26,6 +26,8 @@ public class MainControleur {
 	private AnnoncesController annoncesController;
 	@FXML
 	private ConnexionController connexionController;
+	@FXML
+	private InscriptionController inscriptionController;
 	
 	@FXML
 	public void initialize() {
@@ -63,5 +65,34 @@ public class MainControleur {
 	}
 	public void setUtilisateur(User utilisateur) {
 		this.utilisateur = utilisateur;
+	}
+	
+	@FXML
+	void inscription() {
+		try {
+			Stage primaryStage = new Stage();
+			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/inscription.fxml"));
+			Scene scene = new Scene(loader.load());
+
+			inscriptionController = (InscriptionController) loader.getController();
+
+			primaryStage.setScene(scene);
+			primaryStage.setTitle("Inscription");
+			primaryStage.showAndWait();
+			
+			//recupère ici l'utilisateur authentifié
+//			setUtilisateur(connexionController.getUser());
+//			userLoged = true;
+		
+			deconnexion.setVisible(true);
+			connexion.setVisible(false);
+			inscription.setVisible(false);
+			
+			
+		
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		}
 	}
 }
