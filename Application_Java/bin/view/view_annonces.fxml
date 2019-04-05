@@ -3,9 +3,6 @@
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.control.Menu?>
-<?import javafx.scene.control.MenuBar?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.control.SplitPane?>
 <?import javafx.scene.control.TableColumn?>
@@ -19,29 +16,13 @@
 
 <VBox prefHeight="600.0" prefWidth="900.0" stylesheets="@style_achat.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.AnnoncesController">
   <children>
-    <MenuBar prefHeight="29.0" prefWidth="806.0" VBox.vgrow="NEVER">
-      <menus>
-        <Menu mnemonicParsing="false" text="Client">
-          <items>
-                  <MenuItem id="deconnexion" mnemonicParsing="false" text="Déconnexion" visible="true" />
-                  <MenuItem mnemonicParsing="false" text="Quitter" />
-          </items>
-        </Menu>
-            <Menu mnemonicParsing="false" text="Vendre">
-              <items>
-                <MenuItem id="annonces" mnemonicParsing="false" text="Mes annonces" />
-                  <MenuItem mnemonicParsing="false" text="Vendre un produit" />
-              </items>
-            </Menu>
-      </menus>
-    </MenuBar>
     <SplitPane dividerPositions="0.5" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
       <items>
         <ScrollPane fitToHeight="true" fitToWidth="true" prefWidth="462.0">
           <content>
             <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="466.0">
               <children>
-                <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Objets" textAlignment="CENTER" wrapText="false">
+                <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" style="&#10;" text="Mes Produits" textAlignment="CENTER" wrapText="false">
                            <font>
                       <Font size="18.0" fx:id="x1" />
                            </font>
@@ -57,6 +38,7 @@
                             <TableColumn fx:id="categorie" prefWidth="75.0" text="Catégorie" />
                           </columns>
                         </TableView>
+                        <Button fx:id="annoncer" layoutX="284.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: #081a94;" text="Annoncer un produit" textFill="WHITE" />
               </children>
             </AnchorPane>
           </content>
@@ -73,8 +55,8 @@
                   </TableView>
                   <Label layoutX="240.0" layoutY="17.0" text="Prix Expert : " />
                   <Label layoutX="318.0" layoutY="17.0" text="00.00 $" />
-                  <Button layoutX="91.0" layoutY="479.0" mnemonicParsing="false" text="Accepter" />
-                  <Button layoutX="279.0" layoutY="479.0" mnemonicParsing="false" text="Refuser" />
+                  <Button layoutX="91.0" layoutY="479.0" mnemonicParsing="false" style="-fx-background-color: #081a94#081a94;" text="Accepter" textFill="WHITE" />
+                  <Button layoutX="279.0" layoutY="479.0" mnemonicParsing="false" style="-fx-background-color: #081a94#081a94;" text="Refuser" textFill="WHITE" />
           </children>
         </AnchorPane>
       </items>
