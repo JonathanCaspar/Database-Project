@@ -48,7 +48,7 @@ import javafx.scene.control.Menu;
 public class CatalogueController {
 	public static final String parent = "Catégories";
 	
-	private String mainCatActuelle = "Catégories";
+	private String mainCatActuelle = null;
 	private String catActuelle = "Catégories";
 	
 	@FXML
