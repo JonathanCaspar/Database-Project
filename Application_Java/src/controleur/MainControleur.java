@@ -43,6 +43,7 @@ public class MainControleur {
 	@FXML
 	public void initialize() {
 		this.catalogueController.setStage();
+		
 	}
 	
 	@FXML
@@ -72,10 +73,14 @@ public class MainControleur {
 			//recupère ici l'ID de l'utilisateur authentifié
 			if(connexionController.isLoged()) {
 				setUtilisateur(connexionController.getUserID());
+				System.out.println("userID in MAIN = " + userID);
 				userLoged = true;
 				deconnexion.setVisible(true);
 				connexion.setVisible(false);
 				inscription.setVisible(false);
+				
+				this.annoncesController.setUtilisateur(this.userID);
+				
 				
 			}
 			
@@ -87,6 +92,11 @@ public class MainControleur {
 	public void setUtilisateur(int userID) {
 //		this.utilisateur = utilisateur;
 		this.userID = userID;
+	}
+	
+	public int getUtilisateur() {
+//		this.utilisateur = utilisateur;
+		return this.userID;
 	}
 	
 	@FXML

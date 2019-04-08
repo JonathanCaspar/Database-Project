@@ -14,6 +14,13 @@ public class AnnoncesController {
 	@FXML
 	private NewAnnonceController newAnnonceController;
 	
+	private int userID;
+	
+	public void setUtilisateur(int userID) {
+		this.userID = userID;
+	}
+	
+	
 	/**
 	 * Ouvre la fenetre de creation d'annonce
 	 */
