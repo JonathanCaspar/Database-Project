@@ -64,7 +64,7 @@ public class NewAnnonceController {
 	 */
 	public void expertPopup() {
 		
-		TextInputDialog dialog = new TextInputDialog("walter");
+		TextInputDialog dialog = new TextInputDialog("");
 		dialog.setTitle("EXPERT");
 		dialog.setHeaderText("Estimation du prix du produit.");
 		dialog.setContentText("Entrez votre estimation :");

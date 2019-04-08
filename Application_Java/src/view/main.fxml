@@ -35,12 +35,12 @@
                         <fx:include fx:id="catalogue" source="view_catalogue.fxml" />
                      </content>
                 </Tab>
-                <Tab fx:id="annoncesT" onSelectionChanged="#toAnnonces" text="Mes annonces">
+                <Tab fx:id="annoncesT" onSelectionChanged="#toOtherTab" text="Mes annonces">
                      <content>
                         <fx:include fx:id="annonces" source="view_annonces.fxml" />
                      </content>
                 </Tab>
-                  <Tab fx:id="achatsT" text="Mes achats" />
+                  <Tab fx:id="achatsT" onSelectionChanged="#toOtherTab" text="Mes achats" />
               </tabs>
             </TabPane>
          </children>
