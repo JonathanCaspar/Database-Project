@@ -7,6 +7,8 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.MenuItem;
+import javafx.scene.control.Tab;
+import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
 public class MainControleur {
@@ -19,6 +21,14 @@ public class MainControleur {
 	private MenuItem connexion;
 	@FXML
 	private MenuItem deconnexion;
+	@FXML
+	private TabPane mainPane;
+	@FXML
+	private Tab catalogueT;
+	@FXML
+	private Tab annoncesT;
+	@FXML
+	private Tab achatsT;
 	
 	@FXML
 	private CatalogueController catalogueController;
@@ -33,6 +43,17 @@ public class MainControleur {
 	public void initialize() {
 		this.catalogueController.setStage();
 	}
+	
+	@FXML
+	void toAnnonces() {
+//		System.out.println("TEST TAB");
+//		goToLogin();
+//		mainPane.getSelectionModel().select(catalogueT);
+	}
+	
+	
+	
+	
 	
 	@FXML
 	void goToLogin() {

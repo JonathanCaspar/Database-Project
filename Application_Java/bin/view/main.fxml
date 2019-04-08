@@ -16,7 +16,7 @@
               <menus>
                 <Menu mnemonicParsing="false" text="Client">
                   <items>
-                    <MenuItem fx:id="inscription" mnemonicParsing="false" text="Inscription" onAction="#inscription"/>
+                    <MenuItem fx:id="inscription" mnemonicParsing="false" onAction="#inscription" text="Inscription" />
                         <MenuItem fx:id="connexion" mnemonicParsing="false" onAction="#goToLogin" text="Connexion" />
                         <MenuItem fx:id="deconnexion" mnemonicParsing="false" text="Deconnexion" visible="false" />
                   </items>
@@ -28,19 +28,19 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <TabPane maxWidth="-Infinity" prefHeight="655.0" prefWidth="901.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="mainPane" maxWidth="-Infinity" prefHeight="655.0" prefWidth="901.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
-                <Tab text="Catalogue">
+                <Tab fx:id="catalogueT" text="Catalogue">
                      <content>
                         <fx:include fx:id="catalogue" source="view_catalogue.fxml" />
                      </content>
                 </Tab>
-                <Tab text="Mes annonces">
+                <Tab fx:id="annoncesT" onSelectionChanged="#toAnnonces" text="Mes annonces">
                      <content>
                         <fx:include fx:id="annonces" source="view_annonces.fxml" />
                      </content>
                 </Tab>
-                  <Tab text="Mes achats" />
+                  <Tab fx:id="achatsT" text="Mes achats" />
               </tabs>
             </TabPane>
          </children>

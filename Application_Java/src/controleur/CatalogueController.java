@@ -112,63 +112,6 @@ public class CatalogueController {
 	private User utilisateur = null;
 
 	@FXML
-	void goToLogin(ActionEvent event) {
-
-		try {
-			Stage primaryStage = new Stage();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
-			Scene scene = new Scene(loader.load());
-
-			controleurConnexion = (ConnexionController) loader.getController();
-
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("AUTHENTIFICATION");
-			primaryStage.showAndWait();
-
-			// recupère ici l'utilisateur authentifié
-			setUtilisateur(controleurConnexion.getUser());
-
-			vendre.setVisible(true);
-			deconnexion.setVisible(true);
-			connexion.setVisible(false);
-			inscription.setVisible(false);
-
-			if (this.utilisateur != null) {
-
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-	}
-
-	@FXML
-	void afficherAnnonces(ActionEvent event) {
-		try {
-
-			// recuperer la stage, change la scene
-			Stage primaryStage = (Stage) rightVBox.getScene().getWindow();
-			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/view_annonces.fxml"));
-			Scene scene = new Scene(loader.load());
-
-			controleurAnnonces = (AnnoncesController) loader.getController();
-
-			primaryStage.setScene(scene);
-			primaryStage.setTitle("Annonces");
-			primaryStage.showAndWait();
-
-		} catch (Exception e) {
-			e.printStackTrace();
-
-		}
-	}
-
-	public void setUtilisateur(User utilisateur) {
-		this.utilisateur = utilisateur;
-	}
-
-	@FXML
 	void actionMettreAJour(ActionEvent event) {
 		Float prixMinimum = null;
 		if (!prixMin.getText().trim().isEmpty()) {

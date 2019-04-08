@@ -38,7 +38,7 @@
                             <TableColumn fx:id="categorie" prefWidth="75.0" text="Catégorie" />
                           </columns>
                         </TableView>
-                        <Button fx:id="annoncer" layoutX="284.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: #081a94;" text="Annoncer un produit" textFill="WHITE" />
+                        <Button fx:id="annoncer" onAction="#creerAnnonce" layoutX="284.0" layoutY="12.0" mnemonicParsing="false" style="-fx-background-color: #081a94;" text="Annoncer un produit" textFill="WHITE" />
               </children>
             </AnchorPane>
           </content>
