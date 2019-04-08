@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class MainControleur {
 	
 	private User utilisateur = null;
-	private static int userID = 0;
+	private static int userID = 1;
 	private boolean userLoged = false;
 	@FXML
 	private MenuItem inscription;
@@ -49,11 +49,14 @@ public class MainControleur {
 	@FXML
 	void toOtherTab() {
 		
-		if(userLoged == false) {
+		annoncesController.setTable();
 		
-			goToLogin();
-			mainPane.getSelectionModel().select(catalogueT);
-		}
+		
+//		if(userLoged == false) {
+//		
+//			goToLogin();
+//			mainPane.getSelectionModel().select(catalogueT);
+//		}
 	}
 	
 	

@@ -1,10 +1,15 @@
 package controleur;
 
+import application.Produit;
+import dbstuff.QueriesItr;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.control.Button;
+import javafx.scene.control.TableColumn;
+import javafx.scene.control.TableView;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
 public class AnnoncesController {
@@ -14,12 +19,51 @@ public class AnnoncesController {
 	@FXML
 	private NewAnnonceController newAnnonceController;
 	
-//	private int userID;
+	@FXML
+	private TableView<Produit> objetsView;
+	@FXML
+	private TableColumn<Produit, String> produits;
+	@FXML
+	private TableColumn<Produit, String> prix;
+	@FXML
+	private TableColumn<Produit, String> date;
+	@FXML
+	private TableColumn<Produit, String> categorie;
 	
-//	public void setUtilisateur(int userID) {
-//		this.userID = userID;
-//	}
+
 	
+	/**
+	 * Creer une table contenant la liste de produit passer en paramettre.
+	 * 
+	 * @param table La table de produit.
+	 */
+	public void creatTable(Iterable<Produit> table) {
+		objetsView.getItems().clear();
+		for (Produit o : table) {
+			objetsView.getItems().add(o);
+		}
+
+		objetsView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
+		
+		
+		});
+	}
+	
+	private void creatTablecolmns() {
+		produits.setCellValueFactory(new PropertyValueFactory("nomProduit"));
+		prix.setCellValueFactory(new PropertyValueFactory("prix"));
+		date.setCellValueFactory(new PropertyValueFactory("date"));
+		categorie.setCellValueFactory(new PropertyValueFactory("categorie"));
+
+	}
+	
+	public void setTable() {
+		QueriesItr qt = new QueriesItr(
+				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE sellerid = '"+MainControleur.getUtilisateur()+"')\n" + 
+				" SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts JOIN categories ON categoryid = catid;");
+		creatTablecolmns();
+		creatTable(QueriesItr.iteratorProduit(qt));
+	}
 	
 	/**
 	 * Ouvre la fenetre de creation d'annonce
@@ -46,5 +90,8 @@ public class AnnoncesController {
 		}
 		
 	}
+	
+	
+	
 	
 }

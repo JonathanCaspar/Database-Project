@@ -195,20 +195,20 @@ public class CatalogueController {
 		});
 	}
 
-	/**
-	 * Methode appeler a la creation de l'application
-	 * 
-	 * @param primaryStage Le stage.
-	 */
-	public void setStage(Stage primaryStage) {
-		QueriesItr qt = new QueriesItr(
-				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
-						+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid  FROM products) "
-						+ "SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname date FROM allProducts JOIN categories ON categoryid = catid;");
-		creatTablecolmns();
-		creatTable(QueriesItr.iteratorProduit(qt));
-		createTreeView();
-	}
+//	/**
+//	 * Methode appeler a la creation de l'application
+//	 * 
+//	 * @param primaryStage Le stage.
+//	 */
+//	public void setStage(Stage primaryStage) {
+//		QueriesItr qt = new QueriesItr(
+//				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
+//						+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid  FROM products) "
+//						+ "SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname date FROM allProducts JOIN categories ON categoryid = catid;");
+//		creatTablecolmns();
+//		creatTable(QueriesItr.iteratorProduit(qt));
+//		createTreeView();
+//	}
 
 	/**
 	 * Methode appeler a la creation de l'application
