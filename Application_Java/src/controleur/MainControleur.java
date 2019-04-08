@@ -14,6 +14,7 @@ import javafx.stage.Stage;
 public class MainControleur {
 	
 	private User utilisateur = null;
+	private int userID;
 	private boolean userLoged = false;
 	@FXML
 	private MenuItem inscription;
@@ -67,23 +68,25 @@ public class MainControleur {
 			primaryStage.setTitle("AUTHENTIFICATION");
 			primaryStage.showAndWait();
 			
-			//recupère ici l'utilisateur authentifié
-			setUtilisateur(connexionController.getUser());
-			userLoged = true;
-		
-			deconnexion.setVisible(true);
-			connexion.setVisible(false);
-			inscription.setVisible(false);
 			
+			//recupère ici l'ID de l'utilisateur authentifié
+			if(connexionController.isLoged()) {
+				setUtilisateur(connexionController.getUserID());
+				userLoged = true;
+				deconnexion.setVisible(true);
+				connexion.setVisible(false);
+				inscription.setVisible(false);
+				
+			}
 			
-		
 		} catch (Exception e) {
 			e.printStackTrace();
 
 		}
 	}
-	public void setUtilisateur(User utilisateur) {
-		this.utilisateur = utilisateur;
+	public void setUtilisateur(int userID) {
+//		this.utilisateur = utilisateur;
+		this.userID = userID;
 	}
 	
 	@FXML

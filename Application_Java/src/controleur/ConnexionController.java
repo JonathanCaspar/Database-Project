@@ -31,6 +31,8 @@ public class ConnexionController {
 	private User utilisateur;
 	
 	private int userID;
+	
+	private boolean isloged = false;
 		
 	@FXML
 	void authentification(ActionEvent event) {
@@ -39,13 +41,23 @@ public class ConnexionController {
 		
 		
 		QueriesItr QT = new QueriesItr("SELECT userid FROM " + DbAdapter.DB_TABLES[0] + 
-				" WHERE username = " +username + " AND password = "+ password+" ;");
+				" WHERE username = '" +username + "' AND password = '"+ password+"' ;");
 		ResultSet rs = QT.getResultSet();
 		
 		
 		try {
-			userID = rs.getInt("userid");
+			
+			if (rs.next()) {
+				System.out.println("userID = " + rs.getInt("userid"));
+				userID = rs.getInt("userid");
+				this.isloged = true;
+				
+				Stage stage = (Stage) connect.getScene().getWindow(); 
+			    stage.close();
+			}
+			
 		} catch (SQLException e) {
+			
 			QT.quitter();
 			errorPopup("Problème identification", "Cette association nom d'utilisateur/mot de passe n'existe pas.");
 			e.printStackTrace();
@@ -53,9 +65,7 @@ public class ConnexionController {
 			
 			
 			
-			Stage stage = (Stage) connect.getScene().getWindow(); 
-		    
-		    stage.close();
+			
 		
 		
 		
@@ -74,6 +84,14 @@ public class ConnexionController {
 	
 	public User getUser() {
 		return this.utilisateur;
+	}
+	
+	public int getUserID() {
+		return this.userID;
+	}
+	
+	public boolean isLoged() {
+		return this.isloged;
 	}
 		
 }
