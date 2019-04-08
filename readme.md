@@ -50,9 +50,9 @@ Les sous-catégories « category » ne peuvent avoir qu&#39;une seule (1 : 1) ca
 
 * Offer(__offerID__, #buyerID, #productID, price, date) 
 
-* MainCategory(__mainCategoryID__, name) 
+* MainCategory(__mainCatID__, mainCatName) 
 
-* Category(__catID__, #mainCatName, catName) 
+* Category(__catID__, #mainCatID, catName) 
 
 * SoldProducts(__id__, name, description, #sellerID, #buyerID, #categoryID, estimatedPrice, sellingPrice, soldPrice, dateTransaction) 
 
