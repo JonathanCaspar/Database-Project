@@ -118,8 +118,13 @@ public class QueriesItr {
 
 	public static QueriesItr creatListProductQuery(String mainCatActuelle, String catActuelle, Float prixMinimum,
 			Float prixMaximum, Date minDate, Date maxDate) {
-		String allProducts = "WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
-				+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products) \n";
+		
+		String allProducts = "\nWITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
+				+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products)";
+		
+		String allCategorie = "";
+		String joinCategorie = " JOIN categories ON categoryid = catid;";
+		
 		String prixMin = "";
 		if (prixMinimum != null) {
 			prixMin = " sellingprice >= " + prixMinimum + " AND";
@@ -135,20 +140,36 @@ public class QueriesItr {
 		}
 		String dateMax = "";
 		if (maxDate != null) {
-			dateMax = " date >='" + maxDate.toString() + "' AND";
+			dateMax = " date <='" + maxDate.toString() + "' AND";
 		}
 		
 		if (!(prixMin.isEmpty() && prixMax.isEmpty() && dateMin.isEmpty() && dateMax.isEmpty())) {
-			allProducts = "WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
+			allProducts = "\nWITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
 					+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE";
 			allProducts += prixMin;
 			allProducts += prixMax;
 			allProducts += dateMin;
 			allProducts += dateMax;
 			
-			allProducts = allProducts.substring(0, allProducts.length() - 3) + ")\n";
+			allProducts = allProducts.substring(0, allProducts.length() - 3) + ")";
 		}
-		String query = allProducts + "SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts JOIN categories ON categoryid = catid;";
+		
+		if (mainCatActuelle != null) {
+			if (mainCatActuelle == CatalogueController.parent) {
+				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = \"" + catActuelle + "\")"; 
+				allCategorie += ",\n allCategorie AS (SELECT catid, catname FROM categories NATURAL JOIN mainCatActuelle)";
+				joinCategorie = " JOIN allCategorie ON categoryid = catid;";
+			}
+			else {
+				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = '" + mainCatActuelle + "')";
+				allCategorie += ",\n catActuelle AS (SELECT * FROM categories WHERE catname = '" + catActuelle + "')";
+				allCategorie += ",\n allCategorie AS (SELECT catid, catname FROM catActuelle NATURAL JOIN mainCatActuelle)";
+				joinCategorie = " JOIN allCategorie ON categoryid = catid;";
+			}
+		}
+		
+		String query = allProducts + allCategorie + "\n SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts" + joinCategorie;
+		System.out.println(query);
 		QueriesItr t = new QueriesItr(query);
 		return t;
 	}
