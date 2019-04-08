@@ -14,11 +14,11 @@ public class AnnoncesController {
 	@FXML
 	private NewAnnonceController newAnnonceController;
 	
-	private int userID;
+//	private int userID;
 	
-	public void setUtilisateur(int userID) {
-		this.userID = userID;
-	}
+//	public void setUtilisateur(int userID) {
+//		this.userID = userID;
+//	}
 	
 	
 	/**

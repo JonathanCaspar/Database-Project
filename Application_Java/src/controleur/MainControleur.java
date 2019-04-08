@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class MainControleur {
 	
 	private User utilisateur = null;
-	private int userID;
+	private static int userID = 0;
 	private boolean userLoged = false;
 	@FXML
 	private MenuItem inscription;
@@ -82,7 +82,7 @@ public class MainControleur {
 				connexion.setVisible(false);
 				inscription.setVisible(false);
 				
-				this.annoncesController.setUtilisateur(this.userID);
+//				this.annoncesController.setUtilisateur(this.userID);
 				
 				
 			}
@@ -92,14 +92,14 @@ public class MainControleur {
 
 		}
 	}
-	public void setUtilisateur(int userID) {
+	public static void setUtilisateur(int userid) {
 //		this.utilisateur = utilisateur;
-		this.userID = userID;
+		userID = userid;
 	}
 	
-	public int getUtilisateur() {
+	public static int getUtilisateur() {
 //		this.utilisateur = utilisateur;
-		return this.userID;
+		return userID;
 	}
 	
 	@FXML

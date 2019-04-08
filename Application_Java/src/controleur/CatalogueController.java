@@ -109,7 +109,7 @@ public class CatalogueController {
 	private ConnexionController controleurConnexion;
 	private AnnoncesController controleurAnnonces;
 
-	private User utilisateur = null;
+//	private User utilisateur = null;
 
 	@FXML
 	void actionMettreAJour(ActionEvent event) {
