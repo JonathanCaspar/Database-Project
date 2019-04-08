@@ -23,24 +23,23 @@ Projet final - Base de données
 
 ![](modeleEA/modeleEA.png)
 
-Tout d&#39;abord, l&#39;application comporte des utilisateurs inscrits « users » qui doivent déclarer leur **nom d&#39;utilisateur, mot de passe et prénom**. Pour des fins de confidentialité, **les numéro de téléphone** et **nom de famille** ne sont pas obligatoires. Lors de la création de l&#39;utilisateur, un **numéro d&#39;identification unique** lui sera attitré automatiquement par la base de données.
+Tout d&#39;abord, l&#39;application comporte des utilisateurs inscrits « users » qui doivent déclarer leur **nom d&#39;utilisateur, mot de passe et prénom**. Pour des fins de confidentialité, **les numéros de téléphone** et **nom de famille** ne sont pas obligatoires. Lors de la création de l&#39;utilisateur, un **<ins>numéro d&#39;identification unique</ins>** lui sera attitré automatiquement par la base de données.
 
 Une fois enregistré, un utilisateur peut vendre aucun ou plusieurs produits (0 : n) ou faire aucune ou plusieurs offres (0 : n). Quant aux produits, ils peuvent recevoir aucune ou plusieurs (0 : n) offres, n&#39;appartenir qu&#39;à une seule catégorie (1 : 1) et n&#39;avoir qu&#39;un seul vendeur (1 : 1).
 
-Lorsqu&#39;il vend, l&#39;utilisateur crée un nouvel enregistrement dans « products » comprenant **le nom de l&#39;objet, une description, un prix** et sa **catégorie.** Ensuite, l&#39;utilisateur recevra le **prix estimé** par l&#39;expert et pourra accepter ou refuser de vendre au prix indiqué. Lorsque l&#39;offre de l&#39;expert sera acceptée, le produit se verra attribué **la date de mise en vente** , un **identifiant unique** et **#l&#39;id vendeur** et **#id catégorie de l&#39;objet.**
+Lorsqu&#39;il vend, l&#39;utilisateur crée un nouvel enregistrement dans « products » comprenant **le nom de l&#39;objet, une description, un prix** et sa **catégorie.** Ensuite, l&#39;utilisateur recevra le **prix estimé** par l&#39;expert et pourra accepter ou refuser de vendre au prix indiqué. Lorsque l&#39;offre de l&#39;expert sera acceptée, le produit se verra attribué **la date de mise en vente** , un **<ins>identifiant unique</ins>** et **#l&#39;id vendeur** et **#id catégorie de l&#39;objet.**
 
-Lorsque l&#39;utilisateur fait une offre sur un produit existant, **l&#39;id unique de l&#39;offre,**  **le prix offert, #id produit, #id acheteur et la date** seront ajoutés dans la table « offers ». Un produit vendu sera enregistré dans la table « soldProducts » contenant un **id unique**** , son nom, description, #id du vendeur, #id catégorie du produit, #id de l&#39;acheteur, prix estimé, prix de vente, prix vendu **et la** date de la transaction**.
+Lorsque l&#39;utilisateur fait une offre sur un produit existant, **<ins>l&#39;id unique de l&#39;offre</ins>**,  **le prix offert, #id produit, #id acheteur et la date** seront ajoutés dans la table « offers ». Un produit vendu sera enregistré dans la table « soldProducts » contenant un **id unique**** , son nom, description, #id du vendeur, #id catégorie du produit, #id de l&#39;acheteur, prix estimé, prix de vente, prix vendu **et la** date de la transaction**.
 
-Par ailleurs, les catégories principales « mainCategory » sont référencées par leur **id unique** et leur **nom.** Elles contiennent une ou plusieurs (1 : n) sous-catégories qui contiennent, à leur tour, ont un **id unique**** , **un** nom **et** #idMaincategory.**
+Par ailleurs, les catégories principales « mainCategory » sont référencées par leur **<ins>id unique</ins>** et leur **nom.** Elles contiennent une ou plusieurs (1 : n) sous-catégories qui contiennent, à leur tour, ont un **<ins>id unique<ins>** , **un** nom **et** #idMaincategory.**
 
 Les sous-catégories « category » ne peuvent avoir qu&#39;une seule (1 : 1) catégorie principale et peuvent contenir aucun ou plusieurs produits (0 : n).
 
 ### Légende
 
 - #Clé étrangère
-- Clé principale
+- <ins>Clé principale</ins>
 - **Attribut d&#39;une table**
-
 
 <a id="section2"></a>
 ## 2. Modèle relationnel
