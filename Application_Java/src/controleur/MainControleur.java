@@ -47,10 +47,13 @@ public class MainControleur {
 	}
 	
 	@FXML
-	void toAnnonces() {
-//		System.out.println("TEST TAB");
-//		goToLogin();
-//		mainPane.getSelectionModel().select(catalogueT);
+	void toOtherTab() {
+		
+		if(userLoged == false) {
+		
+			goToLogin();
+			mainPane.getSelectionModel().select(catalogueT);
+		}
 	}
 	
 	
