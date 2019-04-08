@@ -8,6 +8,7 @@ import java.util.Iterator;
 
 import application.Produit;
 import controleur.CatalogueController;
+import controleur.MainControleur;
 
 public class QueriesItr {
 	private Statement stmt = null;
@@ -117,11 +118,11 @@ public class QueriesItr {
 	}
 
 	public static QueriesItr creatListProductQuery(String mainCatActuelle, String catActuelle, Float prixMinimum,
-			Float prixMaximum, Date minDate, Date maxDate) {
+			Float prixMaximum, Float prixOffertMinimum, Float prixOffertMaximum, Date minDate, Date maxDate) {
 		
 		String allProducts = "\nWITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
 				+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products)";
-		
+				
 		String allCategorie = "";
 		String joinCategorie = " JOIN categories ON categoryid = catid;";
 		
@@ -134,6 +135,15 @@ public class QueriesItr {
 			prixMin = " sellingprice <= " + prixMaximum + " AND";
 		}
 		
+		String prixOffertMin = "";
+		if (prixMinimum != null) {
+			prixOffertMin = " maxoffer >= " + prixOffertMinimum + " AND";
+		}
+		
+		String prixOffertMax = "";
+		if (prixMaximum != null) {
+			prixOffertMax = " sellingprice <= " + prixOffertMaximum + " AND";
+		}
 		String dateMin = "";
 		if (minDate != null) {
 			dateMin = " date >='" + minDate.toString() + "' AND";
@@ -143,13 +153,19 @@ public class QueriesItr {
 			dateMax = " date <='" + maxDate.toString() + "' AND";
 		}
 		
-		if (!(prixMin.isEmpty() && prixMax.isEmpty() && dateMin.isEmpty() && dateMax.isEmpty())) {
+		String user = "";
+		if (MainControleur.getUtilisateur() >= 0) {
+			user = " sellerid <> " + MainControleur.getUtilisateur() + " AND";
+		}
+		
+		if (!(prixMin.isEmpty() && prixMax.isEmpty() && dateMin.isEmpty() && dateMax.isEmpty() && user.isEmpty())) {
 			allProducts = "\nWITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
 					+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE";
 			allProducts += prixMin;
 			allProducts += prixMax;
 			allProducts += dateMin;
 			allProducts += dateMax;
+			allProducts += user;
 			
 			allProducts = allProducts.substring(0, allProducts.length() - 3) + ")";
 		}

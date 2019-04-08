@@ -42,7 +42,7 @@ public class MainControleur {
 	
 	@FXML
 	public void initialize() {
-		this.catalogueController.setStage();
+		//this.catalogueController.setStage();
 		
 	}
 	

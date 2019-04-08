@@ -1,5 +1,6 @@
 package controleur;
 
+import java.awt.event.MouseEvent;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -47,10 +48,10 @@ import javafx.scene.control.Menu;
 
 public class CatalogueController {
 	public static final String parent = "Catégories";
-	
+
 	private String mainCatActuelle = null;
 	private String catActuelle = "Catégories";
-	
+
 	@FXML
 	private Font x1;
 
@@ -81,6 +82,10 @@ public class CatalogueController {
 	private TextField prixMin;
 	@FXML
 	private TextField prixMax;
+	@FXML
+    private TextField prixOffertMin;
+    @FXML
+    private TextField prixOffertMax;
 	@FXML
 	private CheckBox cbDateMin;
 	@FXML
@@ -129,6 +134,22 @@ public class CatalogueController {
 				afficherErreur("Le prix maximum n'est pas valide, aucune limite est ajouter.");
 			}
 		}
+		Float prixOffertMinimum = null;
+		if (!prixMin.getText().trim().isEmpty()) {
+			try {
+				prixOffertMinimum = Float.parseFloat(prixOffertMin.getText());
+			} catch (Exception e) {
+				afficherErreur("Le prix minimum n'est pas valide, aucune limite est ajouter.");
+			}
+		}
+		Float prixOffertMaximum = null;
+		if (!prixMax.getText().trim().isEmpty()) {
+			try {
+				prixOffertMaximum = Float.parseFloat(prixOffertMax.getText());
+			} catch (Exception e) {
+				afficherErreur("Le prix maximum n'est pas valide, aucune limite est ajouter.");
+			}
+		}
 		Date minDate = null;
 		if (cbDateMin.isSelected()) {
 			minDate = Date.valueOf(choiceDateMin.getValue());
@@ -139,8 +160,8 @@ public class CatalogueController {
 			maxDate = Date.valueOf(choiceDateMax.getValue());
 		}
 
-		QueriesItr qt = QueriesItr.creatListProductQuery(mainCatActuelle, catActuelle, 
-				prixMinimum, prixMaximum, minDate, maxDate);
+		QueriesItr qt = QueriesItr.creatListProductQuery(mainCatActuelle, catActuelle, prixMinimum, prixMaximum, prixOffertMinimum, prixOffertMaximum,
+				minDate, maxDate);
 		creatTable(QueriesItr.iteratorProduit(qt));
 	}
 
@@ -187,11 +208,16 @@ public class CatalogueController {
 	public void creatTable(Iterable<Produit> table) {
 		objetsView.getItems().clear();
 		for (Produit o : table) {
-			objetsView.getItems().add(o);
+			if (o != null) {
+				objetsView.getItems().add(o);
+			}
 		}
-
-		objetsView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
-			Float offre = new_val.OpenWindow();
+		objetsView.setOnMouseClicked(event -> {
+			if (event.getClickCount() == 2) {
+				if (objetsView.getSelectionModel().getSelectedItem() != null) {
+					Float offre = objetsView.getSelectionModel().getSelectedItem().OpenWindow();
+				}
+			}
 		});
 	}
 
@@ -215,12 +241,12 @@ public class CatalogueController {
 	 * 
 	 * @param primaryStage Le stage.
 	 */
-	public void setStage() {
+	@FXML
+	public void initialize() {
 		actionMettreAJour(null);
 		creatTablecolmns();
 		createTreeView();
 	}
-	
 
 	private void creatTablecolmns() {
 		produits.setCellValueFactory(new PropertyValueFactory("nomProduit"));
@@ -297,8 +323,7 @@ public class CatalogueController {
 				catActuelle = new_val.getValue();
 				if (new_val.getParent() != null) {
 					mainCatActuelle = new_val.getParent().getValue();
-				}
-				else {
+				} else {
 					mainCatActuelle = null;
 				}
 				actionMettreAJour(null);

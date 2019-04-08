@@ -63,11 +63,18 @@
                            <children>
                               <VBox fx:id="rightVBox" prefHeight="506.0" prefWidth="222.0" styleClass="vbox">
                                  <children>
-                                    <Label text="Prix" />
+                                    <Label text="Prix annoncé :" />
                                     <HBox prefHeight="26.0" prefWidth="192.0" styleClass="hbox">
                                        <children>
                                           <TextField fx:id="prixMin" promptText="Min" />
                                           <TextField fx:id="prixMax" promptText="Max" />
+                                       </children>
+                                    </HBox>
+                                    <Label text="Prix offert :" />
+                                    <HBox prefHeight="26.0" prefWidth="192.0" styleClass="hbox">
+                                       <children>
+                                          <TextField fx:id="prixOffertMin" promptText="Min" />
+                                          <TextField fx:id="prixOffertMax" promptText="Max" />
                                        </children>
                                     </HBox>
                                     <CheckBox fx:id="cbDateMin" mnemonicParsing="false" onAction="#actionCbDateMin" text="Date minimale" />
