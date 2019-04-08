@@ -33,6 +33,9 @@ public class NewAnnonceController {
 	
 	private float estimation = 0;
 	
+	/**
+	 * Initialise la liste des categories en allant chercher les noms dans la BD
+	 */
 	@FXML
 	public void initialize() {
 		
@@ -56,7 +59,9 @@ public class NewAnnonceController {
 		
 	}
 	
-	
+	/**
+	 * Popup de l'expert, permet de donner manuellement l'estimation du prix
+	 */
 	public void expertPopup() {
 		
 		TextInputDialog dialog = new TextInputDialog("walter");
@@ -71,7 +76,9 @@ public class NewAnnonceController {
 		}
 		
 	}
-	
+	/**
+	 * Popup pour que le vendeur accepte ou non l'offre
+	 */
 	public void acceptPopup() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Estimation par l'expert");

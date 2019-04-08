@@ -53,8 +53,6 @@ public class MainControleur {
 	
 	
 	
-	
-	
 	@FXML
 	void goToLogin() {
 		
@@ -105,9 +103,9 @@ public class MainControleur {
 //			setUtilisateur(connexionController.getUser());
 //			userLoged = true;
 		
-			deconnexion.setVisible(true);
-			connexion.setVisible(false);
-			inscription.setVisible(false);
+//			deconnexion.setVisible(true);
+//			connexion.setVisible(false);
+//			inscription.setVisible(false);
 			
 			
 		

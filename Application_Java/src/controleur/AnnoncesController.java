@@ -14,6 +14,9 @@ public class AnnoncesController {
 	@FXML
 	private NewAnnonceController newAnnonceController;
 	
+	/**
+	 * Ouvre la fenetre de creation d'annonce
+	 */
 	@FXML
 	void creerAnnonce() {
 	
