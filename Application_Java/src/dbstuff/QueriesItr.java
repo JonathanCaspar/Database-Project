@@ -126,17 +126,17 @@ public class QueriesItr {
 
 	/**
 	 * Cree une querry selon la categorie choisi, les prix minimums et maximums et
-	 * les dates limites.
+	 * les dates limites et n'affiche pas les produits du user actuel.
 	 * 
 	 * @param mainCatActuelle La categorie superieur actuelle null si on est dans toutes les categorie.
 	 * @param catActuelle La categorie souhaitee actuelle.
-	 * @param prixMinimum Le prixM
-	 * @param prixMaximum
-	 * @param prixOffertMinimum
-	 * @param prixOffertMaximum
-	 * @param minDate
-	 * @param maxDate
-	 * @return
+	 * @param prixMinimum Le prix affiche minimum null s'il y en a pas
+	 * @param prixMaximum Le prix affiche maximum null s'il n'y en a pas
+	 * @param prixOffertMinimum Le prix offert minimum null s'il n'y en a pas
+	 * @param prixOffertMaximum Le prix offert maximum null s'il n'y en a pas
+	 * @param minDate La date minimale null s'il y en a pas
+	 * @param maxDate La date maximale null s'il y en a pas
+	 * @return Le QueriesItr selon les criteres 
 	 */
 	public static QueriesItr creatListProductQuery(String mainCatActuelle, String catActuelle, Float prixMinimum,
 			Float prixMaximum, Float prixOffertMinimum, Float prixOffertMaximum, Date minDate, Date maxDate) {
