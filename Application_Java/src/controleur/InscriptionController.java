@@ -69,9 +69,24 @@ public class InscriptionController {
 		
 		if(validForm()) {
 			
-			QueriesItr QT = new QueriesItr("INSERT INTO users (username, password, firstname, lastname, phonenumber) VALUES"+
-					" ('"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+tel+"')");
-			QT.quitter();
+			try {
+				
+				Statement stmt = DbAdapter.con.createStatement();
+				if (stmt != null) {
+					stmt.executeUpdate("INSERT INTO users (username, password, firstname, lastname, phonenumber) VALUES"+
+							" ('"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+tel+"')");
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				errorPopup("Probleme Base de Données", "L'insertion n'a pas pu être effectuée.");
+				e.printStackTrace();
+			}
+			
+			
+//			Statement stmt = null;
+//			QueriesItr QT = new QueriesItr("INSERT INTO users (username, password, firstname, lastname, phonenumber) VALUES"+
+//					" ('"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+tel+"')");
+//			QT.quitter();
 		}
 	}
 	
