@@ -6,7 +6,9 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.Iterator;
 
+import application.Offre;
 import application.Produit;
+import application.Vendu;
 import controleur.CatalogueController;
 import controleur.MainControleur;
 
@@ -121,7 +123,90 @@ public class QueriesItr {
 				};
 			}
 		};
+	}
+	
+	/**
+	 * Creer une "liste" iterable d'offres sans sauvegarder toutes les offres en
+	 * memoire.
+	 * 
+	 * @param qt La querry a iterer
+	 * @return Un iterable de Offre
+	 */
+	public static Iterable<Offre> iteratorOffre(QueriesItr qt) {
+		return new Iterable<Offre>() {
 
+			@Override
+			public Iterator<Offre> iterator() {
+				return new Iterator<Offre>() {
+					ResultSet temp = qt.getResultSet();
+
+					@Override
+					public boolean hasNext() {
+						boolean hn = false;
+						try {
+							if (temp != null) {
+								hn = !temp.isClosed();
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+
+						return hn;
+					}
+
+					@Override
+					public Offre next() {
+						Offre p = null;
+						if (qt.next()) {
+							p = new Offre(temp);
+						}
+						return p;
+					}
+				};
+			}
+		};
+	}
+	
+	/**
+	 * Creer une "liste" iterable de produits vendus sans sauvegarder toutes les produits vendus en
+	 * memoire.
+	 * 
+	 * @param qt La querry a iterer
+	 * @return Un iterable de produits vendus
+	 */
+	public static Iterable<Vendu> iteratorVendu(QueriesItr qt) {
+		return new Iterable<Vendu>() {
+
+			@Override
+			public Iterator<Vendu> iterator() {
+				return new Iterator<Vendu>() {
+					ResultSet temp = qt.getResultSet();
+
+					@Override
+					public boolean hasNext() {
+						boolean hn = false;
+						try {
+							if (temp != null) {
+								hn = !temp.isClosed();
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+
+						return hn;
+					}
+
+					@Override
+					public Vendu next() {
+						Vendu p = null;
+						if (qt.next()) {
+							p = new Vendu(temp);
+						}
+						return p;
+					}
+				};
+			}
+		};
 	}
 
 	/**

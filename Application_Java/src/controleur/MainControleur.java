@@ -49,7 +49,7 @@ public class MainControleur {
 	@FXML
 	void toOtherTab() {
 		
-		annoncesController.setTable();
+		annoncesController.setTableAnnonces();
 		
 		
 //		if(userLoged == false) {
