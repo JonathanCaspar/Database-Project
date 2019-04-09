@@ -135,19 +135,19 @@ public class CatalogueController {
 			}
 		}
 		Float prixOffertMinimum = null;
-		if (!prixMin.getText().trim().isEmpty()) {
+		if (!prixOffertMin.getText().trim().isEmpty()) {
 			try {
 				prixOffertMinimum = Float.parseFloat(prixOffertMin.getText());
 			} catch (Exception e) {
-				afficherErreur("Le prix minimum n'est pas valide, aucune limite est ajouter.");
+				afficherErreur("Le prix offert minimum n'est pas valide, aucune limite est ajouter.");
 			}
 		}
 		Float prixOffertMaximum = null;
-		if (!prixMax.getText().trim().isEmpty()) {
+		if (!prixOffertMax.getText().trim().isEmpty()) {
 			try {
 				prixOffertMaximum = Float.parseFloat(prixOffertMax.getText());
 			} catch (Exception e) {
-				afficherErreur("Le prix maximum n'est pas valide, aucune limite est ajouter.");
+				afficherErreur("Le prix offert maximum n'est pas valide, aucune limite est ajouter.");
 			}
 		}
 		Date minDate = null;

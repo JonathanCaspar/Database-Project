@@ -137,13 +137,13 @@ public class QueriesItr {
 		String prixOffertWhere = "";
 		String prixOffertAnd = "";
 		String prixOffertMin = "";
-		if (prixMinimum != null) {
+		if (prixOffertMinimum != null) {
 			prixOffertWhere = " WHERE ";
 			prixOffertMin = " maxoffer >= " + prixOffertMinimum ;
 		}
 		
 		String prixOffertMax = "";
-		if (prixMaximum != null) {
+		if (prixOffertMaximum != null) {
 			if (prixOffertWhere.isEmpty()) {
 				prixOffertWhere = " WHERE ";
 			}
