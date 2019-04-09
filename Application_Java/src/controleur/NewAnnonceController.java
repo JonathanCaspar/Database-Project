@@ -2,6 +2,7 @@ package controleur;
 
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Optional;
 
@@ -12,6 +13,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.stage.Stage;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
@@ -32,6 +34,10 @@ public class NewAnnonceController {
 	private ComboBox categoriesCB;
 	
 	private float estimation = 0;
+	
+	private String nom, description, prix;
+	private int catID;
+	
 	
 	/**
 	 * Initialise la liste des categories en allant chercher les noms dans la BD
@@ -82,23 +88,78 @@ public class NewAnnonceController {
 	public void acceptPopup() {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Estimation par l'expert");
-		alert.setHeaderText("Votre produit a été estimé à "+ estimation + "$.");
+		alert.setHeaderText("Votre produit a été estimé à "+ this.estimation + "$.");
 		alert.setContentText("Vous pouvez accepter ou refuser ce prix.");
 
-		ButtonType accepter = new ButtonType("Accepter");
+		ButtonType accepter = new ButtonType("Accepter", ButtonData.CANCEL_CLOSE);
 	
 		ButtonType refuser = new ButtonType("Refuser", ButtonData.CANCEL_CLOSE);
 		
 		alert.getButtonTypes().setAll(accepter, refuser);
 		
-		alert.showAndWait();
+		Optional<ButtonType> result = alert.showAndWait();
+		
+		if (result.get() == refuser) {
+			this.estimation = Float.parseFloat(this.prix);
+		}
+		
+		
 	}
+	
+	
+	 public boolean validForm() {
+	    	
+	    	try {
+				
+				nom = nomTF.getText();
+				description = descriptionTF.getText();
+				prix = prixTF.getText();
+				catID = categoriesCB.getSelectionModel().getSelectedIndex() + 1;
+				
+				if(prix.matches("^-?\\d*(\\.\\d{2}){0,1}$")) {
+					return true;
+				}
+				else {
+					errorPopup("Format du prix", "Le prix saisi n'est pas au bon format. \n Rappel: 10.99 .");
+					return false;
+				}
+			
+			
+			}catch(NullPointerException e) {
+				
+				e.printStackTrace();
+				errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
+				return false;
+			}
+	    	
+	    }
+	
 	
 	@FXML 
 	void soumettre() {
 		
-		expertPopup();
-		acceptPopup();
+		if(validForm()) {
+			
+			expertPopup();
+			acceptPopup();
+			
+			try {
+				
+				Statement stmt = DbAdapter.con.createStatement();
+				if (stmt != null) {
+					stmt.executeUpdate("INSERT INTO products (estimatedprice, sellingprice, sellerid, categoryid, description, name) VALUES"+
+							" ('"+ this.estimation +"', '"+ this.prix +"', "+ MainControleur.getUtilisateur()+", "+ this.catID +", '"+this.description+"','"+ this.nom+ "')");
+					stmt.close();
+				}
+			} catch (SQLException e) {
+				errorPopup("Probleme Base de Données", "L'insertion n'a pas pu être effectuée.");
+				e.printStackTrace();
+			}
+			
+				
+			Stage stage = (Stage) soumettre.getScene().getWindow(); 
+		    stage.close();
+		}
 		
 	}
 	
@@ -106,5 +167,16 @@ public class NewAnnonceController {
 		return this.estimation;
 	}
 	
+	
+	
+	public static void errorPopup(String typeError, String message) {
+
+		Alert alert = new Alert(AlertType.ERROR);
+		alert.setTitle("PROBLEME !");
+		alert.setHeaderText(typeError);
+		alert.setContentText(message);
+
+		alert.showAndWait();
+	}
 
 }

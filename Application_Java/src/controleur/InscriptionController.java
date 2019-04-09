@@ -35,31 +35,7 @@ public class InscriptionController {
     private PreparedStatement stmt = null;
 //	private ResultSet rs = null;
 
-	/**
-	 * Instancie un statement et un ResultSet selon la query si tout ce passe bien
-	 * 
-	 * @param query La query a execute
-	 * @throws SQLException 
-	 */
-	public void insertUser() throws SQLException {
-		try {
-			stmt = DbAdapter.con.prepareStatement("INSERT INTO users ( username, password, firstname, lastname, phonenumber) VALUES (?,?,?,?,?,?)");
-			stmt.setString(1, username);
-			stmt.setString(2, password);
-			stmt.setString(3, prenom);
-			stmt.setString(4, nom);
-			stmt.setString(5, tel);
-			
-			stmt.execute();
-			
-		} catch (SQLException e) {
-			stmt.close();
-			e.printStackTrace();
-		}
-	}
-    
-    
-    
+	
     public boolean validForm() {
     	
     	try {
@@ -92,12 +68,6 @@ public class InscriptionController {
 	public void inscrire() {
 		
 		if(validForm()) {
-			
-//			try {
-//				insertUser();
-//			} catch (SQLException e) {
-//				e.printStackTrace();
-//			}
 			
 			QueriesItr QT = new QueriesItr("INSERT INTO users (username, password, firstname, lastname, phonenumber) VALUES"+
 					" ('"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+tel+"')");
