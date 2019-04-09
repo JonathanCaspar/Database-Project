@@ -111,6 +111,10 @@ public class Produit {
 	public String getPrix() {
 		return String.format("%.2f", prix) + " $";
 	}
+	
+	public float getValuePrix() {
+		return prix;
+	}
 
 	public void setPrix(float prix) {
 		this.prix = prix;
@@ -120,6 +124,10 @@ public class Produit {
 		return String.format("%.2f", oMax) + " $";
 	}
 
+	public float getValueOMax() {
+		return oMax;
+	}
+	
 	public void setOMax(float oMax) {
 		this.oMax = oMax;
 	}
@@ -143,11 +151,19 @@ public class Produit {
 	public void setVendeur(String vendeur) {
 		this.vendeur = vendeur;
 	}
+	
+	public int getRefId() {
+		return refid;
+	}
+	
+	public float getEstimation() {
+		return estimation;
+	}
 
 	/*
 	 * Ouvre la fenetre du produit et attend sa fereture.
 	 */
-	public Float OpenWindow() {
+	public void OpenWindow() {
 		Float offre = null;
 
 		try {
@@ -166,7 +182,5 @@ public class Produit {
 			e.printStackTrace();
 
 		}
-
-		return offre;
 	}
 }

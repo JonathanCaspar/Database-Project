@@ -215,7 +215,8 @@ public class CatalogueController {
 		objetsView.setOnMouseClicked(event -> {
 			if (event.getClickCount() == 2) {
 				if (objetsView.getSelectionModel().getSelectedItem() != null) {
-					Float offre = objetsView.getSelectionModel().getSelectedItem().OpenWindow();
+					objetsView.getSelectionModel().getSelectedItem().OpenWindow();
+					actionMettreAJour(null);
 				}
 			}
 		});
