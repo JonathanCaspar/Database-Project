@@ -433,6 +433,64 @@ LANGUAGE plpgsql;
 	WITH allProducts AS (SELECT * FROM products WHERE categoryid = 25 AND sellerid <> 28)
 	SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, getMaxOfferValue(refid) AS maxoffer, date FROM allProducts;
 
+  -- Trouve tout les produits qui a un prix afficher entre le prixMin et le prixMax
+  -- le prix offert maximal entre le prixOMin et le prixOMax (des float)
+  -- la date entre la dateMin et la dateMax (des objet date : 2019-09-16 18:15:28)
+  -- dont le vendeur n'est pas user (un int)
+  -- dont la categorie est catName et le parent de cette categorie est mainCatName (des String : '...')
+  WITH allProducts AS 
+      (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,
+              date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice 
+          FROM products
+          WHERE sellingprice >= prixMin AND sellingprice <= prixMax
+          AND date >= dateMin AND date <= dateMax
+          AND sellerid <> user)
+
+  mainCatActuelle AS 
+      (SELECT maincatid 
+            FROM maincategories 
+            WHERE maincatname = mainCatName)
+
+  catActuelle AS 
+      (SELECT * 
+          FROM categories 
+          WHERE catname = catName)
+
+  allCategorie AS 
+      (SELECT catid, catname 
+          FROM catActuelle 
+          NATURAL JOIN mainCatActuelle)
+
+  SELECT refid, name, description, sellingprice, sellername, 
+            date, maxoffer, catname, date, estimatedprice  
+      FROM allProducts JOIN allCategorie ON categoryid = catid
+      WHERE maxoffer >= prixOMin AND maxoffer >= prixOMax;
+
+  -- Trouve tout les produits qui a un prix afficher entre le prixMin et le prixMax
+  -- le prix offert maximal entre le prixOMin et le prixOMax (des float)
+  -- la date entre la dateMin et la dateMax (des objet date : 2019-09-16 18:15:28)
+  -- dont le vendeur n'est pas user (un int)
+  -- qui appartient a une categorie appartennant a mainCatName (des String : '...')
+  WITH allProducts AS 
+      (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,
+              date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice 
+          FROM products
+          WHERE sellingprice >= prixMin AND sellingprice <= prixMax
+          AND date >= dateMin AND date <= dateMax
+          AND sellerid <> user)
+  mainCatActuelle AS 
+      (SELECT maincatid 
+            FROM maincategories 
+            WHERE maincatname = mainCatName)
+  allCategorie AS 
+      (SELECT catid, catname 
+          FROM catActuelle 
+          NATURAL JOIN mainCatActuelle)
+  SELECT refid, name, description, sellingprice, sellername, 
+            date, maxoffer, catname, date, estimatedprice  
+      FROM allProducts JOIN allCategorie ON categoryid = catid
+      WHERE maxoffer >= prixOMin AND maxoffer >= prixOMax;
+
 
 -- 2) MES ANNONCES (avec utilisateur actuel id=28)
 
@@ -447,4 +505,27 @@ LANGUAGE plpgsql;
 	
 	SELECT * FROM soldproducts WHERE buyerid = 28;
 
+-- 4) requete non utilisee par l'application
+
+  -- Trouve les produits les plus en demande (ceux avec le plus d'offres) par mainCategories
+  WITH nombreOfrreParProduit AS 
+      (SELECT count(*) AS nbrOffre, productid
+          FROM offers GROUP BY productid),
+  mainCatWithChildren AS
+      (SELECT catid, maincatid, maincatname
+          FROM categories NATURAL JOIN maincategories),
+  productsWithNbrOffers AS
+      (SELECT *
+          FROM products JOIN nombreOfrreParProduit
+          ON refid = productid),
+  mainCatWithProduct AS
+    (SELECT  maincatname, refid, name, description, sellerid, 
+             categoryid, estimatedprice, sellingprice, nbrOffre
+          FROM productsWithNbrOffers JOIN mainCatWithChildren ON catid = categoryid),
+  maxByMainCategory AS
+      (SELECT  maincatname, MAX(ALL nbrOffre) as nbrOffre
+          FROM mainCatWithProduct
+          GROUP BY maincatname)
+  SELECT * 
+      FROM mainCatWithProduct NATURAL JOIN maxByMainCategory;
 	COMMIT;
