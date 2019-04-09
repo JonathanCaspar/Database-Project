@@ -21,7 +21,7 @@ Projet final - Base de données
 <a id="section1"></a>
 ## 1. Diagramme Entité-Association
 
-![](modeleEA/modeleEA.png)
+![](https://github.com/JonathanCaspar/ProjetFinalBD/blob/master/modeleEA/modeleEA.png?raw=true)
 
 Tout d&#39;abord, l&#39;application comporte des utilisateurs inscrits « users » qui doivent déclarer leur **nom d&#39;utilisateur, mot de passe et prénom**. Pour des fins de confidentialité, **les numéros de téléphone** et **nom de famille** ne sont pas obligatoires. Lors de la création de l&#39;utilisateur, un **<ins>numéro d&#39;identification unique</ins>** lui sera attitré automatiquement par la base de données.
 
