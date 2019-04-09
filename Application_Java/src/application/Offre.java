@@ -56,8 +56,10 @@ public class Offre {
 		return produitID;
 	}
 
-
-	public float getPrix() {
+	public String getPrix() {
+		return String.format("%.2f", prix) + " $";
+	}
+	public float getPrixF() {
 		return prix;
 	}
 

@@ -65,7 +65,7 @@ public class AnnoncesController {
 			stmt.executeUpdate(
 					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) VALUES"
 					+ "('"+ produit.getNomProduit()+"', '"+produit.getDescription()+"', '"+ MainControleur.getUtilisateur()+"' ,'"+offre.getBuyerID()+"' ,"
-					+ " '"+produit.getCatID()+ "', '"+produit.getEstimation()+ "', '"+ produit.getPrixF()+ "' , '"+offre.getPrix()+ "');");
+					+ " '"+produit.getCatID()+ "', '"+produit.getEstimation()+ "', '"+ produit.getPrixF()+ "' , '"+offre.getPrixF()+ "');");
 			
 							
 			stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID() );
