@@ -1,7 +1,11 @@
 package controleur;
 
+import java.sql.SQLException;
+import java.sql.Statement;
+
 import application.Offre;
 import application.Produit;
+import dbstuff.DbAdapter;
 import dbstuff.QueriesItr;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -18,6 +22,8 @@ public class AnnoncesController {
 
 	@FXML
 	private Button annoncer;
+	@FXML
+	private Button accepter;
 	@FXML
 	private NewAnnonceController newAnnonceController;
 	
@@ -42,8 +48,32 @@ public class AnnoncesController {
 	private TableColumn<Offre, String> dateO;
 	@FXML
 	private Label prixExpert;
-	private int productid;
+	private int productid, offreid;
+	private float prixVente;
 
+	
+	@FXML
+	public void accepterOffre() {
+		
+		Statement stmt = null; 
+		
+		try {
+			
+			stmt = DbAdapter.con.createStatement();
+			stmt.executeUpdate(
+					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) "
+							+ "SELECT name, description, '"+ MainControleur.getUtilisateur() + "', buyerid "
+							+ ", categoryid, estimatedprice, sellingprice, '" + prixVente + "'"
+							+ " FROM products WHERE refid = " + productid);
+			stmt.executeUpdate("DELETE FROM products WHERE refid = " + productid );
+			stmt.close();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	}
+	
 	
 	/**
 	 * Creer une table contenant la liste de produit passer en paramettre.
@@ -93,7 +123,8 @@ public class AnnoncesController {
 
 		offreView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
 		    
-		
+			offreid = offreView.getSelectionModel().getSelectedItem().getProduitID();
+			prixVente = offreView.getSelectionModel().getSelectedItem().getPrix();
 		});
 	}
 	

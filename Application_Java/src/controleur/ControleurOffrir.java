@@ -72,7 +72,8 @@ public class ControleurOffrir {
 					}
 
 					else {
-
+						
+						
 						// Si l'offre est plus grande ou egale a l'estimation la vente est automatique
 						stmt.executeUpdate(
 								"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) "

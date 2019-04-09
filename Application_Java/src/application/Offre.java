@@ -6,7 +6,7 @@ import java.sql.SQLException;
 
 public class Offre {
 
-	private int produitID;
+	private int produitID, offreID;
 	private float prix;
 	private Date date = null;
 	private String buyer = null;
@@ -15,6 +15,7 @@ public class Offre {
 	public Offre(ResultSet temp) {
 		try {
 			
+			this.offreID = temp.getInt("offerid");
 			this.buyer = temp.getString("buyer");
 			this.produitID = temp.getInt("productid");
 			this.prix = temp.getFloat("price");
