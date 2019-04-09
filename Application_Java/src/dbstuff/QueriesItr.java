@@ -124,7 +124,7 @@ public class QueriesItr {
 				+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products)";
 				
 		String allCategorie = "";
-		String joinCategorie = " JOIN categories ON categoryid = catid;";
+		String joinCategorie = " JOIN categories ON categoryid = catid";
 		
 		String prixMin = "";
 		if (prixMinimum != null) {
@@ -134,15 +134,23 @@ public class QueriesItr {
 		if (prixMaximum != null) {
 			prixMin = " sellingprice <= " + prixMaximum + " AND";
 		}
-		
+		String prixOffertWhere = "";
+		String prixOffertAnd = "";
 		String prixOffertMin = "";
 		if (prixMinimum != null) {
-			prixOffertMin = " maxoffer >= " + prixOffertMinimum + " AND";
+			prixOffertWhere = " WHERE ";
+			prixOffertMin = " maxoffer >= " + prixOffertMinimum ;
 		}
 		
 		String prixOffertMax = "";
 		if (prixMaximum != null) {
-			prixOffertMax = " sellingprice <= " + prixOffertMaximum + " AND";
+			if (prixOffertWhere.isEmpty()) {
+				prixOffertWhere = " WHERE ";
+			}
+			else {
+				prixOffertAnd = " AND ";
+			}
+			prixOffertMax = " maxoffer <= " + prixOffertMaximum;
 		}
 		String dateMin = "";
 		if (minDate != null) {
@@ -174,17 +182,22 @@ public class QueriesItr {
 			if (mainCatActuelle == CatalogueController.parent) {
 				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = \"" + catActuelle + "\")"; 
 				allCategorie += ",\n allCategorie AS (SELECT catid, catname FROM categories NATURAL JOIN mainCatActuelle)";
-				joinCategorie = " JOIN allCategorie ON categoryid = catid;";
+				joinCategorie = " JOIN allCategorie ON categoryid = catid";
 			}
 			else {
 				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = '" + mainCatActuelle + "')";
 				allCategorie += ",\n catActuelle AS (SELECT * FROM categories WHERE catname = '" + catActuelle + "')";
 				allCategorie += ",\n allCategorie AS (SELECT catid, catname FROM catActuelle NATURAL JOIN mainCatActuelle)";
-				joinCategorie = " JOIN allCategorie ON categoryid = catid;";
+				joinCategorie = " JOIN allCategorie ON categoryid = catid";
 			}
 		}
 		
 		String query = allProducts + allCategorie + "\n SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts" + joinCategorie;
+		query += prixOffertWhere;
+		query += prixOffertMin;
+		query += prixOffertAnd;
+		query += prixOffertMax;
+		query += ";";
 		System.out.println(query);
 		QueriesItr t = new QueriesItr(query);
 		return t;
