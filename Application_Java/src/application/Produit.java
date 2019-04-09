@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 
 import controleur.ControleurOffrir;
+import dbstuff.QueriesItr;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
@@ -19,6 +20,7 @@ public class Produit {
 	private float estimation = 0;
 	
 	private int refid = 0;
+	private int catID = 0;
 
 	private Date date = null;
 	private String categorie = null;
@@ -111,6 +113,9 @@ public class Produit {
 	public String getPrix() {
 		return String.format("%.2f", prix) + " $";
 	}
+	public float getPrixF() {
+		return prix;
+	}
 	
 	public float getValuePrix() {
 		return prix;
@@ -158,6 +163,23 @@ public class Produit {
 	
 	public float getEstimation() {
 		return estimation;
+	}
+	
+public int getCatID() {
+		
+		QueriesItr qt = new QueriesItr("SELECT categoryid from products WHERE refid = "+ refid +";");
+		ResultSet rs = qt.getResultSet();
+		
+		try {
+			if (rs.next()) {
+				this.catID = rs.getInt("categoryid");
+			}
+		} catch (SQLException e) {
+			qt.quitter();
+			e.printStackTrace();
+		}
+		
+		return this.catID;
 	}
 
 	/*

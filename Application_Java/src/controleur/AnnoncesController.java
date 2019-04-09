@@ -50,6 +50,8 @@ public class AnnoncesController {
 	private Label prixExpert;
 	private int productid, offreid;
 	private float prixVente;
+	private Produit produit;
+	private Offre offre;
 
 	
 	@FXML
@@ -61,10 +63,11 @@ public class AnnoncesController {
 			
 			stmt = DbAdapter.con.createStatement();
 			stmt.executeUpdate(
-					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) "
-							+ "SELECT name, description, '"+ MainControleur.getUtilisateur() + "', buyerid "
-							+ ", categoryid, estimatedprice, sellingprice, '" + prixVente + "'"
-							+ " FROM products WHERE refid = " + productid);
+					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) VALUES"
+					+ "('"+ produit.getNomProduit()+"', '"+produit.getDescription()+"', '"+ MainControleur.getUtilisateur()+"' ,'"+offre.getBuyerID()+"' ,"
+					+ " '"+produit.getCatID()+ "', '"+produit.getEstimation()+ "', '"+ produit.getPrixF()+ "' , '"+offre.getPrix()+ "');");
+			
+							
 			stmt.executeUpdate("DELETE FROM products WHERE refid = " + productid );
 			stmt.close();
 		} catch (SQLException e) {
@@ -88,6 +91,7 @@ public class AnnoncesController {
 
 		objetsView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
 		    
+			produit = objetsView.getSelectionModel().getSelectedItem();
 			productid = objetsView.getSelectionModel().getSelectedItem().getRefId();
 			prixExpert.setText(""+ objetsView.getSelectionModel().getSelectedItem().getEstimation() + " $");
 			setTableOffres();
@@ -123,8 +127,9 @@ public class AnnoncesController {
 
 		offreView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
 		    
-			offreid = offreView.getSelectionModel().getSelectedItem().getProduitID();
-			prixVente = offreView.getSelectionModel().getSelectedItem().getPrix();
+			offre = offreView.getSelectionModel().getSelectedItem();
+//			offreid = offreView.getSelectionModel().getSelectedItem().getProduitID();
+//			prixVente = offreView.getSelectionModel().getSelectedItem().getPrix();
 		});
 	}
 	
@@ -136,8 +141,9 @@ public class AnnoncesController {
 	}
 	
 	public void setTableOffres() {
-		QueriesItr qt = new QueriesItr("SELECT offerid, getUserFullName(buyerid) AS buyer, productid, price, date FROM offers WHERE productid = "+ this.productid +" ;");
-				
+//		QueriesItr qt = new QueriesItr("SELECT offerid, getUserFullName(buyerid) AS buyer, productid, price, date FROM offers WHERE productid = "+ this.productid +" ;");
+		QueriesItr qt = new QueriesItr("SELECT offerid, buyerid, productid, price, date FROM offers WHERE productid = "+ this.productid +" ;");
+	
 		creatTablecolmnsOffres();
 		creatTableOffres(QueriesItr.iteratorOffre(qt));
 	}
