@@ -68,10 +68,10 @@ public class AnnoncesController {
 					+ " '"+produit.getCatID()+ "', '"+produit.getEstimation()+ "', '"+ produit.getPrixF()+ "' , '"+offre.getPrix()+ "');");
 			
 							
-			stmt.executeUpdate("DELETE FROM products WHERE refid = " + productid );
+			stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID() );
 			stmt.close();
 		} catch (SQLException e) {
-			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
@@ -128,8 +128,7 @@ public class AnnoncesController {
 		offreView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
 		    
 			offre = offreView.getSelectionModel().getSelectedItem();
-//			offreid = offreView.getSelectionModel().getSelectedItem().getProduitID();
-//			prixVente = offreView.getSelectionModel().getSelectedItem().getPrix();
+
 		});
 	}
 	
