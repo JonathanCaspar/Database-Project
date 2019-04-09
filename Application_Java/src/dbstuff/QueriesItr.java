@@ -200,8 +200,8 @@ public class QueriesItr {
 
 		if (mainCatActuelle != null) {
 			if (mainCatActuelle == CatalogueController.parent) {
-				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = \""
-						+ catActuelle + "\")";
+				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = '"
+						+ catActuelle + "')";
 				allCategorie += ",\n allCategorie AS (SELECT catid, catname FROM categories NATURAL JOIN mainCatActuelle)";
 				joinCategorie = " JOIN allCategorie ON categoryid = catid";
 			} else {
