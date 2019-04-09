@@ -31,7 +31,7 @@ Lorsqu&#39;il vend, l&#39;utilisateur crée un nouvel enregistrement dans « pro
 
 Lorsque l&#39;utilisateur fait une offre sur un produit existant, **<ins>l&#39;id unique de l&#39;offre</ins>**,  **le prix offert, #id produit, #id acheteur et la date** seront ajoutés dans la table « offers ». Un produit vendu sera enregistré dans la table « soldProducts » contenant un **id unique**** , son nom, description, #id du vendeur, #id catégorie du produit, #id de l&#39;acheteur, prix estimé, prix de vente, prix vendu **et la** date de la transaction**.
 
-Par ailleurs, les catégories principales « mainCategory » sont référencées par leur **<ins>id unique</ins>** et leur **nom.** Elles contiennent une ou plusieurs (1 : n) sous-catégories qui contiennent, à leur tour, ont un **<ins>id unique<ins>** , **un** nom **et** #idMaincategory.**
+Par ailleurs, les catégories principales « mainCategory » sont référencées par leur **<ins>id unique</ins>** et leur **nom.** Elles contiennent une ou plusieurs (1 : n) sous-catégories qui contiennent, à leur tour, ont un **<ins>id unique<ins>** , **un nom** et **#idMaincategory.**
 
 Les sous-catégories « category » ne peuvent avoir qu&#39;une seule (1 : 1) catégorie principale et peuvent contenir aucun ou plusieurs produits (0 : n).
 
