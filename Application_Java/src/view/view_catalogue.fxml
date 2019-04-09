@@ -18,13 +18,13 @@
 <?import javafx.scene.paint.Color?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.CatalogueController">
+<AnchorPane prefHeight="600.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.CatalogueController">
    <children>
       <VBox prefHeight="600.0" prefWidth="900.0" stylesheets="@style_achat.css" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <children>
-          <SplitPane dividerPositions="0.2505567928730512, 0.7505567928730512" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
+          <SplitPane dividerPositions="0.24874791318864775, 0.8213689482470785" focusTraversable="true" prefHeight="-1.0" prefWidth="-1.0" VBox.vgrow="ALWAYS">
             <items>
-              <AnchorPane>
+              <AnchorPane prefHeight="577.0" prefWidth="225.0">
                 <children>
                   <Label alignment="CENTER" layoutX="14.0" layoutY="14.0" minWidth="60.0" prefWidth="-1.0" style="&#10;" text="Catégorie" textAlignment="CENTER" wrapText="false">
                     <font>
@@ -42,14 +42,14 @@
                   <AnchorPane id="Content" minHeight="-1.0" minWidth="-1.0" prefHeight="545.0" prefWidth="466.0">
                     <children>
                       <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Objets" textAlignment="CENTER" textFill="$x2" wrapText="false" />
-                              <TableView fx:id="objetsView" layoutX="-3.0" layoutY="43.0" prefHeight="490.0" prefWidth="442.0" AnchorPane.bottomAnchor="12.200000000000045" AnchorPane.leftAnchor="-3.0" AnchorPane.rightAnchor="0.6000000000000227" AnchorPane.topAnchor="43.0">
+                              <TableView fx:id="objetsView" layoutX="-1.0" layoutY="43.0" prefHeight="522.0" prefWidth="583.0" AnchorPane.bottomAnchor="12.0" AnchorPane.leftAnchor="-1.0" AnchorPane.rightAnchor="1.0" AnchorPane.topAnchor="43.0">
                                 <columns>
-                                  <TableColumn fx:id="produits" prefWidth="75.0" text="Produit" />
-                                    <TableColumn fx:id="prix" prefWidth="75.0" text="Prix" />
-                                    <TableColumn fx:id="date" prefWidth="75.0" text="Date" />
-                                  <TableColumn fx:id="categorie" prefWidth="75.0" text="Catégorie" />
-                                    <TableColumn fx:id="vendeur" prefWidth="75.0" text="Vendeur" />
-                                    <TableColumn fx:id="oMax" prefWidth="75.0" text="Offre Maximale" />
+                                  <TableColumn fx:id="produits" prefWidth="167.0" text="Produit" />
+                                    <TableColumn fx:id="prix" prefWidth="81.0" text="Prix" />
+                                    <TableColumn fx:id="date" prefWidth="107.0" text="Date" />
+                                  <TableColumn fx:id="categorie" prefWidth="127.0" text="Catégorie" />
+                                    <TableColumn fx:id="vendeur" prefWidth="114.0" text="Vendeur" />
+                                    <TableColumn fx:id="oMax" prefWidth="81.0" text="Offre Maximale" />
                                 </columns>
                               </TableView>
                     </children>
@@ -61,13 +61,20 @@
                   <Label alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="options" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                         <VBox alignment="TOP_CENTER" layoutY="41.0" AnchorPane.bottomAnchor="2.2000000000000455" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="41.0">
                            <children>
-                              <VBox fx:id="rightVBox" prefHeight="506.0" prefWidth="222.0" styleClass="vbox">
+                              <VBox fx:id="rightVBox" prefHeight="506.0" prefWidth="282.0" styleClass="vbox">
                                  <children>
-                                    <Label text="Prix" />
+                                    <Label text="Prix annoncé :" />
                                     <HBox prefHeight="26.0" prefWidth="192.0" styleClass="hbox">
                                        <children>
                                           <TextField fx:id="prixMin" promptText="Min" />
                                           <TextField fx:id="prixMax" promptText="Max" />
+                                       </children>
+                                    </HBox>
+                                    <Label text="Prix offert :" />
+                                    <HBox prefHeight="26.0" prefWidth="192.0" styleClass="hbox">
+                                       <children>
+                                          <TextField fx:id="prixOffertMin" promptText="Min" />
+                                          <TextField fx:id="prixOffertMax" promptText="Max" />
                                        </children>
                                     </HBox>
                                     <CheckBox fx:id="cbDateMin" mnemonicParsing="false" onAction="#actionCbDateMin" text="Date minimale" />

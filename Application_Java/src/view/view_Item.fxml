@@ -9,7 +9,6 @@
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
 <BorderPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" stylesheets="@style_achat.css" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.ControleurOffrir">
    <top>
       <Label fx:id="nomProduit" text="NomPruduit" BorderPane.alignment="CENTER" />
@@ -26,7 +25,7 @@
       <HBox alignment="CENTER" BorderPane.alignment="CENTER">
          <children>
             <TextField fx:id="offreTextField" promptText="Offre" />
-            <Button fx:id="offreButton" mnemonicParsing="false" onAction="#offreButtonAction" text="Offrir" />
+            <Button fx:id="offreButton" disable="true" mnemonicParsing="false" onAction="#offreButtonAction" text="Offrir" />
          </children>
       </HBox>
    </bottom>

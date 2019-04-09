@@ -8,11 +8,11 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="898.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.MainControleur">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="694.0" prefWidth="1200.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="controleur.MainControleur">
    <children>
-      <VBox prefHeight="688.0" prefWidth="898.0">
+      <VBox prefHeight="688.0" prefWidth="1200.0">
          <children>
-            <MenuBar maxWidth="-Infinity" prefHeight="34.0" prefWidth="901.0">
+            <MenuBar maxWidth="-Infinity" prefHeight="34.0" prefWidth="1201.0">
               <menus>
                 <Menu mnemonicParsing="false" text="Client">
                   <items>
@@ -28,19 +28,19 @@
                 </Menu>
               </menus>
             </MenuBar>
-            <TabPane fx:id="mainPane" maxWidth="-Infinity" prefHeight="655.0" prefWidth="901.0" tabClosingPolicy="UNAVAILABLE">
+            <TabPane fx:id="mainPane" maxWidth="-Infinity" prefHeight="655.0" prefWidth="1203.0" tabClosingPolicy="UNAVAILABLE">
               <tabs>
                 <Tab fx:id="catalogueT" text="Catalogue">
                      <content>
                         <fx:include fx:id="catalogue" source="view_catalogue.fxml" />
                      </content>
                 </Tab>
-                <Tab fx:id="annoncesT" onSelectionChanged="#toAnnonces" text="Mes annonces">
+                <Tab fx:id="annoncesT" onSelectionChanged="#toOtherTab" text="Mes annonces">
                      <content>
                         <fx:include fx:id="annonces" source="view_annonces.fxml" />
                      </content>
                 </Tab>
-                  <Tab fx:id="achatsT" text="Mes achats" />
+                  <Tab fx:id="achatsT" onSelectionChanged="#toOtherTab" text="Mes achats" />
               </tabs>
             </TabPane>
          </children>
