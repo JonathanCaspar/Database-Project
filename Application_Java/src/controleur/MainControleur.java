@@ -85,11 +85,13 @@ public class MainControleur {
 	 */
 	@FXML
 	void deconnexion() {
+		
+		mainPane.getSelectionModel().select(catalogueT);
 		setUtilisateur(-1);
 		deconnexion.setVisible(false);
 		connexion.setVisible(true);
 		inscription.setVisible(true);
-		mainPane.getSelectionModel().select(catalogueT);
+	
 		this.catalogueController.initialize();
 	}
 	
