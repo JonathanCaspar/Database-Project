@@ -3,15 +3,14 @@ Projet final - Base de données
 
 ## Sommaire :
 
-1. [Diagramme Entité-Association](#section1)
-2. [Modèle relationnel](#section2)
-3. [Définition de la base de données](#section3)
-	1. [Explications des choix d'implémentation](#section3-1)
-	2. [Fonctions](#section3-2)
-4. [Ensemble des requêtes en SQL et explications des résultats attendus](#section4)
-5. [Guide utilisateur](#section5)
+1. Diagramme Entité-Association
+2. Modèle relationnel
+3. Définition de la base de données
+	1. Explications des choix d'implémentation
+	2. Fonctions
+4. Ensemble des requêtes en SQL et explications des résultats attendus
+5. Guide utilisateur
 
-<a id="section1"></a>
 ## 1. Diagramme Entité-Association
 
 ![](https://github.com/JonathanCaspar/ProjetFinalBD/blob/master/modeleEA/modeleEA.png?raw=true)
@@ -34,7 +33,6 @@ Les sous-catégories « category » ne peuvent avoir qu&#39;une seule (1 : 1) ca
 - <ins>Clé principale</ins>
 - **Attribut d&#39;une table**
 
-<a id="section2"></a>
 ## 2. Modèle relationnel
 
 * User(__userID__, username, password, firstname, lastname, phone) 
@@ -52,10 +50,8 @@ Les sous-catégories « category » ne peuvent avoir qu&#39;une seule (1 : 1) ca
 SoldProducts est une table de __log__ conservant l'historique des produits vendus.
   
 
-<a id="section3"></a>
-## 3. Définition de la base de données ([DDL.sql](DDL.sql))
+## 3. Définition de la base de données ([DDL.sql])
 
-<a id="section3-1"></a>
 ### Explications des choix d'implémentation :
 Nous avons décidé de représenter les **acheteurs** et les **vendeurs** en une seule entité (**user**) ayant un ID arbitraire comme clé primaire. Les experts n'ont pas été représenté car nous ne jugions pas cela nécessaire (une simple fenêtre suivant la mise en vente suffit).
 
@@ -72,7 +68,6 @@ Afin de faciliter la suppression future des offres pour lesquelles le produit as
 
 La dernière table **soldproducts** nous sert à garder une trace des informations sur les produits vendus.
 
-<a id="section3-2"></a>
 ### Fonctions :
 
 * Retourne si oui ou non, un mot de passe correspond à l'utilisateur ayant un ID spécifié
@@ -156,7 +151,6 @@ END; $$
 LANGUAGE plpgsql;
 ~~~~
 
-<a id="section4"></a>
 ## 4. L'ensemble des requêtes en SQL et explications des résultats attendus ([LMD.sql](LMD.sql))
 
 A moins de mentionner un autre id d'utilisateur, on suppose pour les requêtes suivantes que l'utilisateur connecté a un id = 18 :
@@ -250,7 +244,7 @@ WITH nombreOffreParProduit AS
   SELECT * 
       FROM mainCatWithProduct NATURAL JOIN maxByMainCategory;
 ~~~~
-<a id="section5"></a>
+
 ## 5. Guide utilisateur
 
 ### Usage général
