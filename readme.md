@@ -179,7 +179,7 @@ WITH allProducts AS
 (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,
  date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice 
  FROM products WHERE 
- sellingPrice >= 100 sellingprice <= 250.0 
+ sellingPrice >= 100 AND sellingprice <= 250.0 
  AND date >='2019-04-08' AND date <='2019-04-10' 
  AND sellerid <> 18 )
  
