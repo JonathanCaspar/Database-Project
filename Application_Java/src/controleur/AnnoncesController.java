@@ -150,7 +150,7 @@ public class AnnoncesController {
 	 * Mise en place du tableau contenant les offres faites pour les produits de l'utilisateur authentifié
 	 */
 	public void setTableOffres() {
-		QueriesItr qt = new QueriesItr("SELECT offerid, buyerid, productid, price, date FROM offers WHERE productid = "+ this.productid +" ;");
+		QueriesItr qt = new QueriesItr("SELECT offerid, buyerid, productid, price, date FROM offers WHERE productid = "+ this.produit.getRefId() +" ;");
 		creatTablecolmnsOffres();
 		creatTableOffres(QueriesItr.iteratorOffre(qt));
 	}
