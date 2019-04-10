@@ -125,10 +125,10 @@ public class QueriesItr {
 			}
 		};
 	}
-	
+
 	/**
-	 * Creer une "liste" iterable d'offres (coté vendeur) sans sauvegarder toutes les offres en
-	 * memoire.
+	 * Creer une "liste" iterable d'offres (coté vendeur) sans sauvegarder toutes
+	 * les offres en memoire.
 	 * 
 	 * @param qt La querry a iterer
 	 * @return Un iterable de Offre
@@ -167,10 +167,10 @@ public class QueriesItr {
 			}
 		};
 	}
-	
+
 	/**
-	 * Creer une "liste" iterable d'offres (coté acheteur) sans sauvegarder toutes les offres en
-	 * memoire.
+	 * Creer une "liste" iterable d'offres (coté acheteur) sans sauvegarder toutes
+	 * les offres en memoire.
 	 * 
 	 * @param qt La querry a iterer
 	 * @return Un iterable de Offre
@@ -209,10 +209,10 @@ public class QueriesItr {
 			}
 		};
 	}
-	
+
 	/**
-	 * Creer une "liste" iterable de produits vendus sans sauvegarder toutes les produits vendus en
-	 * memoire.
+	 * Creer une "liste" iterable de produits vendus sans sauvegarder toutes les
+	 * produits vendus en memoire.
 	 * 
 	 * @param qt La querry a iterer
 	 * @return Un iterable de produits vendus
@@ -256,18 +256,21 @@ public class QueriesItr {
 	 * Cree une querry selon la categorie choisi, les prix minimums et maximums et
 	 * les dates limites et n'affiche pas les produits du user actuel.
 	 * 
-	 * @param mainCatActuelle La categorie superieur actuelle null si on est dans toutes les categorie.
-	 * @param catActuelle La categorie souhaitee actuelle.
-	 * @param prixMinimum Le prix affiche minimum null s'il y en a pas
-	 * @param prixMaximum Le prix affiche maximum null s'il n'y en a pas
+	 * @param mainCatActuelle   La categorie superieur actuelle null si on est dans
+	 *                          toutes les categorie.
+	 * @param catActuelle       La categorie souhaitee actuelle.
+	 * @param recherche
+	 * @param prixMinimum       Le prix affiche minimum null s'il y en a pas
+	 * @param prixMaximum       Le prix affiche maximum null s'il n'y en a pas
 	 * @param prixOffertMinimum Le prix offert minimum null s'il n'y en a pas
 	 * @param prixOffertMaximum Le prix offert maximum null s'il n'y en a pas
-	 * @param minDate La date minimale null s'il y en a pas
-	 * @param maxDate La date maximale null s'il y en a pas
-	 * @return Le QueriesItr selon les criteres 
+	 * @param minDate           La date minimale null s'il y en a pas
+	 * @param maxDate           La date maximale null s'il y en a pas
+	 * @return Le QueriesItr selon les criteres
 	 */
-	public static QueriesItr creatListProductQuery(String mainCatActuelle, String catActuelle, Float prixMinimum,
-			Float prixMaximum, Float prixOffertMinimum, Float prixOffertMaximum, Date minDate, Date maxDate) {
+	public static QueriesItr creatListProductQuery(String mainCatActuelle, String catActuelle, String recherche,
+			Float prixMinimum, Float prixMaximum, Float prixOffertMinimum, Float prixOffertMaximum, Date minDate,
+			Date maxDate) {
 
 		String allProducts = "\nWITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
 				+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products)";
@@ -275,13 +278,31 @@ public class QueriesItr {
 		String allCategorie = "";
 		String joinCategorie = " JOIN categories ON categoryid = catid";
 
+		String like = "";
+		if (recherche != null) {
+			String[] words = recherche.split("[\\p{Punct}\\s]+");
+			int i = 0;
+			for (String w : words) {
+				if (w.length() > 2) {
+					w = w.toLowerCase();
+					like += " LOWER( name ) LIKE '%" + w + "%' OR";
+					like += " LOWER( description ) LIKE '%" + w + "%' OR";
+					i++;
+				}
+			}
+
+			if (i > 0) {
+				like = "(" + like.substring(0, like.length() - 2) + ")";
+			}
+		}
+
 		String prixMin = "";
 		if (prixMinimum != null) {
 			prixMin = " sellingprice >= " + prixMinimum + " AND";
 		}
 		String prixMax = "";
 		if (prixMaximum != null) {
-			prixMin = " sellingprice <= " + prixMaximum + " AND";
+			prixMax = " sellingprice <= " + prixMaximum + " AND";
 		}
 		String prixOffertWhere = "";
 		String prixOffertAnd = "";
@@ -314,19 +335,30 @@ public class QueriesItr {
 			user = " sellerid <> " + MainControleur.getUtilisateur() + " AND";
 		}
 
-		if (!(prixMin.isEmpty() && prixMax.isEmpty() && dateMin.isEmpty() && dateMax.isEmpty() && user.isEmpty())) {
+		// Si un des champs de restriction n'est pas vide on l'ajoute a la requete
+		if (!(prixMin.isEmpty() && prixMax.isEmpty() && dateMin.isEmpty() && dateMax.isEmpty() && user.isEmpty()
+				&& like.isEmpty())) {
 			allProducts = "\nWITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
-					+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE";
+					+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE ";
 			allProducts += prixMin;
 			allProducts += prixMax;
 			allProducts += dateMin;
 			allProducts += dateMax;
 			allProducts += user;
+			if (like.isEmpty()) {
+				allProducts = allProducts.substring(0, allProducts.length() - 3) + ")";
+			}
+			else {
+				allProducts += like + ")";
+			}
 
-			allProducts = allProducts.substring(0, allProducts.length() - 3) + ")";
 		}
 
 		if (mainCatActuelle != null) {
+			
+			mainCatActuelle = mainCatActuelle.replace("'", "''");
+			catActuelle = catActuelle.replace("'", "''");
+			
 			if (mainCatActuelle == CatalogueController.parent) {
 				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = '"
 						+ catActuelle + "')";
@@ -350,7 +382,7 @@ public class QueriesItr {
 		query += prixOffertMax;
 		query += ";";
 		QueriesItr t = new QueriesItr(query);
-		System.out.println("Requ�te cr�ee = " + query);
+		System.out.println("Requ�te cr�ee = " + query);
 		return t;
 	}
 }

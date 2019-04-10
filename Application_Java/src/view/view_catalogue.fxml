@@ -63,6 +63,8 @@
                            <children>
                               <VBox fx:id="rightVBox" prefHeight="506.0" prefWidth="282.0" styleClass="vbox">
                                  <children>
+                                    <Label text="Rechercher :" />
+                                    <TextField fx:id="rechercheTextField" promptText="Mots à chercher" />
                                     <Label text="Prix annoncé :" />
                                     <HBox prefHeight="26.0" prefWidth="192.0" styleClass="hbox">
                                        <children>
