@@ -547,7 +547,7 @@ END; $function$
 
 * Retourne le nom d'une catégorie principale en fonction de son id
 ~~~~sql
-CREATE OR REPLACE FUNCTION casparjo.getmaincategoriesname(id integer)
+CREATE OR REPLACE FUNCTION getmaincategoriesname(id integer)
  RETURNS character varying
  LANGUAGE plpgsql
 AS $function$
@@ -601,6 +601,8 @@ LANGUAGE plpgsql;
 <a id="section4-8"></a>
 ### Requêtes-type utilisées par l'application
 
+A moins de mentionner un autre id d'utilisateur, on suppose pour les requêtes suivantes que l'utilisateur connecté a un id = 18 :
+
 #### 1) Catalogue
 * Catégories sur colonne gauche :
 ~~~~sql
@@ -619,25 +621,40 @@ WITH allProducts AS (SELECT * FROM products WHERE categoryid = 25 AND sellerid <
 SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date FROM allProducts;
 ~~~~
 
-#### 2) Mes annonces (avec utilisateur actuel id=28)
+#### 2) Mes annonces
 
-* Objets en vente 
+* Afficher les produits en vente par l'utilisateur (id=18) en précisant le montant de l'offre maximale pour chaque produit
 ~~~~sql
-SELECT getOffersCount(refid) as nboffers, name, refid AS productid, categoryid, sellingprice, estimatedprice, description 
-FROM products WHERE sellerid=28;
+WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE sellerid = 18)
+
+SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts JOIN categories ON categoryid = catid;
 ~~~~
 
-* Propositions liées à l'objet selectionné (exemple produitid = 21)
+* Afficher les offres liées à l'objet selectionné (exemple produitid = 21)
 ~~~~sql
 SELECT * FROM offers WHERE productid = 21;
 ~~~~
 
-
-#### 3) Mes achats (si utilisateur courant id = 28)
-
+* Accepter l'offre de l'acheteur (id=25) de 33$ sur le produit "Robe Blanche" (description = nom) classé dans la catégorie "Femmes-Haut" (catid=14) vendu par le vendeur d'id=100 au prix initial de 38.69$ et estimé à 38.69$. On insère le produit vendu dans la table **soldproducts** et on supprime le produit de la table **products** (ainsi que ses autres offres grâce au ON DELETE CASCADE)
 ~~~~sql
-SELECT * FROM soldproducts WHERE buyerid = 28;
+INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) VALUES
+('Robe blanche', 'Robe blanche', 100, 25, 14, 38.69, 38.69, 33);
+~~~
+
+
+#### 3) Mes achats
+
+* Retourne la liste détaillée des offres actives de l'utilisateur connecté
+~~~~sql
+SELECT name, getUserFullName(sellerid) AS sellername, sellingprice, price ,offers.date AS dateO FROM products JOIN offers ON productid = refid WHERE buyerid = 18;
 ~~~~
+
+* Retourne la liste détaillée des produits déjà achetés par l'utilisateur (pour lesquels son offre a été acceptée)
+~~~~sql
+SELECT name, getUserFullName(sellerid) AS sellername, soldprice, datetransaction FROM soldproducts WHERE buyerid =18;
+~~~~
+
+#### 4) Autres requêtes spéficiques
 
 <a id="section5"></a>
 ## 5. Guide utilisateur
