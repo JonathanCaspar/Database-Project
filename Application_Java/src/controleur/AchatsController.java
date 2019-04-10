@@ -29,13 +29,13 @@ public class AchatsController {
 	@FXML
 	private TableView<Achat> achatView;
 	@FXML
-	private TableColumn<Achat, String> produitV;
+	private TableColumn<Achat, String> produitA;
 	@FXML
-	private TableColumn<Achat, String> vendeurV;
+	private TableColumn<Achat, String> vendeurA;
 	@FXML
-	private TableColumn<Achat, String> prixV;
+	private TableColumn<Achat, String> prixA;
 	@FXML
-	private TableColumn<Achat, String> dateV;
+	private TableColumn<Achat, String> dateA;
 	
 	
 	/**
@@ -93,10 +93,10 @@ public class AchatsController {
 	
 	private void creatTablecolmnsAchat() {
 		
-		produitV.setCellValueFactory(new PropertyValueFactory("nomProduit"));
-		vendeurV.setCellValueFactory(new PropertyValueFactory("vendeur"));
-		prixV.setCellValueFactory(new PropertyValueFactory("prixVente"));
-		dateV.setCellValueFactory(new PropertyValueFactory("date"));
+		produitA.setCellValueFactory(new PropertyValueFactory("nomProduit"));
+		vendeurA.setCellValueFactory(new PropertyValueFactory("vendeur"));
+		prixA.setCellValueFactory(new PropertyValueFactory("prixVente"));
+		dateA.setCellValueFactory(new PropertyValueFactory("date"));
 	}
 
 	/**
@@ -104,7 +104,7 @@ public class AchatsController {
 	 * Produits pour lesquels les offres ont été acceptées.
 	 */
 	public void setTableAchat() {
-		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername, soldprice, datetransaction FROM soldproducts WHERE buyerid =" + MainControleur.getUtilisateur()+ ";");
+		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(" + MainControleur.getUtilisateur()+ ") AS buyername, soldprice, datetransaction FROM soldproducts WHERE buyerid =" + MainControleur.getUtilisateur()+ ";");
 		creatTablecolmnsAchat();
 		creatTableAchat(QueriesItr.iteratorAchat(qt));
 	}

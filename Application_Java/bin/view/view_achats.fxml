@@ -47,10 +47,10 @@
             <Label fx:id="Aca" alignment="CENTER" font="$x1" layoutX="14.0" layoutY="14.0" style="&#10;" text="Mes achats" textAlignment="CENTER" textFill="$x2" wrapText="false" />
                   <TableView fx:id="achatView" layoutY="43.0" prefHeight="521.0" prefWidth="595.0">
                      <columns>
-                        <TableColumn fx:id="produitV" prefWidth="190.0" text="Produit" />
-                        <TableColumn fx:id="vendeurV" prefWidth="119.0" text="Vendeur" />
-                        <TableColumn fx:id="prixV" prefWidth="93.0" text="Prix" />
-                        <TableColumn fx:id="dateV" prefWidth="109.0" text="Date" />
+                        <TableColumn fx:id="produitA" prefWidth="190.0" text="Produit" />
+                        <TableColumn fx:id="vendeurA" prefWidth="119.0" text="Vendeur" />
+                        <TableColumn fx:id="prixA" prefWidth="93.0" text="Prix" />
+                        <TableColumn fx:id="dateA" prefWidth="109.0" text="Date" />
                      </columns>
                   </TableView>
           </children>
