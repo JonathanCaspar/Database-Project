@@ -350,6 +350,7 @@ public class QueriesItr {
 		query += prixOffertMax;
 		query += ";";
 		QueriesItr t = new QueriesItr(query);
+		System.out.println("Requête créee = " + query);
 		return t;
 	}
 }

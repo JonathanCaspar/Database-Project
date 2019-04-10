@@ -123,7 +123,7 @@ public class CatalogueController {
 			try {
 				prixMinimum = Float.parseFloat(prixMin.getText());
 			} catch (Exception e) {
-				afficherErreur("Le prix minimum n'est pas valide, aucune limite est ajouter.");
+				afficherErreur("Le prix minimum n'est pas valide, aucune limite est ajoutée.");
 			}
 		}
 		Float prixMaximum = null;
@@ -131,7 +131,7 @@ public class CatalogueController {
 			try {
 				prixMaximum = Float.parseFloat(prixMax.getText());
 			} catch (Exception e) {
-				afficherErreur("Le prix maximum n'est pas valide, aucune limite est ajouter.");
+				afficherErreur("Le prix maximum n'est pas valide, aucune limite est ajoutée.");
 			}
 		}
 		Float prixOffertMinimum = null;
@@ -139,7 +139,7 @@ public class CatalogueController {
 			try {
 				prixOffertMinimum = Float.parseFloat(prixOffertMin.getText());
 			} catch (Exception e) {
-				afficherErreur("Le prix offert minimum n'est pas valide, aucune limite est ajouter.");
+				afficherErreur("Le prix offert minimum n'est pas valide, aucune limite est ajoutée.");
 			}
 		}
 		Float prixOffertMaximum = null;
@@ -147,7 +147,7 @@ public class CatalogueController {
 			try {
 				prixOffertMaximum = Float.parseFloat(prixOffertMax.getText());
 			} catch (Exception e) {
-				afficherErreur("Le prix offert maximum n'est pas valide, aucune limite est ajouter.");
+				afficherErreur("Le prix offert maximum n'est pas valide, aucune limite est ajoutée.");
 			}
 		}
 		Date minDate = null;

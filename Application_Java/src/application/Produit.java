@@ -165,7 +165,7 @@ public class Produit {
 		return estimation;
 	}
 	
-public int getCatID() {
+	public int getCatID() {
 		
 		QueriesItr qt = new QueriesItr("SELECT categoryid from products WHERE refid = "+ refid +";");
 		ResultSet rs = qt.getResultSet();
