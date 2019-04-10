@@ -96,8 +96,15 @@ public class InscriptionController {
      * @return query la requete
      */
     public String getQuery() {
-    	String query = "INSERT INTO users ( userid, username, password, firstname"; 
-    	String values = "VALUES ( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"' ";
+//    	String query = "\nWITH maxUserID AS ( SELECT MAX(userid) AS max FROM users ) \n"+
+        String query ="INSERT INTO users ( userid, username, password, firstname"; 
+//    	String values = "VALUES ( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"' ";
+    	String values = " VALUES ( ( SELECT MAX(userid) AS max FROM users ) + 1 ,'"+ username+"', '"+password+"', '"+prenom+"' ";
+
+    	
+//    	String query = "INSERT INTO users (username, password, firstname"; 
+//    	String values = "VALUES ('"+ username+"', '"+password+"', '"+prenom+"' ";
+    	
     	String end = ")";
     	if(this.nom.length() > 0) {
     		query += " , lastname ";
@@ -107,10 +114,13 @@ public class InscriptionController {
     		query += " , phonenumber ";
     		values += ", '"+this.tel+"'";
     	}
-    	
     	values += end;
     	query += end;
     	query += values;
+    	
+    	System.out.println(query);
+
+    	
     	return query;
     }
     

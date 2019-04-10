@@ -145,7 +145,6 @@ public class AnnoncesController {
 		acheteur.setCellValueFactory(new PropertyValueFactory("buyer"));
 		prixO.setCellValueFactory(new PropertyValueFactory("prix"));
 		dateO.setCellValueFactory(new PropertyValueFactory("date"));
-
 	}
 	/**
 	 * Mise en place du tableau contenant les offres faites pour les produits de l'utilisateur authentifié
