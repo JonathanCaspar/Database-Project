@@ -6,10 +6,9 @@ Projet final - Base de données
 1. [Diagramme Entité-Association](#section1)
 2. [Modèle relationnel](#section2)
 3. [Définition de la base de données](#section3)
+	1. [Explications des choix d'implémentation](#section3-1)
+	2. [Fonctions](#section3-2)
 4. [Ensemble des requêtes en SQL et explications des résultats attendus](#section4)
-	1. [Fonctions](#section4-7)
-	2. [Requêtes-type utilisées par l'application](#section4-8)
-	
 5. [Guide utilisateur](#section5)
 
 <a id="section1"></a>
@@ -23,7 +22,7 @@ Une fois enregistré, un utilisateur peut vendre aucun ou plusieurs produits (0 
 
 Lorsqu&#39;il vend, l&#39;utilisateur crée un nouvel enregistrement dans « products » comprenant **le nom de l&#39;objet, une description, un prix** et sa **catégorie.** Ensuite, l&#39;utilisateur recevra le **prix estimé** par l&#39;expert et pourra accepter ou refuser de vendre au prix indiqué. Lorsque l&#39;offre de l&#39;expert sera acceptée, le produit se verra attribué **la date de mise en vente** , un **<ins>identifiant unique</ins>** et **#l&#39;id vendeur** et **#id catégorie de l&#39;objet.**
 
-Lorsque l&#39;utilisateur fait une offre sur un produit existant, **<ins>l&#39;id unique de l&#39;offre</ins>**,  **le prix offert, #id produit, #id acheteur et la date** seront ajoutés dans la table « offers ». Un produit vendu sera enregistré dans la table « soldProducts » contenant un **id unique**** , son nom, description, #id du vendeur, #id catégorie du produit, #id de l&#39;acheteur, prix estimé, prix de vente, prix vendu **et la** date de la transaction**.
+Lorsque l&#39;utilisateur fait une offre sur un produit existant, **<ins>l&#39;id unique de l&#39;offre</ins>**,  **le prix offert, #id produit, #id acheteur et la date** seront ajoutés dans la table « offers ». Un produit vendu sera enregistré dans la table « soldProducts » contenant un **id unique** , **son nom**, **description**, **#id du vendeur**, **#id catégorie du produit**, **#id de l&#39;acheteur**, **prix estimé**, **prix de vente**, **prix vendu** et la **date de la transaction**.
 
 Par ailleurs, les catégories principales « mainCategory » sont référencées par leur **<ins>id unique</ins>** et leur **nom.** Elles contiennent une ou plusieurs (1 : n) sous-catégories qui contiennent, à leur tour, ont un **<ins>id unique<ins>** , **un nom** et **#idMaincategory.**
 
@@ -56,6 +55,8 @@ SoldProducts est une table de __log__ conservant l'historique des produits vendu
 <a id="section3"></a>
 ## 3. Définition de la base de données ([DDL.sql](DDL.sql))
 
+<a id="section3-1"></a>
+### Explications des choix d'implémentation :
 Nous avons décidé de représenter les **acheteurs** et les **vendeurs** en une seule entité (**user**) ayant un ID arbitraire comme clé primaire. Les experts n'ont pas été représenté car nous ne jugions pas cela nécessaire (une simple fenêtre suivant la mise en vente suffit).
 
 Les **produits** ont comme clé primaire standard : un ID généré et ont tous une référence (clé étrangère) vers l'entité du vendeur et de sa catégorie.
@@ -71,10 +72,7 @@ Afin de faciliter la suppression future des offres pour lesquelles le produit as
 
 La dernière table **soldproducts** nous sert à garder une trace des informations sur les produits vendus.
 
-<a id="section4"></a>
-## 4. L'ensemble des requêtes en SQL et explications des résultats attendus ([LMD.sql](LMD.sql))
-
-<a id="section4-7"></a>
+<a id="section3-2"></a>
 ### Fonctions :
 
 * Retourne si oui ou non, un mot de passe correspond à l'utilisateur ayant un ID spécifié
@@ -158,8 +156,8 @@ END; $$
 LANGUAGE plpgsql;
 ~~~~
 
-<a id="section4-8"></a>
-### Requêtes-type utilisées par l'application
+<a id="section4"></a>
+## 4. L'ensemble des requêtes en SQL et explications des résultats attendus ([LMD.sql](LMD.sql))
 
 A moins de mentionner un autre id d'utilisateur, on suppose pour les requêtes suivantes que l'utilisateur connecté a un id = 18 :
 
@@ -181,7 +179,7 @@ WITH allProducts AS
 (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,
  date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice 
  FROM products WHERE 
- sellingPrice >= 100 sellingprice <= 250.0 
+ sellingPrice >= 100 AND sellingprice <= 250.0 
  AND date >='2019-04-08' AND date <='2019-04-10' 
  AND sellerid <> 18 )
  
