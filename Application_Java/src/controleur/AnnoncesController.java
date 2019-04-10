@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 
 import application.Offre;
+import application.Achat;
 import application.Produit;
 import dbstuff.DbAdapter;
 import dbstuff.QueriesItr;
@@ -51,13 +52,40 @@ public class AnnoncesController {
 	private TableColumn<Offre, String> prixO;
 	@FXML
 	private TableColumn<Offre, String> dateO;
+	
 	@FXML
 	private Label prixExpert;
+	
+	/**
+	 * Tableau de droite contenant les proposition faite pour 
+	 * les produits de l'utilisateur authentifié
+	 */
+	@FXML
+	private TableView<Achat> venteView;
+	@FXML
+	private TableColumn<Achat, String> produitV;
+	@FXML
+	private TableColumn<Achat, String> acheteurV;
+	@FXML
+	private TableColumn<Achat, String> prixV;
+	@FXML
+	private TableColumn<Achat, String> dateV;
+	
 	private int productid, offreid;
 	private float prixVente;
 	private Produit produit;
 	private Offre offre;
 
+	
+	@FXML
+	public void initialize() {
+		this.setTableAnnonces();
+		this.setTableVente();
+		offreView.getItems().clear();
+	}
+		
+	
+	
 	
 	
 	/**
@@ -78,6 +106,9 @@ public class AnnoncesController {
 					
 			stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID() );
 			stmt.close();
+			
+			this.initialize();
+			
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -179,5 +210,39 @@ public class AnnoncesController {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+	
+	/**
+	 * Creer une table contenant la liste des achats effectués passer en paramettre.
+	 * 
+	 * @param table La table de produit.
+	 */
+	public void creatTableVente(Iterable<Achat> table) {
+		venteView.getItems().clear();
+		
+		for (Achat o : table) {
+			venteView.getItems().add(o);
+		}
+		venteView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
+			System.out.println(venteView.getSelectionModel().getSelectedItem().getVendeur()); 
+		});
+	}
+	
+	private void creatTablecolmnsVente() {
+		
+		produitV.setCellValueFactory(new PropertyValueFactory("nomProduit"));
+		acheteurV.setCellValueFactory(new PropertyValueFactory("acheteur"));
+		prixV.setCellValueFactory(new PropertyValueFactory("prixVente"));
+		dateV.setCellValueFactory(new PropertyValueFactory("date"));
+	}
+
+	/**
+	 * Mise en place du tableau des achats effectués par l'utilisateur.
+	 * Produits pour lesquels les offres ont été acceptées.
+	 */
+	public void setTableVente() {
+		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername ,getUserFullName(buyerid) AS buyername, soldprice, datetransaction FROM soldproducts WHERE sellerid =" + MainControleur.getUtilisateur()+ ";");
+		creatTablecolmnsVente();
+		creatTableVente(QueriesItr.iteratorAchat(qt));
 	}
 }

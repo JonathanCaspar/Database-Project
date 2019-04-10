@@ -84,11 +84,11 @@ public class ConnexionController {
 		
 		if(validForm()) {
 			QueriesItr QT = new QueriesItr("SELECT userid FROM " + DbAdapter.DB_TABLES[0] + 
-					" WHERE username = '" +username + "' AND password = '"+ password+"' ;");
+					" WHERE username = '" + username + "' AND password = '"+ password+"' ;");
 			ResultSet rs = QT.getResultSet();
 			
 			try{
-				
+					
 				if (rs.next()) {
 					System.out.println("userID = " + rs.getInt("userid"));
 					userID = rs.getInt("userid");
@@ -97,7 +97,12 @@ public class ConnexionController {
 					Stage stage = (Stage) connect.getScene().getWindow(); 
 				    stage.close();
 				}
-				
+				else {
+					
+					QT.quitter();
+					errorPopup("Problème identification", "Cette association nom d'utilisateur/mot de passe n'existe pas.");
+				}
+					
 			} catch (SQLException e) {
 				
 				QT.quitter();

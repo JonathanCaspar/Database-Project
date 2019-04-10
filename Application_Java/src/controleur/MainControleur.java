@@ -60,7 +60,7 @@ public class MainControleur {
 			mainPane.getSelectionModel().select(catalogueT);
 		}
 		else {
-			annoncesController.setTableAnnonces();
+			annoncesController.initialize();
 		}
 	}
 	
