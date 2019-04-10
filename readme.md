@@ -1,6 +1,10 @@
 Projet final - Base de données
 =======================================
 
+#### Jonathan Caspar (20059041) - Jules Cohen (20032498)
+
+#### Jean-François Blanchette (20030091) - Tanahel Huot Roberge (20096767)
+
 ## Sommaire :
 
 1. Diagramme Entité-Association
@@ -15,17 +19,17 @@ Projet final - Base de données
 
 ![](https://github.com/JonathanCaspar/ProjetFinalBD/blob/master/modeleEA/modeleEA.png?raw=true)
 
-Tout d&#39;abord, l&#39;application comporte des utilisateurs inscrits « users » qui doivent déclarer leur **nom d&#39;utilisateur, mot de passe et prénom**. Pour des fins de confidentialité, **les numéros de téléphone** et **nom de famille** ne sont pas obligatoires. Lors de la création de l&#39;utilisateur, un **<ins>numéro d&#39;identification unique</ins>** lui sera attitré automatiquement par la base de données.
+Tout d&#39;abord, l&#39;application comporte des utilisateurs inscrits `users` qui doivent déclarer leur **nom d&#39;utilisateur, mot de passe et prénom**. Pour des fins de confidentialité, **les numéros de téléphone** et **nom de famille** ne sont pas obligatoires. Lors de la création de l&#39;utilisateur, un **<ins>numéro d&#39;identification unique</ins>** lui sera attitré automatiquement par la base de données.
 
 Une fois enregistré, un utilisateur peut vendre aucun ou plusieurs produits (0 : n) ou faire aucune ou plusieurs offres (0 : n). Quant aux produits, ils peuvent recevoir aucune ou plusieurs (0 : n) offres, n&#39;appartenir qu&#39;à une seule catégorie (1 : 1) et n&#39;avoir qu&#39;un seul vendeur (1 : 1).
 
-Lorsqu&#39;il vend, l&#39;utilisateur crée un nouvel enregistrement dans « products » comprenant **le nom de l&#39;objet, une description, un prix** et sa **catégorie.** Ensuite, l&#39;utilisateur recevra le **prix estimé** par l&#39;expert et pourra accepter ou refuser de vendre au prix indiqué. Lorsque l&#39;offre de l&#39;expert sera acceptée, le produit se verra attribué **la date de mise en vente** , un **<ins>identifiant unique</ins>** et **#l&#39;id vendeur** et **#id catégorie de l&#39;objet.**
+Lorsqu&#39;il vend, l&#39;utilisateur crée un nouvel enregistrement dans `products` comprenant **le nom de l&#39;objet, une description, un prix** et sa **catégorie.** Ensuite, l&#39;utilisateur recevra le **prix estimé** par l&#39;expert et pourra accepter ou refuser de vendre au prix indiqué. Lorsque l&#39;offre de l&#39;expert sera acceptée, le produit se verra attribué **la date de mise en vente** , un **<ins>identifiant unique</ins>** et **#l&#39;id vendeur** et **#id catégorie de l&#39;objet.**
 
-Lorsque l&#39;utilisateur fait une offre sur un produit existant, **<ins>l&#39;id unique de l&#39;offre</ins>**,  **le prix offert, #id produit, #id acheteur et la date** seront ajoutés dans la table « offers ». Un produit vendu sera enregistré dans la table « soldProducts » contenant un **id unique** , **son nom**, **description**, **#id du vendeur**, **#id catégorie du produit**, **#id de l&#39;acheteur**, **prix estimé**, **prix de vente**, **prix vendu** et la **date de la transaction**.
+Lorsque l&#39;utilisateur fait une offre sur un produit existant, **<ins>l&#39;id unique de l&#39;offre</ins>**,  **le prix offert, #id produit, #id acheteur et la date** seront ajoutés dans la table `offers`. Un produit vendu sera enregistré dans la table `soldProducts` contenant un **id unique** , **son nom**, **description**, **#id du vendeur**, **#id catégorie du produit**, **#id de l&#39;acheteur**, **prix estimé**, **prix de vente**, **prix vendu** et la **date de la transaction**.
 
-Par ailleurs, les catégories principales « mainCategory » sont référencées par leur **<ins>id unique</ins>** et leur **nom.** Elles contiennent une ou plusieurs (1 : n) sous-catégories qui contiennent, à leur tour, ont un **<ins>id unique<ins>** , **un nom** et **#idMaincategory.**
+Par ailleurs, les catégories principales `mainCategories` sont référencées par leur **<ins>id unique</ins>** et leur **nom.** Elles contiennent une ou plusieurs (1 : n) sous-catégories qui contiennent, à leur tour, ont un **<ins>id unique<ins>** , **un nom** et **#idMaincategory.**
 
-Les sous-catégories « category » ne peuvent avoir qu&#39;une seule (1 : 1) catégorie principale et peuvent contenir aucun ou plusieurs produits (0 : n).
+Les sous-catégories `categories` ne peuvent avoir qu&#39;une seule (1 : 1) catégorie principale et peuvent contenir aucun ou plusieurs produits (0 : n).
 
 ### Légende
 
@@ -53,20 +57,20 @@ SoldProducts est une table de __log__ conservant l'historique des produits vendu
 ## 3. Définition de la base de données ([DDL.sql])
 
 ### Explications des choix d'implémentation :
-Nous avons décidé de représenter les **acheteurs** et les **vendeurs** en une seule entité (**user**) ayant un ID arbitraire comme clé primaire. Les experts n'ont pas été représenté car nous ne jugions pas cela nécessaire (une simple fenêtre suivant la mise en vente suffit).
+Nous avons décidé de représenter les `acheteurs` et les `vendeurs` en une seule entité (`user`) ayant un ID arbitraire comme clé primaire. Les experts n'ont pas été représenté car nous ne jugions pas cela nécessaire (une simple fenêtre suivant la mise en vente suffit).
 
-Les **produits** ont comme clé primaire standard : un ID généré et ont tous une référence (clé étrangère) vers l'entité du vendeur et de sa catégorie.
+Les `produits` ont comme clé primaire standard : un ID généré et ont tous une référence (clé étrangère) vers l'entité du vendeur et de sa catégorie.
 
-Les **catégories** sont classés par **catégories principales** (**maincategories**), et chaque produit fait partie d'une seule catégorie. De plus, on force l'unicité de la paire **(catname et maincatid)** pour éviter les doublons au sein d'une même catégorie principale. (par exemple : une catégorie "Autres" pourrait exister plusieurs fois mais pour des catégories principales différentes seulement.)
+Les `catégories` sont classés par `catégories principales` (`maincategories`), et chaque produit fait partie d'une seule catégorie. De plus, on force l'unicité de la paire `(catname et maincatid)` pour éviter les doublons au sein d'une même catégorie principale. (par exemple : une catégorie "Autres" pourrait exister plusieurs fois mais pour des catégories principales différentes seulement.)
 
-Les **offres** sont représentés de la même façon que les produits, elles sont identifiées par un ID généré, et ont tous une référence (clé étrangère) vers l'entité de l'acheteur (celui qui a fait l'offre) et le produit ciblé par l'offre. 
-Nous avons choisi d'ajouter un **"ON DELETE CASCADE"** à :
+Les `offres` sont représentés de la même façon que les produits, elles sont identifiées par un ID généré, et ont tous une référence (clé étrangère) vers l'entité de l'acheteur (celui qui a fait l'offre) et le produit ciblé par l'offre. 
+Nous avons choisi d'ajouter un `ON DELETE CASCADE` à :
 ~~~~sql
 FOREIGN KEY (productid) REFERENCES products(refid) ON DELETE CASCADE,
 ~~~~
 Afin de faciliter la suppression future des offres pour lesquelles le produit associé n'est plus présent dans la base de données. Ainsi, lorsqu'un produit est supprimé (vente terminée, annulée, etc...) toutes les offres qui y faisaient référence seront aussi supprimées.
 
-La dernière table **soldproducts** nous sert à garder une trace des informations sur les produits vendus.
+La dernière table `soldproducts` nous sert à garder une trace des informations sur les produits vendus.
 
 ### Fonctions :
 
@@ -249,28 +253,28 @@ WITH nombreOffreParProduit AS
 
 ### Usage général
 
-Dans l’onglet principal (catalogue), l’interface principale de l’application est divisée en trois boîtes : Catégories, Objets et Options.
+Dans l’onglet principal (catalogue), l’interface principale de l’application est divisée en trois boîtes : `Catégories`, `Objets` et `Options`.
 L’usager peut sélectionner la catégorie générale d’un objet qu’il recherche pour filtrer les objets en vente. Les catégories sont ainsi sous-divisées en catégories plus précises pour simplifier et alléger la recherche de l’objet désiré. 
-Les objets en vente sont indiqués dans la boîte « Objets » et son filtrables selon le choix de l’usager. Donc, pour faire une recherche en ordre alphabétique, l’usager n’a qu’à cliquer sur « Produit » pour que les objets soient dans l’ordre approprié. Il en va de même pour le reste des colonnes. 
-Pour afficher les détails d’une annonce, il suffit de double-cliquer sur celle qui intéresse l’usager. Une nouvelle fenêtre s’ouvrira avec les détails et les commentaires de l’article. Il sera possible de faire une offre sur l’objet que lorsque l’usager sera inscrit dans la base de données (voir volet « Inscription au site »).
-La boîte « options » permet un filtrage encore plus précis pour l’usager. Il est possible d’entrer les prix minimum et maximum qu’il désire payer, ainsi que les dates d’affichage d’un produit en appuyant sur « Mettre à jour ».
+Les objets en vente sont indiqués dans la boîte `Objets` et son filtrables selon le choix de l’usager. Donc, pour faire une recherche en ordre alphabétique, l’usager n’a qu’à cliquer sur `Produit` pour que les objets soient dans l’ordre approprié. Il en va de même pour le reste des colonnes. 
+Pour afficher les détails d’une annonce, il suffit de double-cliquer sur celle qui intéresse l’usager. Une nouvelle fenêtre s’ouvrira avec les détails et les commentaires de l’article. Il sera possible de faire une offre sur l’objet que lorsque l’usager sera inscrit dans la base de données (voir volet `Inscription au site`).
+La boîte `options` permet un filtrage encore plus précis pour l’usager. Il est possible d’entrer les prix minimum et maximum qu’il désire payer, ainsi que les dates d’affichage d’un produit en appuyant sur `Mettre à jour`.
  
  ### Inscription et connexion au site
 
-Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet « Client » et sélectionner « Inscription ».  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le numéro de téléphone est facultatif. 
-Lorsque l’inscription est réussie, l’usager a, désormais, accès à toutes les fonctionnalités du site. Cliquez sur connexion, entrez vos informations d’utilisateur et cliquez sur « Se Connecter ».
+Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le numéro de téléphone est facultatif. 
+Lorsque l’inscription est réussie, l’usager a, désormais, accès à toutes les fonctionnalités du site. Cliquez sur connexion, entrez vos informations d’utilisateur et cliquez sur `Se Connecter`.
 
 ### Faire une offre/acheter un produit
 
-Pour faire une offre sur un produit en vente, il suffit de suivre la procédure indiquée dans la section « Usage général » et indiquer le prix prêt à offrir dans l’espace prévu à cet effet. Une offre supérieure au prix proposé par le vendeur conclura automatiquement la vente du produit. Une offre inférieure au prix de vente enverra une offre au vendeur qui a le choix d’accepter ou non le prix proposé par l’usager. Lorsque la vente est concluante, une fenêtre confirmant l’achat sera affichée à l’usager.
+Pour faire une offre sur un produit en vente, il suffit de suivre la procédure indiquée dans la section `Usage général` et indiquer le prix prêt à offrir dans l’espace prévu à cet effet. Une offre supérieure au prix proposé par le vendeur conclura automatiquement la vente du produit. Une offre inférieure au prix de vente enverra une offre au vendeur qui a le choix d’accepter ou non le prix proposé par l’usager. Lorsque la vente est concluante, une fenêtre confirmant l’achat sera affichée à l’usager.
 
 ### Vendre un produit
 
-À la suite de la connexion à l’application, il faut cliquer sur l’onglet « Mes annonces » de l’interface principal pour accéder aux options de vente. La boîte « Mes Produits » indique les produits mis en vente par l’usager et la boîte « Propositions » affiche les offres reçues par différents clients potentiels. 
-Pour mettre un objet en vente, cliquer sur « Annoncer un produit ». Une nouvelle fenêtre s’ouvre où les informations de l’objet devront être entrées. Une fois les espaces comblés, l’usager recevra un prix proposé par l’expert selon le marché. Libre à l’usager d’accepter ou non la proposition. Si le prix de l’expert est accepté, l’objet sera mis en vente au prix proposé par ce-dernier. Sinon, l’objet ne sera pas mis en vente. 
-Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte « Propositions » et cliquer sur « Accepter ». Les détails de la vente seront indiqués dans la boîte « Mes ventes ». 
+À la suite de la connexion à l’application, il faut cliquer sur l’onglet `Mes annonces` de l’interface principal pour accéder aux options de vente. La boîte `Mes Produits` indique les produits mis en vente par l’usager et la boîte `Propositions` affiche les offres reçues par différents clients potentiels. 
+Pour mettre un objet en vente, cliquer sur `Annoncer un produit`. Une nouvelle fenêtre s’ouvre où les informations de l’objet devront être entrées. Une fois les espaces comblés, l’usager recevra un prix proposé par l’expert selon le marché. Libre à l’usager d’accepter ou non la proposition. Si le prix de l’expert est accepté, l’objet sera mis en vente au prix proposé par ce-dernier. Sinon, l’objet ne sera pas mis en vente. 
+Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte `Propositions` et cliquer sur `Accepter`. Les détails de la vente seront indiqués dans la boîte `Mes ventes`. 
 Une offre acceptée entraînera un refus automatique de toutes les autres offres en attente du même produit. 
 
 ### Achats effectués
 
-L’onglet « Mes achats » de l’interface principal permet de conserver l’historique des achats de l’usager. Ils y sont indiqués en ordre chronologique et contiennent les informations pertinentes de l’achat. Dans la boîte de gauche, les offres en suspens y sont affichées. Une offre en suspens n’est pas refusée, mais bien en attente de confirmation par le vendeur. 
+L’onglet `Mes achats` de l’interface principal permet de conserver l’historique des achats de l’usager. Ils y sont indiqués en ordre chronologique et contiennent les informations pertinentes de l’achat. Dans la boîte de gauche, les offres en suspens y sont affichées. Une offre en suspens n’est pas refusée, mais bien en attente de confirmation par le vendeur. 
