@@ -35,7 +35,7 @@ public class InscriptionController {
 	/**
 	 * Verifie si le formulaire est entierement rempli 
 	 * et si le numero de telephone est au bon format
-	 * @return
+	 * @return vrai si le formulaire est valide, faux sinon
 	 */
     public boolean validForm() {
     	
@@ -85,12 +85,6 @@ public class InscriptionController {
 				errorPopup("Probleme Base de Données", "L'insertion n'a pas pu être effectuée.");
 				e.printStackTrace();
 			}
-			
-			
-//			Statement stmt = null;
-//			QueriesItr QT = new QueriesItr("INSERT INTO users (username, password, firstname, lastname, phonenumber) VALUES"+
-//					" ('"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+tel+"')");
-//			QT.quitter();
 		}
 	}
 	

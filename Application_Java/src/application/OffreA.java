@@ -16,7 +16,10 @@ public class OffreA {
 	private Float prixDemande;
 	private Date date;
 	
-	
+	/**
+	 * Constructeur d'une Offre pour "Mes Achats"
+	 * @param temp
+	 */
 	public OffreA(ResultSet temp) {
 		try {
 				
