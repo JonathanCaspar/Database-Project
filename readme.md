@@ -132,7 +132,6 @@ END; $$
 LANGUAGE plpgsql;
 ~~~~
 
-
 * Comptabilise le nombre d'offres associées au produit en vente (avec refid)
 ~~~~sql
 CREATE OR REPLACE FUNCTION getOffersCount(refid integer)
@@ -158,6 +157,7 @@ BEGIN
 END; $$
 LANGUAGE plpgsql;
 ~~~~
+
 <a id="section4-8"></a>
 ### Requêtes-type utilisées par l'application
 
@@ -229,5 +229,28 @@ FROM soldproducts WHERE buyerid =18;
 
 #### 4) Autres requêtes spéficiques
 
+* Trouve les produits les plus en demande (ceux avec le plus d'offres) par mainCategories
+~~~~sql
+WITH nombreOfrreParProduit AS 
+      (SELECT count(*) AS nbrOffre, productid
+          FROM offers GROUP BY productid),
+  mainCatWithChildren AS
+      (SELECT catid, maincatid, maincatname
+          FROM categories NATURAL JOIN maincategories),
+  productsWithNbrOffers AS
+      (SELECT *
+          FROM products JOIN nombreOfrreParProduit
+          ON refid = productid),
+  mainCatWithProduct AS
+    (SELECT  maincatname, refid, name, description, sellerid, 
+             categoryid, estimatedprice, sellingprice, nbrOffre
+          FROM productsWithNbrOffers JOIN mainCatWithChildren ON catid = categoryid),
+  maxByMainCategory AS
+      (SELECT  maincatname, MAX(ALL nbrOffre) as nbrOffre
+          FROM mainCatWithProduct
+          GROUP BY maincatname)
+  SELECT * 
+      FROM mainCatWithProduct NATURAL JOIN maxByMainCategory;
+~~~~
 <a id="section5"></a>
 ## 5. Guide utilisateur
