@@ -258,6 +258,7 @@ public class QueriesItr {
 	 * 
 	 * @param mainCatActuelle La categorie superieur actuelle null si on est dans toutes les categorie.
 	 * @param catActuelle La categorie souhaitee actuelle.
+	 * @param recherche 
 	 * @param prixMinimum Le prix affiche minimum null s'il y en a pas
 	 * @param prixMaximum Le prix affiche maximum null s'il n'y en a pas
 	 * @param prixOffertMinimum Le prix offert minimum null s'il n'y en a pas
@@ -266,7 +267,7 @@ public class QueriesItr {
 	 * @param maxDate La date maximale null s'il y en a pas
 	 * @return Le QueriesItr selon les criteres 
 	 */
-	public static QueriesItr creatListProductQuery(String mainCatActuelle, String catActuelle, Float prixMinimum,
+	public static QueriesItr creatListProductQuery(String mainCatActuelle, String catActuelle, String recherche, Float prixMinimum,
 			Float prixMaximum, Float prixOffertMinimum, Float prixOffertMaximum, Date minDate, Date maxDate) {
 
 		String allProducts = "\nWITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
@@ -274,7 +275,25 @@ public class QueriesItr {
 
 		String allCategorie = "";
 		String joinCategorie = " JOIN categories ON categoryid = catid";
-
+		
+		String like = "";
+		if (recherche != null) {
+			String[] words = recherche.split("[\\p{Punct}\\s]+");
+			int i = 0;
+			for (String w : words) {
+				if (w.length() > 2) {
+					w = w.toLowerCase();
+					like += " LOWER( name ) LIKE '%" + w + "%' OR";
+					like += " LOWER( description ) LIKE '%" + w + "%' OR";
+					i++;
+				}
+			}
+			
+			if (i > 0) {
+				like = "(" + like.substring(0, like.length() - 2) + ")";
+			}
+		}
+		
 		String prixMin = "";
 		if (prixMinimum != null) {
 			prixMin = " sellingprice >= " + prixMinimum + " AND";
@@ -313,17 +332,18 @@ public class QueriesItr {
 		if (MainControleur.getUtilisateur() >= 0) {
 			user = " sellerid <> " + MainControleur.getUtilisateur() + " AND";
 		}
-
-		if (!(prixMin.isEmpty() && prixMax.isEmpty() && dateMin.isEmpty() && dateMax.isEmpty() && user.isEmpty())) {
+		
+		// Si un des champs de restriction n'est pas vide on l'ajoute a la requete
+		if (!(prixMin.isEmpty() && prixMax.isEmpty() && dateMin.isEmpty() && dateMax.isEmpty() && user.isEmpty() && like.isEmpty())) {
 			allProducts = "\nWITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername,"
-					+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE";
+					+ " date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE    ";
 			allProducts += prixMin;
 			allProducts += prixMax;
 			allProducts += dateMin;
 			allProducts += dateMax;
 			allProducts += user;
 
-			allProducts = allProducts.substring(0, allProducts.length() - 3) + ")";
+			allProducts = allProducts.substring(0, allProducts.length() - 3) + like + ")";
 		}
 
 		if (mainCatActuelle != null) {
@@ -350,7 +370,7 @@ public class QueriesItr {
 		query += prixOffertMax;
 		query += ";";
 		QueriesItr t = new QueriesItr(query);
-		System.out.println("Requête créee = " + query);
+		System.out.println("Requï¿½te crï¿½ee = " + query);
 		return t;
 	}
 }

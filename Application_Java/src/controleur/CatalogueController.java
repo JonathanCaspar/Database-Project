@@ -79,6 +79,8 @@ public class CatalogueController {
 	@FXML
 	private VBox rightVBox;
 	@FXML
+    private TextField rechercheTextField;
+	@FXML
 	private TextField prixMin;
 	@FXML
 	private TextField prixMax;
@@ -118,6 +120,10 @@ public class CatalogueController {
 
 	@FXML
 	void actionMettreAJour(ActionEvent event) {
+		String recherche = null;
+		if (!rechercheTextField.getText().trim().isEmpty()) {
+			recherche = rechercheTextField.getText().trim();
+		}
 		Float prixMinimum = null;
 		if (!prixMin.getText().trim().isEmpty()) {
 			try {
@@ -160,7 +166,7 @@ public class CatalogueController {
 			maxDate = Date.valueOf(choiceDateMax.getValue());
 		}
 
-		QueriesItr qt = QueriesItr.creatListProductQuery(mainCatActuelle, catActuelle, prixMinimum, prixMaximum, prixOffertMinimum, prixOffertMaximum,
+		QueriesItr qt = QueriesItr.creatListProductQuery(mainCatActuelle, catActuelle,recherche, prixMinimum, prixMaximum, prixOffertMinimum, prixOffertMaximum,
 				minDate, maxDate);
 		creatTable(QueriesItr.iteratorProduit(qt));
 	}
