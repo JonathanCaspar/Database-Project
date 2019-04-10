@@ -26,7 +26,7 @@ public class Offre {
 			this.prix = temp.getFloat("price");
 			this.date = temp.getDate("date");
 			
-			getBuyerName(temp.getInt("buyerid"));
+			setBuyerName(temp.getInt("buyerid"));
 			
 			System.out.println("offre : " + buyer);
 			
@@ -37,7 +37,12 @@ public class Offre {
 		
 	}
 
-	public void getBuyerName(int buyerID) {
+	public String getBuyerName(int buyerID) {
+		return this.buyer;
+	}
+	
+	
+	public void setBuyerName(int buyerID) {
 		
 		QueriesItr qt = new QueriesItr("SELECT getUserFullName(buyerid) AS buyer FROM offers WHERE buyerid = "+ buyerID+" ;"  );
 		ResultSet rs = qt.getResultSet();
@@ -51,6 +56,7 @@ public class Offre {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public int getProduitID() {
 		return produitID;
@@ -62,7 +68,6 @@ public class Offre {
 	public float getPrixF() {
 		return prix;
 	}
-
 
 	public String getDate() {
 		return date.toString();

@@ -14,7 +14,7 @@ import javafx.stage.Stage;
 public class MainControleur {
 	
 	private User utilisateur = null;
-	private static int userID = 1;
+	private static int userID = -1;
 	private boolean userLoged = false;
 	@FXML
 	private MenuItem inscription;
@@ -39,31 +39,50 @@ public class MainControleur {
 	private ConnexionController connexionController;
 	@FXML
 	private InscriptionController inscriptionController;
+	@FXML
+	private AchatsController achatsController;
 	
 	@FXML
 	public void initialize() {
 		//this.catalogueController.setStage();
-		
 	}
 	
 	@FXML
-	void toOtherTab() {
+	void toAnnonces() {
 		
-		annoncesController.setTableAnnonces();
-		
-		
-//		if(userLoged == false) {
-//		
-//			goToLogin();
-//			mainPane.getSelectionModel().select(catalogueT);
-//		}
+		if(userID < 0) {
+			goToLogin();
+			mainPane.getSelectionModel().select(catalogueT);
+		}
+		else {
+			annoncesController.setTableAnnonces();
+		}
 	}
 	
+	@FXML
+	void toAchats() {
+		
+		if(userID < 0) {
+			goToLogin();
+			mainPane.getSelectionModel().select(catalogueT);
+		}else {
+			achatsController.setTableOffre();
+			achatsController.setTableAchat();
+		}
+	}
 	
+	@FXML
+	void deconnexion() {
+		setUtilisateur(-1);
+		deconnexion.setVisible(false);
+		connexion.setVisible(true);
+		inscription.setVisible(true);
+		mainPane.getSelectionModel().select(catalogueT);
+		this.catalogueController.initialize();
+	}
 	
 	@FXML
 	void goToLogin() {
-		
 		try {
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/login.fxml"));
@@ -80,28 +99,24 @@ public class MainControleur {
 			if(connexionController.isLoged()) {
 				setUtilisateur(connexionController.getUserID());
 				System.out.println("userID in MAIN = " + userID);
-				userLoged = true;
+				
 				deconnexion.setVisible(true);
 				connexion.setVisible(false);
 				inscription.setVisible(false);
-				
-//				this.annoncesController.setUtilisateur(this.userID);
-				
-				
 			}
 			
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
 	}
+	
+	
 	public static void setUtilisateur(int userid) {
-//		this.utilisateur = utilisateur;
 		userID = userid;
 	}
 	
 	public static int getUtilisateur() {
-//		this.utilisateur = utilisateur;
+
 		return userID;
 	}
 	

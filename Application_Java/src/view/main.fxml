@@ -18,7 +18,7 @@
                   <items>
                     <MenuItem fx:id="inscription" mnemonicParsing="false" onAction="#inscription" text="Inscription" />
                         <MenuItem fx:id="connexion" mnemonicParsing="false" onAction="#goToLogin" text="Connexion" />
-                        <MenuItem fx:id="deconnexion" mnemonicParsing="false" text="Deconnexion" visible="false" />
+                        <MenuItem fx:id="deconnexion" mnemonicParsing="false" onAction="#deconnexion" text="Deconnexion" visible="false" />
                   </items>
                 </Menu>
                 <Menu mnemonicParsing="false" text="Quitter">
@@ -35,12 +35,15 @@
                         <fx:include fx:id="catalogue" source="view_catalogue.fxml" />
                      </content>
                 </Tab>
-                <Tab fx:id="annoncesT" onSelectionChanged="#toOtherTab" text="Mes annonces">
+                <Tab fx:id="annoncesT" onSelectionChanged="#toAnnonces" text="Mes annonces">
                      <content>
                         <fx:include fx:id="annonces" source="view_annonces.fxml" />
                      </content>
                 </Tab>
-                  <Tab fx:id="achatsT" onSelectionChanged="#toOtherTab" text="Mes achats" />
+                  <Tab fx:id="achatsT" onSelectionChanged="#toAchats" text="Mes achats">
+                     <content>
+                        <fx:include fx:id="achats" source="view_achats.fxml" />
+                     </content></Tab>
               </tabs>
             </TabPane>
          </children>

@@ -7,8 +7,9 @@ import java.sql.Statement;
 import java.util.Iterator;
 
 import application.Offre;
+import application.OffreA;
 import application.Produit;
-import application.Vendu;
+import application.Achat;
 import controleur.CatalogueController;
 import controleur.MainControleur;
 
@@ -126,7 +127,7 @@ public class QueriesItr {
 	}
 	
 	/**
-	 * Creer une "liste" iterable d'offres sans sauvegarder toutes les offres en
+	 * Creer une "liste" iterable d'offres (coté vendeur) sans sauvegarder toutes les offres en
 	 * memoire.
 	 * 
 	 * @param qt La querry a iterer
@@ -168,18 +169,18 @@ public class QueriesItr {
 	}
 	
 	/**
-	 * Creer une "liste" iterable de produits vendus sans sauvegarder toutes les produits vendus en
+	 * Creer une "liste" iterable d'offres (coté acheteur) sans sauvegarder toutes les offres en
 	 * memoire.
 	 * 
 	 * @param qt La querry a iterer
-	 * @return Un iterable de produits vendus
+	 * @return Un iterable de Offre
 	 */
-	public static Iterable<Vendu> iteratorVendu(QueriesItr qt) {
-		return new Iterable<Vendu>() {
+	public static Iterable<OffreA> iteratorOffreA(QueriesItr qt) {
+		return new Iterable<OffreA>() {
 
 			@Override
-			public Iterator<Vendu> iterator() {
-				return new Iterator<Vendu>() {
+			public Iterator<OffreA> iterator() {
+				return new Iterator<OffreA>() {
 					ResultSet temp = qt.getResultSet();
 
 					@Override
@@ -197,10 +198,52 @@ public class QueriesItr {
 					}
 
 					@Override
-					public Vendu next() {
-						Vendu p = null;
+					public OffreA next() {
+						OffreA p = null;
 						if (qt.next()) {
-							p = new Vendu(temp);
+							p = new OffreA(temp);
+						}
+						return p;
+					}
+				};
+			}
+		};
+	}
+	
+	/**
+	 * Creer une "liste" iterable de produits vendus sans sauvegarder toutes les produits vendus en
+	 * memoire.
+	 * 
+	 * @param qt La querry a iterer
+	 * @return Un iterable de produits vendus
+	 */
+	public static Iterable<Achat> iteratorAchat(QueriesItr qt) {
+		return new Iterable<Achat>() {
+
+			@Override
+			public Iterator<Achat> iterator() {
+				return new Iterator<Achat>() {
+					ResultSet temp = qt.getResultSet();
+
+					@Override
+					public boolean hasNext() {
+						boolean hn = false;
+						try {
+							if (temp != null) {
+								hn = !temp.isClosed();
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+
+						return hn;
+					}
+
+					@Override
+					public Achat next() {
+						Achat p = null;
+						if (qt.next()) {
+							p = new Achat(temp);
 						}
 						return p;
 					}

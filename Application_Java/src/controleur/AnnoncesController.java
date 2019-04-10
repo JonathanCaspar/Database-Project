@@ -58,7 +58,6 @@ public class AnnoncesController {
 	public void accepterOffre() {
 		
 		Statement stmt = null; 
-		
 		try {
 			
 			stmt = DbAdapter.con.createStatement();
@@ -66,12 +65,10 @@ public class AnnoncesController {
 					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) VALUES"
 					+ "('"+ produit.getNomProduit()+"', '"+produit.getDescription()+"', '"+ MainControleur.getUtilisateur()+"' ,'"+offre.getBuyerID()+"' ,"
 					+ " '"+produit.getCatID()+ "', '"+produit.getEstimation()+ "', '"+ produit.getPrixF()+ "' , '"+offre.getPrixF()+ "');");
-			
-							
+					
 			stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID() );
 			stmt.close();
 		} catch (SQLException e) {
-			
 			e.printStackTrace();
 		}
 		
@@ -92,7 +89,6 @@ public class AnnoncesController {
 		objetsView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
 		    
 			produit = objetsView.getSelectionModel().getSelectedItem();
-			productid = objetsView.getSelectionModel().getSelectedItem().getRefId();
 			prixExpert.setText(""+ objetsView.getSelectionModel().getSelectedItem().getEstimation() + " $");
 			setTableOffres();
 		});
@@ -171,12 +167,6 @@ public class AnnoncesController {
 
 		} catch (Exception e) {
 			e.printStackTrace();
-
 		}
-		
 	}
-	
-	
-	
-	
 }
