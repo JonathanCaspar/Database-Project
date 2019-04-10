@@ -18,6 +18,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
+import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 
@@ -30,7 +31,7 @@ public class NewAnnonceController {
 	@FXML
 	private TextField nomTF;
 	@FXML
-	private TextField descriptionTF;
+	private TextArea descriptionTA;
 	@FXML
 	private TextField prixTF;
 	
@@ -122,7 +123,7 @@ public class NewAnnonceController {
 	    	try {
 				
 				nom = nomTF.getText();
-				description = descriptionTF.getText();
+				description = descriptionTA.getText();
 				prix = prixTF.getText();
 				catID = categoriesCB.getSelectionModel().getSelectedIndex() + 1;
 				

@@ -65,18 +65,20 @@ public class InscriptionController {
 			nom = nomTF.getText();
 			tel = telTF.getText();
 			
-			if(username.length() == 0 ||  password.length() == 0 || prenom.length() == 0 || nom.length() == 0 || tel.length() == 0) {
+			if(username.length() == 0 ||  password.length() == 0 || prenom.length() == 0) {
 				errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
 				return false;
 			}
 			
 			
-			if(tel.matches("^\\d{3}-\\d{3}-\\d{4}$")) {
+			if(tel.length() >0 && tel.matches("^\\d{3}-\\d{3}-\\d{4}$")) {
 				return true;
 			}
-			else {
+			else if(tel.length() >0 && !tel.matches("^\\d{3}-\\d{3}-\\d{4}$")) {
 				errorPopup("Format numéro de téléphone", "Le numéro saisi n'est pas au bon format \n Rappel: 123-456-7777.");
 				return false;
+			}else {
+				return true;
 			}
 		
 		
@@ -86,31 +88,60 @@ public class InscriptionController {
 			errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
 			return false;
 		}
+    }
+    
+    
+    /**
+     * Construit la query en fonction de la presence ou non de nom ou de numero de telephone
+     * @return query la requete
+     */
+    public String getQuery() {
+        String query ="INSERT INTO users ( userid, username, password, firstname"; 
+    	String values = " VALUES ( ( SELECT MAX(userid) AS max FROM users ) + 1 ,'"+ username+"', '"+password+"', '"+prenom+"' ";
+  	
+    	String end = ")";
+    	if(this.nom.length() > 0) {
+    		query += " , lastname ";
+    		values += ", '"+ this.nom +"'";
+    	}
+    	if(this.tel.length() > 0 ) {
+    		query += " , phonenumber ";
+    		values += ", '"+this.tel+"'";
+    	}
+    	values += end;
+    	query += end;
+    	query += values;
     	
+    	System.out.println(query);
+
+    	
+    	return query;
     }
     
-    
-    public void setNewMaxId() {
-    	try {
-			
-			Statement stmt = DbAdapter.con.createStatement();
-			
-			if (stmt != null) {
-				ResultSet rs = stmt.executeQuery("SELECT MAX(userid) AS max FROM users;");
-				if(rs.next()) {
-					
-					this.userID = rs.getInt("max") + 1;
-				}
-				stmt.close();
-				
-				System.out.println(" ID = "+ this.userID);
-			}
-		} catch (SQLException e) {
-			errorPopup("Probleme Base de Données", "Requête non effectuée.");
-			e.printStackTrace();
-		}
-		
-    }
+//    public void setNewMaxId() {
+//    	try {
+//			
+//			Statement stmt = DbAdapter.con.createStatement();
+//			
+//			if (stmt != null) {
+//				ResultSet rs = stmt.executeQuery("SELECT MAX(userid) AS max FROM users;");
+//				if(rs.next()) {
+//					
+//					this.userID = rs.getInt("max") + 1;
+//				}
+//				stmt.close();
+//				
+//				System.out.println(" ID = "+ this.userID);
+//			}
+//		} catch (SQLException e) {
+//			errorPopup("Probleme Base de Données", "Requête non effectuée.");
+//			e.printStackTrace();
+//		}
+//		
+//    }
+//    
+//    
+//    
     
     /**
      * Insertion d'un nouvel utilisateur dans la base de données.
@@ -120,15 +151,13 @@ public class InscriptionController {
 		
 		if(validForm()) {
 			
-			setNewMaxId();
+//			setNewMaxId();
 			
 			try{
 				
 				Statement stmt = DbAdapter.con.createStatement();
 				if (stmt != null) {
-					stmt.executeUpdate("WITH newID AS(SELECT MAX(userid)+1 FROM users) \n "+
-										"INSERT INTO users ( userid, username, password, firstname, lastname, phonenumber) VALUES"+
-							" ( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+tel+"')");
+					stmt.executeUpdate(getQuery());
 					stmt.close();
 					
 					Stage stage = (Stage) inscriptionPane.getScene().getWindow(); 
