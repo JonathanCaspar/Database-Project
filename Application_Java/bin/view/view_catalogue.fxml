@@ -83,7 +83,7 @@
                                     <DatePicker fx:id="choiceDateMax" disable="true" promptText="Date maximale" />
                                  </children>
                               </VBox>
-                              <Button fx:id="MettreAJour" mnemonicParsing="false" onAction="#actionMettreAJour" text="Mettre à jour" />
+                              <Button fx:id="MettreAJour" mnemonicParsing="false" onAction="#actionMettreAJour" style="-fx-background-color: #081a94;" text="Mettre à jour" textFill="#fffefe" />
                            </children>
                         </VBox>
                 </children>

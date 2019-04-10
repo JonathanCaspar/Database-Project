@@ -104,7 +104,7 @@ public class AchatsController {
 	 * Produits pour lesquels les offres ont été acceptées.
 	 */
 	public void setTableAchat() {
-		QueriesItr qt = new QueriesItr("SELECT name, sellerid, soldprice, datetransaction FROM soldproducts WHERE buyerid =" + MainControleur.getUtilisateur()+ ";");
+		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername, soldprice, datetransaction FROM soldproducts WHERE buyerid =" + MainControleur.getUtilisateur()+ ";");
 		creatTablecolmnsAchat();
 		creatTableAchat(QueriesItr.iteratorAchat(qt));
 	}

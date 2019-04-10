@@ -8,7 +8,7 @@ public class Achat {
 
 	private String nomProduit;
 	private float prixVente = 0;
-	private Date date;
+	private String date;
 	private String vendeur;
 	
 	
@@ -16,7 +16,7 @@ public class Achat {
 		try {
 			nomProduit = temp.getString("name");
 			vendeur = temp.getString("sellername");
-			date = temp.getDate("datetransaction");
+			date = temp.getDate("datetransaction").toString();
 			prixVente = temp.getFloat("soldprice");
 			
 		} catch (SQLException e) {
@@ -34,7 +34,7 @@ public class Achat {
 	}
 
 	public String getDate() {
-		return date.toString();
+		return date;
 	}
 
 	public String getVendeur() {

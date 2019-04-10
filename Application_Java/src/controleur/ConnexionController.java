@@ -1,7 +1,9 @@
 package controleur;
 
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
 
 import java.awt.Window;
 import java.sql.ResultSet;
@@ -28,42 +30,80 @@ public class ConnexionController {
 	@FXML
 	private Button connect;
 	
+	@FXML
+	private AnchorPane loginPane;
 	private User utilisateur;
 	
 	private int userID;
 	
 	private boolean isloged = false;
+	
+	private String username, password;
 		
+	@FXML
+	public void initialize() {
+		
+		loginPane.setOnKeyReleased(event -> {
+			  if (event.getCode() == KeyCode.ENTER){
+				  authentification();
+			  }
+		});
+	}
+	
+	public boolean validForm() {
+		
+		try {
+			
+			username = usernameTF.getText();
+			password = passwordPF.getText();
+			
+			if(username.length() == 0 || password.length() == 0) {
+				errorPopup("Données manquantes.", "Vous n'avez pas rempli tous les champs.");
+				return false;
+			}
+			
+			return true;
+			
+		} catch(NullPointerException e) {
+			errorPopup("Données manquantes.", "Vous n'avez pas rempli tous les champs.");
+			e.printStackTrace();
+			return false;
+		}
+		
+	}
+	
+	
 	/**
 	 * Verifie si l'assocation username/password est dans la base de données
 	 * 
 	 * @param event
 	 */
 	@FXML
-	void authentification(ActionEvent event) {
-		String username = usernameTF.getText();
-		String password = passwordPF.getText();
+	void authentification() {
 		
-		QueriesItr QT = new QueriesItr("SELECT userid FROM " + DbAdapter.DB_TABLES[0] + 
-				" WHERE username = '" +username + "' AND password = '"+ password+"' ;");
-		ResultSet rs = QT.getResultSet();
 		
-		try{
+		if(validForm()) {
+			QueriesItr QT = new QueriesItr("SELECT userid FROM " + DbAdapter.DB_TABLES[0] + 
+					" WHERE username = '" +username + "' AND password = '"+ password+"' ;");
+			ResultSet rs = QT.getResultSet();
 			
-			if (rs.next()) {
-				System.out.println("userID = " + rs.getInt("userid"));
-				userID = rs.getInt("userid");
-				this.isloged = true;
+			try{
 				
-				Stage stage = (Stage) connect.getScene().getWindow(); 
-			    stage.close();
+				if (rs.next()) {
+					System.out.println("userID = " + rs.getInt("userid"));
+					userID = rs.getInt("userid");
+					this.isloged = true;
+					
+					Stage stage = (Stage) connect.getScene().getWindow(); 
+				    stage.close();
+				}
+				
+			} catch (SQLException e) {
+				
+				QT.quitter();
+				errorPopup("Problème identification", "Cette association nom d'utilisateur/mot de passe n'existe pas.");
+				e.printStackTrace();
 			}
-			
-		} catch (SQLException e) {
-			
-			QT.quitter();
-			errorPopup("Problème identification", "Cette association nom d'utilisateur/mot de passe n'existe pas.");
-			e.printStackTrace();
 		}
 	}
 	

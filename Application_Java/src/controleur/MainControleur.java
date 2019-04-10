@@ -15,6 +15,7 @@ public class MainControleur {
 	
 	private User utilisateur = null;
 	private static int userID = -1;
+
 	private boolean userLoged = false;
 	@FXML
 	private MenuItem inscription;

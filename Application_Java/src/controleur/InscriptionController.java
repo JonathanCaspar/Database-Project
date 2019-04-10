@@ -13,10 +13,14 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.control.Alert.AlertType;
+import javafx.scene.input.KeyCode;
 
 public class InscriptionController {
 
+	@FXML
+	AnchorPane inscriptionPane;
 	@FXML
 	TextField usernameTF;
 	@FXML
@@ -32,6 +36,18 @@ public class InscriptionController {
     private String username, password, prenom, nom, tel;
 	
 
+    
+    @FXML
+	public void initialize() {
+		
+		inscriptionPane.setOnKeyReleased(event -> {
+			  if (event.getCode() == KeyCode.ENTER){
+				  inscrire();
+			  }
+		});
+	}
+    
+    
 	/**
 	 * Verifie si le formulaire est entierement rempli 
 	 * et si le numero de telephone est au bon format
@@ -46,6 +62,12 @@ public class InscriptionController {
 			prenom = prenomTF.getText();
 			nom = nomTF.getText();
 			tel = telTF.getText();
+			
+			if(username.length() == 0 ||  password.length() == 0 || prenom.length() == 0 || nom.length() == 0 || tel.length() == 0) {
+				errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
+				return false;
+			}
+			
 			
 			if(tel.matches("^\\d{3}-\\d{3}-\\d{4}$")) {
 				return true;

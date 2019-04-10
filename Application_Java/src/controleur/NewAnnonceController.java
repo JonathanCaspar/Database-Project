@@ -13,6 +13,8 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.Button;
 import javafx.scene.control.ButtonBar.ButtonData;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 import javafx.scene.control.ButtonType;
 import javafx.scene.control.ComboBox;
@@ -21,6 +23,8 @@ import javafx.scene.control.TextInputDialog;
 
 public class NewAnnonceController {
 	
+	@FXML
+	AnchorPane annoncePane;
 	@FXML
 	private Button soumettre;
 	@FXML
@@ -62,6 +66,12 @@ public class NewAnnonceController {
 		}
 		
 		categoriesCB.getItems().addAll(categories);
+		
+		annoncePane.setOnKeyReleased(event -> {
+			  if (event.getCode() == KeyCode.ENTER){
+				  soumettre();
+			  }
+		});
 		
 	}
 	
@@ -115,6 +125,11 @@ public class NewAnnonceController {
 				description = descriptionTF.getText();
 				prix = prixTF.getText();
 				catID = categoriesCB.getSelectionModel().getSelectedIndex() + 1;
+				
+				if(nom.length() == 0 || description.length() == 0 || prix.length() == 0) {
+					errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
+					return false;
+				}
 				
 				if(prix.matches("^-?\\d*(\\.\\d{2}){0,1}$")) {
 					return true;

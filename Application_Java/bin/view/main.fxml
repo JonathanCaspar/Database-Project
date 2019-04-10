@@ -21,11 +21,6 @@
                         <MenuItem fx:id="deconnexion" mnemonicParsing="false" onAction="#deconnexion" text="Deconnexion" visible="false" />
                   </items>
                 </Menu>
-                <Menu mnemonicParsing="false" text="Quitter">
-                  <items>
-                    <MenuItem mnemonicParsing="false" text="Delete" />
-                  </items>
-                </Menu>
               </menus>
             </MenuBar>
             <TabPane fx:id="mainPane" maxWidth="-Infinity" prefHeight="655.0" prefWidth="1203.0" tabClosingPolicy="UNAVAILABLE">
