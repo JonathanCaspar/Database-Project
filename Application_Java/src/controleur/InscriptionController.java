@@ -96,15 +96,9 @@ public class InscriptionController {
      * @return query la requete
      */
     public String getQuery() {
-//    	String query = "\nWITH maxUserID AS ( SELECT MAX(userid) AS max FROM users ) \n"+
         String query ="INSERT INTO users ( userid, username, password, firstname"; 
-//    	String values = "VALUES ( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"' ";
     	String values = " VALUES ( ( SELECT MAX(userid) AS max FROM users ) + 1 ,'"+ username+"', '"+password+"', '"+prenom+"' ";
-
-    	
-//    	String query = "INSERT INTO users (username, password, firstname"; 
-//    	String values = "VALUES ('"+ username+"', '"+password+"', '"+prenom+"' ";
-    	
+  	
     	String end = ")";
     	if(this.nom.length() > 0) {
     		query += " , lastname ";
@@ -124,30 +118,30 @@ public class InscriptionController {
     	return query;
     }
     
-    public void setNewMaxId() {
-    	try {
-			
-			Statement stmt = DbAdapter.con.createStatement();
-			
-			if (stmt != null) {
-				ResultSet rs = stmt.executeQuery("SELECT MAX(userid) AS max FROM users;");
-				if(rs.next()) {
-					
-					this.userID = rs.getInt("max") + 1;
-				}
-				stmt.close();
-				
-				System.out.println(" ID = "+ this.userID);
-			}
-		} catch (SQLException e) {
-			errorPopup("Probleme Base de Données", "Requête non effectuée.");
-			e.printStackTrace();
-		}
-		
-    }
-    
-    
-    
+//    public void setNewMaxId() {
+//    	try {
+//			
+//			Statement stmt = DbAdapter.con.createStatement();
+//			
+//			if (stmt != null) {
+//				ResultSet rs = stmt.executeQuery("SELECT MAX(userid) AS max FROM users;");
+//				if(rs.next()) {
+//					
+//					this.userID = rs.getInt("max") + 1;
+//				}
+//				stmt.close();
+//				
+//				System.out.println(" ID = "+ this.userID);
+//			}
+//		} catch (SQLException e) {
+//			errorPopup("Probleme Base de Données", "Requête non effectuée.");
+//			e.printStackTrace();
+//		}
+//		
+//    }
+//    
+//    
+//    
     
     /**
      * Insertion d'un nouvel utilisateur dans la base de données.
@@ -157,7 +151,7 @@ public class InscriptionController {
 		
 		if(validForm()) {
 			
-			setNewMaxId();
+//			setNewMaxId();
 			
 			try{
 				
