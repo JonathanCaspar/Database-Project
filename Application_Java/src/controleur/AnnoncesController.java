@@ -13,10 +13,14 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ButtonType;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
+import javafx.scene.control.Alert.AlertType;
+import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
@@ -53,9 +57,15 @@ public class AnnoncesController {
 	@FXML
 	private TableView<Offre> offreView;
 	@FXML
-	private TableColumn<Offre, String> acheteur;
+	private TableColumn<Offre, String> produitO;
+	@FXML
+	private TableColumn<Offre, String> acheteurO;
 	@FXML
 	private TableColumn<Offre, String> prixO;
+	@FXML
+	private TableColumn<Offre, String> offreO;
+	@FXML
+	private TableColumn<Offre, String> estimationO;
 	@FXML
 	private TableColumn<Offre, String> dateO;
 	
@@ -87,7 +97,12 @@ public class AnnoncesController {
 	public void initialize() {
 		this.setTableAnnonces();
 		this.setTableVente();
-		offreView.getItems().clear();
+		
+		String queryAllOffers = "SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO"+
+				" FROM offers JOIN products ON productid = refid WHERE sellerid = '"+MainControleur.getUtilisateur()+"';";
+		
+		
+		this.setTableOffres(queryAllOffers);
 	}
 		
 	
@@ -106,12 +121,14 @@ public class AnnoncesController {
 			
 			stmt = DbAdapter.con.createStatement();
 			stmt.executeUpdate(
-					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) VALUES"
-					+ "('"+ produit.getNomProduit()+"', '"+produit.getDescription()+"', '"+ MainControleur.getUtilisateur()+"' ,'"+offre.getBuyerID()+"' ,"
-					+ " '"+produit.getCatID()+ "', '"+produit.getEstimation()+ "', '"+ produit.getPrixF()+ "' , '"+offre.getPrixF()+ "');");
-					
-			stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID() );
+					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) "
+							+ "SELECT name, description, '" + MainControleur.getUtilisateur() + "', '"+ offre.getBuyerID()
+							+ "', categoryid, estimatedprice, sellingprice, '" + offre.getValuePrixO() + "'"
+							+ " FROM products WHERE refid = " + offre.getProduitID());
+			stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID());
 			stmt.close();
+			
+			ventePopup();
 			
 			this.initialize();
 			
@@ -136,8 +153,12 @@ public class AnnoncesController {
 		objetsView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
 		    
 			produit = objetsView.getSelectionModel().getSelectedItem();
-			prixExpert.setText(""+ objetsView.getSelectionModel().getSelectedItem().getEstimation() + " $");
-			setTableOffres();
+			
+			String querySellerOffers = "SELECT offerid,  getUserFullName(buyerid) AS buyername , buyerid, productid, name, sellingprice, price,estimatedprice, offers.date AS dateO"+
+					" FROM offers JOIN products ON productid = refid WHERE sellerid = '"+ MainControleur.getUtilisateur() +"' AND refid = "+ produit.getRefId()+";";
+			
+			setTableOffres(querySellerOffers);
+			
 		});
 	}
 	
@@ -146,6 +167,7 @@ public class AnnoncesController {
 		nbOffre.setCellValueFactory(new PropertyValueFactory("nbOffre"));
 		produits.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		prix.setCellValueFactory(new PropertyValueFactory("prix"));
+		prixO.setCellValueFactory(new PropertyValueFactory("prixO"));
 		estimation.setCellValueFactory(new PropertyValueFactory("estimation"));
 		maxOffre.setCellValueFactory(new PropertyValueFactory("oMax"));
 		date.setCellValueFactory(new PropertyValueFactory("date"));
@@ -181,15 +203,18 @@ public class AnnoncesController {
 	}
 	
 	private void creatTablecolmnsOffres() {
-		acheteur.setCellValueFactory(new PropertyValueFactory("buyer"));
+		produitO.setCellValueFactory(new PropertyValueFactory("nomProduit"));
+		acheteurO.setCellValueFactory(new PropertyValueFactory("buyer"));
 		prixO.setCellValueFactory(new PropertyValueFactory("prix"));
+		offreO.setCellValueFactory(new PropertyValueFactory("prixO"));
+		estimationO.setCellValueFactory(new PropertyValueFactory("estimation"));
 		dateO.setCellValueFactory(new PropertyValueFactory("date"));
 	}
 	/**
 	 * Mise en place du tableau contenant les offres faites pour les produits de l'utilisateur authentifié
 	 */
-	public void setTableOffres() {
-		QueriesItr qt = new QueriesItr("SELECT offerid, buyerid, productid, price, date FROM offers WHERE productid = "+ this.produit.getRefId() +" ;");
+	public void setTableOffres(String query) {
+		QueriesItr qt = new QueriesItr(query);
 		creatTablecolmnsOffres();
 		creatTableOffres(QueriesItr.iteratorOffre(qt));
 	}
@@ -254,4 +279,25 @@ public class AnnoncesController {
 		creatTablecolmnsVente();
 		creatTableVente(QueriesItr.iteratorAchat(qt));
 	}
+	
+	
+	/**
+	 * Popup validant la vente d'un produit.
+	 * 
+	 * @param prix Le prix offert.
+	 * @param text Le texte de confirmation
+	 */
+	public void ventePopup() {
+		Alert alert = new Alert(AlertType.CONFIRMATION);
+		alert.setTitle("Vente");
+		alert.setHeaderText("ARTICLE VENDU");
+		alert.setContentText("Vous avez vendu : " + offre.getNomProduit() + " pour "+ offre.getPrixO() +" à " + offre.getBuyer()+".");
+
+		ButtonType accepter = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
+
+		alert.getButtonTypes().setAll(accepter);
+		alert.showAndWait();
+	}
+	
+	
 }

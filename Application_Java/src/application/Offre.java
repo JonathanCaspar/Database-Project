@@ -12,9 +12,10 @@ import javafx.stage.Stage;
 public class Offre {
 
 	private int produitID, offreID, buyerID;
-	private float prix;
-	private Date date = null;
-	private String buyer = null;
+	
+	private float prix, prixO, estimation;
+	private Date date;
+	private String buyer, nomProduit;
 	
 	/**
 	 * Constructeur d'une Offre pour "Mes Annonces"
@@ -24,15 +25,15 @@ public class Offre {
 		try {
 			
 			this.offreID = temp.getInt("offerid");
+			this.buyer = temp.getString("buyername");
 			this.buyerID = temp.getInt("buyerid");
 			this.produitID = temp.getInt("productid");
-			this.prix = temp.getFloat("price");
-			this.date = temp.getDate("date");
-			
-			setBuyerName(temp.getInt("buyerid"));
-			
-			System.out.println("offre : " + buyer);
-			
+			this.nomProduit = temp.getString("name");
+			this.prix = temp.getFloat("sellingprice");
+			this.prixO = temp.getFloat("price");
+			this.estimation = temp.getFloat("estimatedprice");
+			this.date = temp.getDate("dateO");
+						
 		} catch (SQLException e) {
 			
 			e.printStackTrace();
@@ -40,56 +41,46 @@ public class Offre {
 		
 	}
 
-	public String getBuyerName(int buyerID) {
-		return this.buyer;
+	
+	public String getPrixO() {
+		return String.format("%.2f", prixO) + " $";
 	}
 	
-	/**
-	 * Recupere le nom d'un vendeur dans la base de données selon son id.
-	 * @param buyerID
-	 */
-	public void setBuyerName(int buyerID) {
-		
-		QueriesItr qt = new QueriesItr("SELECT getUserFullName(buyerid) AS buyer FROM offers WHERE buyerid = "+ buyerID+" ;"  );
-		ResultSet rs = qt.getResultSet();
-		
-		try {
-			if (rs.next()) {
-				this.buyer = rs.getString("buyer");
-			}
-		} catch (SQLException e) {
-			qt.quitter();
-			e.printStackTrace();
-		}
+	public float getValuePrixO() {
+		return prixO;
 	}
-	
- 
-	//GETTERS
-	
-	public int getProduitID() {
-		return produitID;
-	}
+
 
 	public String getPrix() {
 		return String.format("%.2f", prix) + " $";
 	}
 	
-	public float getPrixF() {
-		return prix;
+	public int getProduitID() {
+		return produitID;
+	}
+
+	public int getOffreID() {
+		return offreID;
+	}
+
+	public int getBuyerID() {
+		return buyerID;
+	}
+
+	public float getEstimation() {
+		return estimation;
 	}
 
 	public String getDate() {
 		return date.toString();
 	}
-
-
-	public int getBuyerID() {
-		return buyerID;
-	}
 	
 	public String getBuyer() {
 		return buyer;
 	}
-	
+
+	public String getNomProduit() {
+		return nomProduit;
+	}
 	
 }
