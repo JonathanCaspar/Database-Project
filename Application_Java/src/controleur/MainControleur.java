@@ -14,8 +14,7 @@ import javafx.stage.Stage;
 public class MainControleur {
 	
 	private User utilisateur = null;
-//	private static int userID = -1;
-	private static int userID = 2;
+	private static int userID = -1;
 
 	private boolean userLoged = false;
 	@FXML
@@ -56,13 +55,13 @@ public class MainControleur {
 	@FXML
 	void toAnnonces() {
 		
-//		if(userID < 0) {
-//			goToLogin();
-//			mainPane.getSelectionModel().select(catalogueT);
-//		}
-//		else {
+		if(userID < 0) {
+			goToLogin();
+			mainPane.getSelectionModel().select(catalogueT);
+		}
+		else {
 			annoncesController.setTableAnnonces();
-//		}
+		}
 	}
 	
 	/**
@@ -72,13 +71,13 @@ public class MainControleur {
 	@FXML
 	void toAchats() {
 		
-//		if(userID < 0) {
-//			goToLogin();
-//			mainPane.getSelectionModel().select(catalogueT);
-//		}else {
+		if(userID < 0) {
+			goToLogin();
+			mainPane.getSelectionModel().select(catalogueT);
+		}else {
 			achatsController.setTableOffre();
 			achatsController.setTableAchat();
-//		}
+		}
 	}
 	
 	/**
