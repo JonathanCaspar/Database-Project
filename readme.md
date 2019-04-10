@@ -62,6 +62,21 @@ SoldProducts est une table de __log__ conservant l'historique des produits vendu
 <a id="section3"></a>
 ## 3. Définition de la base de données ([DDL.sql](DDL.sql))
 
+Nous avons décidé de représenter les **acheteurs** et les **vendeurs** en une seule entité (**user**) ayant un ID arbitraire comme clé primaire. Les experts n'ont pas été représenté car nous ne jugions pas cela nécessaire (une simple fenêtre suivant la mise en vente suffit).
+
+Les **produits** ont comme clé primaire standard : un ID généré et ont tous une référence (clé étrangère) vers l'entité du vendeur et de sa catégorie.
+
+Les **catégories** sont classés par **catégories principales** (**maincategories**), et chaque produit fait partie d'une seule catégorie. De plus, on force l'unicité de la paire **(catname et maincatid)** pour éviter les doublons au sein d'une même catégorie principale. (par exemple : une catégorie "Autres" pourrait exister plusieurs fois mais pour des catégories principales différentes seulement.)
+
+Les **offres** sont représentés de la même façon que les produits, elles sont identifiées par un ID généré, et ont tous une référence (clé étrangère) vers l'entité de l'acheteur (celui qui a fait l'offre) et le produit ciblé par l'offre. 
+Nous avons choisi d'ajouter un **"ON DELETE CASCADE"** à :
+~~~~sql
+FOREIGN KEY (productid) REFERENCES products(refid) ON DELETE CASCADE,
+~~~~
+Afin de faciliter la suppression future des offres pour lesquelles le produit associé n'est plus présent dans la base de données. Ainsi, lorsqu'un produit est supprimé (vente terminée, annulée, etc...) toutes les offres qui y faisaient référence seront aussi supprimées.
+
+La dernière table **soldproducts** nous sert à garder une trace des informations sur les produits vendus.
+
 ~~~~sql
 DROP TABLE IF EXISTS soldproducts, offers, products, categories, maincategories, 
 users; 
