@@ -229,7 +229,7 @@ FROM soldproducts WHERE buyerid =18;
 
 * Trouve les produits les plus en demande (ceux avec le plus d'offres) par mainCategories
 ~~~~sql
-WITH nombreOfrreParProduit AS 
+WITH nombreOffreParProduit AS 
       (SELECT count(*) AS nbrOffre, productid
           FROM offers GROUP BY productid),
   mainCatWithChildren AS
@@ -237,7 +237,7 @@ WITH nombreOfrreParProduit AS
           FROM categories NATURAL JOIN maincategories),
   productsWithNbrOffers AS
       (SELECT *
-          FROM products JOIN nombreOfrreParProduit
+          FROM products JOIN nombreOffreParProduit
           ON refid = productid),
   mainCatWithProduct AS
     (SELECT  maincatname, refid, name, description, sellerid, 
