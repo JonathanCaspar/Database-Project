@@ -77,6 +77,8 @@ public class InscriptionController {
 			else if(tel.length() >0 && !tel.matches("^\\d{3}-\\d{3}-\\d{4}$")) {
 				errorPopup("Format numéro de téléphone", "Le numéro saisi n'est pas au bon format \n Rappel: 123-456-7777.");
 				return false;
+			}else {
+				return true;
 			}
 		
 		
@@ -86,17 +88,16 @@ public class InscriptionController {
 			errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
 			return false;
 		}
-    	
-    	return false;
     }
     
     public String getQuery() {
-    	String query = "INSERT INTO users ( userid, username, password, firstname, lastname, phonenumber) VALUES"+ 
-    			"( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"'";
+    	String query = "INSERT INTO users ( userid, username, password, firstname, lastname"; 
     	if(this.tel.length() == 0 ) {
-    		query += ");";
+    		query += ") VALUES" + 
+    				"( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"')";
     	}else {
-    		query += ", '"+this.tel+"');";
+    		query += ",phonenumber) VALUES" + 
+    				"( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+this.tel+"')";
     	}
     	
     	return query;
