@@ -65,7 +65,7 @@ public class InscriptionController {
 			nom = nomTF.getText();
 			tel = telTF.getText();
 			
-			if(username.length() == 0 ||  password.length() == 0 || prenom.length() == 0 || nom.length() == 0) {
+			if(username.length() == 0 ||  password.length() == 0 || prenom.length() == 0) {
 				errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
 				return false;
 			}
@@ -90,16 +90,27 @@ public class InscriptionController {
 		}
     }
     
+    
+    /**
+     * Construit la query en fonction de la presence ou non de nom ou de numero de telephone
+     * @return query la requete
+     */
     public String getQuery() {
-    	String query = "INSERT INTO users ( userid, username, password, firstname, lastname"; 
-    	if(this.tel.length() == 0 ) {
-    		query += ") VALUES" + 
-    				"( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"')";
-    	}else {
-    		query += ",phonenumber) VALUES" + 
-    				"( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+this.tel+"')";
+    	String query = "INSERT INTO users ( userid, username, password, firstname"; 
+    	String values = "VALUES ( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"' ";
+    	String end = ")";
+    	if(this.nom.length() > 0) {
+    		query += " , lastname ";
+    		values += ", '"+ this.nom +"'";
+    	}
+    	if(this.tel.length() > 0 ) {
+    		query += " , phonenumber ";
+    		values += ", '"+this.tel+"'";
     	}
     	
+    	values += end;
+    	query += end;
+    	query += values;
     	return query;
     }
     
