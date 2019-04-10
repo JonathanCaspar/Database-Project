@@ -65,16 +65,16 @@ public class InscriptionController {
 			nom = nomTF.getText();
 			tel = telTF.getText();
 			
-			if(username.length() == 0 ||  password.length() == 0 || prenom.length() == 0 || nom.length() == 0 || tel.length() == 0) {
+			if(username.length() == 0 ||  password.length() == 0 || prenom.length() == 0 || nom.length() == 0) {
 				errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
 				return false;
 			}
 			
 			
-			if(tel.matches("^\\d{3}-\\d{3}-\\d{4}$")) {
+			if(tel.length() >0 && tel.matches("^\\d{3}-\\d{3}-\\d{4}$")) {
 				return true;
 			}
-			else {
+			else if(tel.length() >0 && !tel.matches("^\\d{3}-\\d{3}-\\d{4}$")) {
 				errorPopup("Format numéro de téléphone", "Le numéro saisi n'est pas au bon format \n Rappel: 123-456-7777.");
 				return false;
 			}
@@ -87,8 +87,20 @@ public class InscriptionController {
 			return false;
 		}
     	
+    	return false;
     }
     
+    public String getQuery() {
+    	String query = "INSERT INTO users ( userid, username, password, firstname, lastname, phonenumber) VALUES"+ 
+    			"( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"'";
+    	if(this.tel.length() == 0 ) {
+    		query += ");";
+    	}else {
+    		query += ", '"+this.tel+"');";
+    	}
+    	
+    	return query;
+    }
     
     public void setNewMaxId() {
     	try {
@@ -112,6 +124,9 @@ public class InscriptionController {
 		
     }
     
+    
+    
+    
     /**
      * Insertion d'un nouvel utilisateur dans la base de données.
      */
@@ -126,9 +141,7 @@ public class InscriptionController {
 				
 				Statement stmt = DbAdapter.con.createStatement();
 				if (stmt != null) {
-					stmt.executeUpdate("WITH newID AS(SELECT MAX(userid)+1 FROM users) \n "+
-										"INSERT INTO users ( userid, username, password, firstname, lastname, phonenumber) VALUES"+
-							" ( "+ this.userID + ",'"+ username+"', '"+password+"', '"+prenom+"', '"+nom+"', '"+tel+"')");
+					stmt.executeUpdate(getQuery());
 					stmt.close();
 					
 					Stage stage = (Stage) inscriptionPane.getScene().getWindow(); 
