@@ -186,6 +186,7 @@ public class AnnoncesController {
 		creatTableOffres(QueriesItr.iteratorOffre(qt));
 	}
 	
+	
 	/**
 	 * Ouvre la fenetre de creation d'annonce pour l'utilisateur authentifié
 	 */
