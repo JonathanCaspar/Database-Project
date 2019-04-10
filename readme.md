@@ -517,6 +517,48 @@ INSERT INTO soldproducts (estimatedprice, sellingprice, sellerid, categoryid, de
 <a id="section4-7"></a>
 ### Fonctions :
 
+* Retourne si oui ou non, un mot de passe correspond à l'utilisateur ayant un ID spécifié
+~~~~sql
+CREATE OR REPLACE FUNCTION check_password(id character varying, pwd character varying)
+ RETURNS boolean
+ LANGUAGE plpgsql
+AS $function$
+        DECLARE
+        passed BOOLEAN;
+BEGIN
+        SELECT (password = pwd) INTO passed FROM users WHERE username = id;
+        RETURN passed;
+END; $function$
+~~~~
+
+* Retourne le nom d'une catégorie en fonction de son id
+~~~~sql
+CREATE OR REPLACE FUNCTION getcategoriesname(id integer)
+ RETURNS character varying
+ LANGUAGE plpgsql
+AS $function$
+        DECLARE
+        name varchar(40);
+BEGIN
+        name := (SELECT catname FROM categories WHERE catid = id);
+        RETURN name;
+END; $function$
+~~~~
+
+* Retourne le nom d'une catégorie principale en fonction de son id
+~~~~sql
+CREATE OR REPLACE FUNCTION casparjo.getmaincategoriesname(id integer)
+ RETURNS character varying
+ LANGUAGE plpgsql
+AS $function$
+        DECLARE
+        name varchar(40);
+BEGIN
+        name := (SELECT catname FROM maincategories WHERE catid = id);
+        RETURN name;
+END; $function$
+~~~~
+
 * Récupérer le nom et prénom concaténé selon l'id fourni :
 ~~~~sql
 CREATE OR REPLACE FUNCTION getUserFullName(id integer)
