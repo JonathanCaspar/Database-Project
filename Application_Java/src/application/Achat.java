@@ -9,13 +9,14 @@ public class Achat {
 	private String nomProduit;
 	private float prixVente = 0;
 	private String date;
-	private String vendeur;
+	private String vendeur, acheteur;
 	
 	
 	public Achat(ResultSet temp) {
 		try {
 			nomProduit = temp.getString("name");
 			vendeur = temp.getString("sellername");
+			acheteur = temp.getString("buyername");
 			date = temp.getDate("datetransaction").toString();
 			prixVente = temp.getFloat("soldprice");
 			
@@ -39,6 +40,10 @@ public class Achat {
 
 	public String getVendeur() {
 		return vendeur;
+	}
+	
+	public String getAcheteur() {
+		return acheteur;
 	}
 
 }
