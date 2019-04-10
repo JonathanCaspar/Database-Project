@@ -190,12 +190,10 @@ WHERE maxoffer >= 100.0 AND maxoffer <= 250.0;
 
 * Afficher les produits en vente par l'utilisateur (id=18) en précisant le montant de l'offre maximale pour chaque produit
 ~~~~sql
-WITH allProducts AS 
-(SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date, 
- getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE sellerid = 18)
-
-SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice
-FROM allProducts JOIN categories ON categoryid = catid;
+SELECT getOffersCount(refid) as nboffers, refid, name, description ,sellingprice,
+	getUserFullName(sellerid) AS sellername, date, getMaxOfferValue(refid) AS maxoffer, 
+	estimatedprice, categoryid 
+	FROM products WHERE sellerid = 18;
 ~~~~
 
 * Afficher les offres liées à l'objet selectionné (exemple produitid = 21)
