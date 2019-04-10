@@ -131,7 +131,7 @@ public class NewAnnonceController {
 					return false;
 				}
 				
-				if(prix.matches("^-?\\d*(\\.\\d{2}){0,1}$")) {
+				if(prix.matches("^-?\\d*(\\.\\d{1,2}){0,1}$")) {
 					return true;
 				}
 				else {
