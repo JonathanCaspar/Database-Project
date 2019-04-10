@@ -9,6 +9,7 @@ import java.util.Iterator;
 import application.Offre;
 import application.OffreA;
 import application.Produit;
+import application.ProduitV;
 import application.Achat;
 import controleur.CatalogueController;
 import controleur.MainControleur;
@@ -118,6 +119,48 @@ public class QueriesItr {
 						Produit p = null;
 						if (qt.next()) {
 							p = new Produit(temp);
+						}
+						return p;
+					}
+				};
+			}
+		};
+	}
+	
+	/**
+	 * Creer une "liste" iterable de produit (côté acheteur) sans sauvegarder tous les produits en
+	 * memoire.
+	 * 
+	 * @param qt La querry a iterer
+	 * @return Un iterable de produits
+	 */
+	public static Iterable<ProduitV> iteratorProduitV(QueriesItr qt) {
+		return new Iterable<ProduitV>() {
+
+			@Override
+			public Iterator<ProduitV> iterator() {
+				return new Iterator<ProduitV>() {
+					ResultSet temp = qt.getResultSet();
+
+					@Override
+					public boolean hasNext() {
+						boolean hn = false;
+						try {
+							if (temp != null) {
+								hn = !temp.isClosed();
+							}
+						} catch (SQLException e) {
+							e.printStackTrace();
+						}
+
+						return hn;
+					}
+
+					@Override
+					public ProduitV next() {
+						ProduitV p = null;
+						if (qt.next()) {
+							p = new ProduitV(temp);
 						}
 						return p;
 					}

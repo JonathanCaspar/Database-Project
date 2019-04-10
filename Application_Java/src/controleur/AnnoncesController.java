@@ -6,6 +6,7 @@ import java.sql.Statement;
 import application.Offre;
 import application.Achat;
 import application.Produit;
+import application.ProduitV;
 import dbstuff.DbAdapter;
 import dbstuff.QueriesItr;
 import javafx.event.ActionEvent;
@@ -30,15 +31,20 @@ public class AnnoncesController {
 	
 	//Tableau de gauche, contenant les annonces de l'utilisateur authentifié
 	@FXML
-	private TableView<Produit> objetsView;
+	private TableView<ProduitV> objetsView;
 	@FXML
-	private TableColumn<Produit, String> produits;
+	private TableColumn<ProduitV, String> nbOffre;
 	@FXML
-	private TableColumn<Produit, String> prix;
+	private TableColumn<ProduitV, String> produits;
 	@FXML
-	private TableColumn<Produit, String> date;
+	private TableColumn<ProduitV, String> prix;
 	@FXML
-	private TableColumn<Produit, String> categorie;
+	private TableColumn<ProduitV, String> estimation;
+	@FXML
+	private TableColumn<ProduitV, String> maxOffre;
+	@FXML
+	private TableColumn<ProduitV, String> date;
+	
 	
 	/**
 	 * Tableau de droite contenant les proposition faite pour 
@@ -73,7 +79,7 @@ public class AnnoncesController {
 	
 	private int productid, offreid;
 	private float prixVente;
-	private Produit produit;
+	private ProduitV produit;
 	private Offre offre;
 
 	
@@ -121,9 +127,9 @@ public class AnnoncesController {
 	 * 
 	 * @param table La table de produit.
 	 */
-	public void creatTableAnnonces(Iterable<Produit> table) {
+	public void creatTableAnnonces(Iterable<ProduitV> table) {
 		objetsView.getItems().clear();
-		for (Produit o : table) {
+		for (ProduitV o : table) {
 			objetsView.getItems().add(o);
 		}
 
@@ -136,22 +142,24 @@ public class AnnoncesController {
 	}
 	
 	private void creatTablecolmnsAnnonces() {
+		
+		nbOffre.setCellValueFactory(new PropertyValueFactory("nbOffre"));
 		produits.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		prix.setCellValueFactory(new PropertyValueFactory("prix"));
+		estimation.setCellValueFactory(new PropertyValueFactory("estimation"));
+		maxOffre.setCellValueFactory(new PropertyValueFactory("oMax"));
 		date.setCellValueFactory(new PropertyValueFactory("date"));
-		categorie.setCellValueFactory(new PropertyValueFactory("categorie"));
-
 	}
 
 	/**
 	 * Mise en place du tableau contenant les annonces de l'utilisateur authentifié
 	 */
 	public void setTableAnnonces() {
-		QueriesItr qt = new QueriesItr(
-				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE sellerid = '"+MainControleur.getUtilisateur()+"')\n" + 
-				" SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts JOIN categories ON categoryid = catid;");
+		QueriesItr qt = new QueriesItr(" SELECT getOffersCount(refid) as nboffers, refid, name, description ,sellingprice, getUserFullName(sellerid) AS sellername, "
+										+"date, getMaxOfferValue(refid) AS maxoffer, estimatedprice, categoryid "
+										+"FROM products WHERE sellerid = '"+MainControleur.getUtilisateur()+"';");
 		creatTablecolmnsAnnonces();
-		creatTableAnnonces(QueriesItr.iteratorProduit(qt));
+		creatTableAnnonces(QueriesItr.iteratorProduitV(qt));
 	}
 	
 	/**
