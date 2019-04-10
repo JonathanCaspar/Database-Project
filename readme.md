@@ -54,7 +54,7 @@ Les sous-catégories `categories` ne peuvent avoir qu&#39;une seule (1 : 1) cat�
 SoldProducts est une table de __log__ conservant l'historique des produits vendus.
   
 
-## 3. Définition de la base de données ([DDL.sql])
+## 3. Définition de la base de données (DDL.sql)
 
 ### Explications des choix d'implémentation :
 Nous avons décidé de représenter les `acheteurs` et les `vendeurs` en une seule entité (`user`) ayant un ID arbitraire comme clé primaire. Les experts n'ont pas été représenté car nous ne jugions pas cela nécessaire (une simple fenêtre suivant la mise en vente suffit).
@@ -155,7 +155,7 @@ END; $$
 LANGUAGE plpgsql;
 ~~~~
 
-## 4. L'ensemble des requêtes en SQL et explications des résultats attendus ([LMD.sql](LMD.sql))
+## 4. L'ensemble des requêtes en SQL et explications des résultats attendus (LMD.sql)
 
 A moins de mentionner un autre id d'utilisateur, on suppose pour les requêtes suivantes que l'utilisateur connecté a un id = 18 :
 
