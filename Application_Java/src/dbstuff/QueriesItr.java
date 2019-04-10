@@ -355,6 +355,10 @@ public class QueriesItr {
 		}
 
 		if (mainCatActuelle != null) {
+			
+			mainCatActuelle = mainCatActuelle.replace("'", "''");
+			catActuelle = catActuelle.replace("'", "''");
+			
 			if (mainCatActuelle == CatalogueController.parent) {
 				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = '"
 						+ catActuelle + "')";
