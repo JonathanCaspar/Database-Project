@@ -34,18 +34,21 @@ public class ConnexionController {
 	
 	private boolean isloged = false;
 		
+	/**
+	 * Verifie si l'assocation username/password est dans la base de données
+	 * 
+	 * @param event
+	 */
 	@FXML
 	void authentification(ActionEvent event) {
 		String username = usernameTF.getText();
 		String password = passwordPF.getText();
 		
-		
 		QueriesItr QT = new QueriesItr("SELECT userid FROM " + DbAdapter.DB_TABLES[0] + 
 				" WHERE username = '" +username + "' AND password = '"+ password+"' ;");
 		ResultSet rs = QT.getResultSet();
 		
-		
-		try {
+		try{
 			
 			if (rs.next()) {
 				System.out.println("userID = " + rs.getInt("userid"));
@@ -62,16 +65,13 @@ public class ConnexionController {
 			errorPopup("Problème identification", "Cette association nom d'utilisateur/mot de passe n'existe pas.");
 			e.printStackTrace();
 		}
-			
-			
-			
-			
-		
-		
-		
 	}
 	
-	
+	/**
+	 * Popup d'erreur customizable
+	 * @param typeError
+	 * @param message
+	 */
 	public static void errorPopup(String typeError, String message) {
 
 		Alert alert = new Alert(AlertType.ERROR);

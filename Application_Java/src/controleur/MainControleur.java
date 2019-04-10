@@ -47,6 +47,10 @@ public class MainControleur {
 		//this.catalogueController.setStage();
 	}
 	
+	/**
+	 * Verifie si l'utilisateur est authentifié pour accéder à ses annonces.
+	 * Si non connecté, propose de d'authentifié
+	 */
 	@FXML
 	void toAnnonces() {
 		
@@ -59,6 +63,10 @@ public class MainControleur {
 		}
 	}
 	
+	/**
+	 * Verifie si l'utilisateur est authentifié pour accéder à ses achats
+	 * Si non connecté, propose de d'authentifié
+	 */
 	@FXML
 	void toAchats() {
 		
@@ -71,6 +79,10 @@ public class MainControleur {
 		}
 	}
 	
+	/**
+	 * Deconnecte l'utilisateur en mettant le userID à -1
+	 * Retourne au catalogue
+	 */
 	@FXML
 	void deconnexion() {
 		setUtilisateur(-1);
@@ -81,6 +93,10 @@ public class MainControleur {
 		this.catalogueController.initialize();
 	}
 	
+	/**
+	 * Ouvre la page permettant à l'utilisateur de s'authentifier
+	 * Récupère le nouvel userID
+	 */
 	@FXML
 	void goToLogin() {
 		try {

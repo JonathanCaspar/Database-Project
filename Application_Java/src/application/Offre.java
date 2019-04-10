@@ -16,7 +16,10 @@ public class Offre {
 	private Date date = null;
 	private String buyer = null;
 	
-	
+	/**
+	 * Constructeur d'une Offre pour "Mes Annonces"
+	 * @param temp
+	 */
 	public Offre(ResultSet temp) {
 		try {
 			
@@ -41,7 +44,10 @@ public class Offre {
 		return this.buyer;
 	}
 	
-	
+	/**
+	 * Recupere le nom d'un vendeur dans la base de données selon son id.
+	 * @param buyerID
+	 */
 	public void setBuyerName(int buyerID) {
 		
 		QueriesItr qt = new QueriesItr("SELECT getUserFullName(buyerid) AS buyer FROM offers WHERE buyerid = "+ buyerID+" ;"  );
@@ -57,7 +63,9 @@ public class Offre {
 		}
 	}
 	
-
+ 
+	//GETTERS
+	
 	public int getProduitID() {
 		return produitID;
 	}
@@ -65,6 +73,7 @@ public class Offre {
 	public String getPrix() {
 		return String.format("%.2f", prix) + " $";
 	}
+	
 	public float getPrixF() {
 		return prix;
 	}

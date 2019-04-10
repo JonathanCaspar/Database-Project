@@ -27,6 +27,7 @@ public class AnnoncesController {
 	@FXML
 	private NewAnnonceController newAnnonceController;
 	
+	//Tableau de gauche, contenant les annonces de l'utilisateur authentifié
 	@FXML
 	private TableView<Produit> objetsView;
 	@FXML
@@ -38,6 +39,10 @@ public class AnnoncesController {
 	@FXML
 	private TableColumn<Produit, String> categorie;
 	
+	/**
+	 * Tableau de droite contenant les proposition faite pour 
+	 * les produits de l'utilisateur authentifié
+	 */
 	@FXML
 	private TableView<Offre> offreView;
 	@FXML
@@ -54,6 +59,11 @@ public class AnnoncesController {
 	private Offre offre;
 
 	
+	
+	/**
+	 * Accepte une offre on inserant le produit vendu dans la table soldeproducts
+	 * et en supprimant le produit de la table products (ainsi que ses autres offres)
+	 */
 	@FXML
 	public void accepterOffre() {
 		
@@ -102,6 +112,9 @@ public class AnnoncesController {
 
 	}
 
+	/**
+	 * Mise en place du tableau contenant les annonces de l'utilisateur authentifié
+	 */
 	public void setTableAnnonces() {
 		QueriesItr qt = new QueriesItr(
 				"WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE sellerid = '"+MainControleur.getUtilisateur()+"')\n" + 
@@ -111,9 +124,9 @@ public class AnnoncesController {
 	}
 	
 	/**
-	 * Creer une table contenant la liste de produit passer en paramettre.
+	 * Creer une table contenant la liste d'offres passée en paramètre.
 	 * 
-	 * @param table La table de produit.
+	 * @param table La table d'offres.
 	 */
 	public void creatTableOffres(Iterable<Offre> table) {
 		offreView.getItems().clear();
@@ -134,17 +147,17 @@ public class AnnoncesController {
 		dateO.setCellValueFactory(new PropertyValueFactory("date"));
 
 	}
-	
+	/**
+	 * Mise en place du tableau contenant les offres faites pour les produits de l'utilisateur authentifié
+	 */
 	public void setTableOffres() {
-//		QueriesItr qt = new QueriesItr("SELECT offerid, getUserFullName(buyerid) AS buyer, productid, price, date FROM offers WHERE productid = "+ this.productid +" ;");
 		QueriesItr qt = new QueriesItr("SELECT offerid, buyerid, productid, price, date FROM offers WHERE productid = "+ this.productid +" ;");
-	
 		creatTablecolmnsOffres();
 		creatTableOffres(QueriesItr.iteratorOffre(qt));
 	}
 	
 	/**
-	 * Ouvre la fenetre de creation d'annonce
+	 * Ouvre la fenetre de creation d'annonce pour l'utilisateur authentifié
 	 */
 	@FXML
 	void creerAnnonce() {
@@ -164,7 +177,6 @@ public class AnnoncesController {
 			
 			setTableAnnonces();
 		
-
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

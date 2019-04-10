@@ -31,11 +31,12 @@ public class InscriptionController {
 	Button inscription;
     private String username, password, prenom, nom, tel;
 	
-    
-    private PreparedStatement stmt = null;
-//	private ResultSet rs = null;
 
-	
+	/**
+	 * Verifie si le formulaire est entierement rempli 
+	 * et si le numero de telephone est au bon format
+	 * @return
+	 */
     public boolean validForm() {
     	
     	try {
@@ -64,6 +65,9 @@ public class InscriptionController {
     	
     }
     
+    /**
+     * Insertion d'un nouvel utilisateur dans la base de données.
+     */
 	@FXML
 	public void inscrire() {
 		
@@ -90,6 +94,11 @@ public class InscriptionController {
 		}
 	}
 	
+	/**
+	 * Popup d'erreur customizable.
+	 * @param typeError
+	 * @param message
+	 */
 	public static void errorPopup(String typeError, String message) {
 
 		Alert alert = new Alert(AlertType.ERROR);

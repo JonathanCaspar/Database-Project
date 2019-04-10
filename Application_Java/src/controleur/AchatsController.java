@@ -11,6 +11,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 public class AchatsController {
 
+	//Tableau de gauche, les offres faites par l'utilisateur
 	@FXML
 	private TableView<OffreA> offreAView;
 	@FXML
@@ -24,7 +25,7 @@ public class AchatsController {
 	@FXML
 	private TableColumn<OffreA, String> date;
 	
-	
+	//Tableau de droite, achats effectués par l'utilisateur
 	@FXML
 	private TableView<Achat> achatView;
 	@FXML
@@ -62,6 +63,9 @@ public class AchatsController {
 		date.setCellValueFactory(new PropertyValueFactory("date"));
 	}
 
+	/**
+	 * Mise en place du tableau contenant les offres faites par l'utilisateur.
+	 */
 	public void setTableOffre() {
 		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername, sellingprice, price ,offers.date AS dateO "
 										+"FROM products JOIN offers ON productid = refid WHERE buyerid = " + MainControleur.getUtilisateur()+ ";");
@@ -95,6 +99,10 @@ public class AchatsController {
 		dateV.setCellValueFactory(new PropertyValueFactory("date"));
 	}
 
+	/**
+	 * Mise en place du tableau des achats effectués par l'utilisateur.
+	 * Produits pour lesquels les offres ont été acceptées.
+	 */
 	public void setTableAchat() {
 		QueriesItr qt = new QueriesItr("SELECT name, sellerid, soldprice, datetransaction FROM soldproducts WHERE buyerid =" + MainControleur.getUtilisateur()+ ";");
 		creatTablecolmnsAchat();
