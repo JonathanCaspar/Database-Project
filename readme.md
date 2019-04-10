@@ -625,9 +625,12 @@ SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sell
 
 * Afficher les produits en vente par l'utilisateur (id=18) en précisant le montant de l'offre maximale pour chaque produit
 ~~~~sql
-WITH allProducts AS (SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date, getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE sellerid = 18)
+WITH allProducts AS 
+(SELECT refid, name, description, sellingprice, getUserFullName(sellerid) AS sellername, date, 
+ getMaxOfferValue(refid) AS maxoffer, categoryid, estimatedprice  FROM products WHERE sellerid = 18)
 
-SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts JOIN categories ON categoryid = catid;
+SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice
+FROM allProducts JOIN categories ON categoryid = catid;
 ~~~~
 
 * Afficher les offres liées à l'objet selectionné (exemple produitid = 21)
@@ -637,21 +640,22 @@ SELECT * FROM offers WHERE productid = 21;
 
 * Accepter l'offre de l'acheteur (id=25) de 33$ sur le produit "Robe Blanche" (description = nom) classé dans la catégorie "Femmes-Haut" (catid=14) vendu par le vendeur d'id=100 au prix initial de 38.69$ et estimé à 38.69$. On insère le produit vendu dans la table **soldproducts** et on supprime le produit de la table **products** (ainsi que ses autres offres grâce au ON DELETE CASCADE)
 ~~~~sql
-INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) VALUES
-('Robe blanche', 'Robe blanche', 100, 25, 14, 38.69, 38.69, 33);
-~~~
-
+INSERT INTO soldproducts(name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) 
+VALUES ('Robe blanche', 'Robe blanche', 100, 25, 14, 38.69, 38.69, 33);
+~~~~
 
 #### 3) Mes achats
 
 * Retourne la liste détaillée des offres actives de l'utilisateur connecté
 ~~~~sql
-SELECT name, getUserFullName(sellerid) AS sellername, sellingprice, price ,offers.date AS dateO FROM products JOIN offers ON productid = refid WHERE buyerid = 18;
+SELECT name, getUserFullName(sellerid) AS sellername, sellingprice, price ,offers.date AS dateO 
+FROM products JOIN offers ON productid = refid WHERE buyerid = 18;
 ~~~~
 
 * Retourne la liste détaillée des produits déjà achetés par l'utilisateur (pour lesquels son offre a été acceptée)
 ~~~~sql
-SELECT name, getUserFullName(sellerid) AS sellername, soldprice, datetransaction FROM soldproducts WHERE buyerid =18;
+SELECT name, getUserFullName(sellerid) AS sellername, soldprice, datetransaction 
+FROM soldproducts WHERE buyerid =18;
 ~~~~
 
 #### 4) Autres requêtes spéficiques
