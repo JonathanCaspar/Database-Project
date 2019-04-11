@@ -29,7 +29,11 @@ public class AnnoncesController {
 	@FXML
 	private Button annoncer;
 	@FXML
+	private Button retirer;
+	@FXML
 	private Button accepter;
+	@FXML
+	private Button refuser;
 	@FXML
 	private NewAnnonceController newAnnonceController;
 	
@@ -105,6 +109,41 @@ public class AnnoncesController {
 		this.setTableOffres(queryAllOffers);
 	}
 		
+	
+	@FXML
+	void retirerProduit(){
+		Statement stmt = null; 
+		try {
+			
+			stmt = DbAdapter.con.createStatement();
+			
+			stmt.executeUpdate("DELETE FROM products WHERE refid = " + produit.getRefId());
+			stmt.close();
+			
+			this.initialize();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	@FXML
+	void refuserOffre(){
+		Statement stmt = null; 
+		try {
+			
+			stmt = DbAdapter.con.createStatement();
+			
+			stmt.executeUpdate("DELETE FROM offers WHERE offerid = " + offre.getOffreID());
+			stmt.close();
+			
+			this.initialize();
+			
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 	
 	
 	
