@@ -24,6 +24,7 @@ public class QueriesItr {
 	 * @param query La query a execute
 	 */
 	public QueriesItr(String query) {
+		System.out.println("\n\n" + query + "\n");
 		try {
 			stmt = DbAdapter.con.createStatement();
 			if (stmt != null) {
