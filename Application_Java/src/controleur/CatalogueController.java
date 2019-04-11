@@ -157,12 +157,12 @@ public class CatalogueController {
 			}
 		}
 		Date minDate = null;
-		if (cbDateMin.isSelected()) {
+		if (cbDateMin.isSelected() && choiceDateMin.getValue() != null) {
 			minDate = Date.valueOf(choiceDateMin.getValue());
 		}
 
 		Date maxDate = null;
-		if (cbDateMax.isSelected()) {
+		if (cbDateMax.isSelected() && choiceDateMax.getValue() != null) {
 			maxDate = Date.valueOf(choiceDateMax.getValue());
 		}
 
