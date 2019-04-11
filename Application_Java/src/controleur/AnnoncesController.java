@@ -36,8 +36,8 @@ public class AnnoncesController {
 	private Button refuser;
 	@FXML
 	private NewAnnonceController newAnnonceController;
-	
-	//Tableau de gauche, contenant les annonces de l'utilisateur authentifié
+
+	// Tableau de gauche, contenant les annonces de l'utilisateur authentifié
 	@FXML
 	private TableView<ProduitV> objetsView;
 	@FXML
@@ -52,11 +52,10 @@ public class AnnoncesController {
 	private TableColumn<ProduitV, String> maxOffre;
 	@FXML
 	private TableColumn<ProduitV, String> date;
-	
-	
+
 	/**
-	 * Tableau de droite contenant les proposition faite pour 
-	 * les produits de l'utilisateur authentifié
+	 * Tableau de droite contenant les proposition faite pour les produits de
+	 * l'utilisateur authentifié
 	 */
 	@FXML
 	private TableView<Offre> offreView;
@@ -72,13 +71,13 @@ public class AnnoncesController {
 	private TableColumn<Offre, String> estimationO;
 	@FXML
 	private TableColumn<Offre, String> dateO;
-	
+
 	@FXML
 	private Label prixExpert;
-	
+
 	/**
-	 * Tableau de droite contenant les proposition faite pour 
-	 * les produits de l'utilisateur authentifié
+	 * Tableau de droite contenant les proposition faite pour les produits de
+	 * l'utilisateur authentifié
 	 */
 	@FXML
 	private TableView<Achat> venteView;
@@ -90,94 +89,87 @@ public class AnnoncesController {
 	private TableColumn<Achat, String> prixV;
 	@FXML
 	private TableColumn<Achat, String> dateV;
-	
+
 	private int productid, offreid;
 	private float prixVente;
 	private ProduitV produit;
 	private Offre offre;
 
-	
 	@FXML
 	public void initialize() {
 		this.setTableAnnonces();
 		this.setTableVente();
-		
-		String queryAllOffers = "SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO"+
-				" FROM offers JOIN products ON productid = refid WHERE sellerid = '"+MainControleur.getUtilisateur()+"';";
-		
-		
+
+		String queryAllOffers = "SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO"
+				+ " FROM offers JOIN products ON productid = refid WHERE sellerid = '" + MainControleur.getUtilisateur()
+				+ "';";
+
 		this.setTableOffres(queryAllOffers);
 	}
-		
-	
+
 	@FXML
-	void retirerProduit(){
-		Statement stmt = null; 
+	void retirerProduit() {
+		Statement stmt = null;
 		try {
-			
+
 			stmt = DbAdapter.con.createStatement();
-			
+
 			stmt.executeUpdate("DELETE FROM products WHERE refid = " + produit.getRefId());
 			stmt.close();
-			
+
 			this.initialize();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	@FXML
-	void refuserOffre(){
-		Statement stmt = null; 
+	void refuserOffre() {
+		Statement stmt = null;
 		try {
-			
+
 			stmt = DbAdapter.con.createStatement();
-			
+
 			stmt.executeUpdate("DELETE FROM offers WHERE offerid = " + offre.getOffreID());
 			stmt.close();
-			
+
 			this.initialize();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
-	
-	
+
 	/**
-	 * Accepte une offre on inserant le produit vendu dans la table soldeproducts
-	 * et en supprimant le produit de la table products (ainsi que ses autres offres)
+	 * Accepte une offre on inserant le produit vendu dans la table soldeproducts et
+	 * en supprimant le produit de la table products (ainsi que ses autres offres)
 	 */
 	@FXML
 	public void accepterOffre() {
-		
-		Statement stmt = null; 
+
+		Statement stmt = null;
 		try {
-			
+
 			stmt = DbAdapter.con.createStatement();
 			stmt.executeUpdate(
 					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) "
-							+ "SELECT name, description, '" + MainControleur.getUtilisateur() + "', '"+ offre.getBuyerID()
-							+ "', categoryid, estimatedprice, sellingprice, '" + offre.getValuePrixO() + "'"
-							+ " FROM products WHERE refid = " + offre.getProduitID());
+							+ "SELECT name, description, '" + MainControleur.getUtilisateur() + "', '"
+							+ offre.getBuyerID() + "', categoryid, estimatedprice, sellingprice, '"
+							+ offre.getValuePrixO() + "'" + " FROM products WHERE refid = " + offre.getProduitID());
 			stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID());
 			stmt.close();
-			
+
 			ventePopup();
-			
+
 			this.initialize();
-			
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
-	
+
 	/**
 	 * Creer une table contenant la liste de produit passer en paramettre.
 	 * 
@@ -186,23 +178,26 @@ public class AnnoncesController {
 	public void creatTableAnnonces(Iterable<ProduitV> table) {
 		objetsView.getItems().clear();
 		for (ProduitV o : table) {
-			objetsView.getItems().add(o);
+			if (o != null) {
+				objetsView.getItems().add(o);
+			}
 		}
 
 		objetsView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
-		    
+
 			produit = objetsView.getSelectionModel().getSelectedItem();
-			
-			String querySellerOffers = "SELECT offerid,  getUserFullName(buyerid) AS buyername , buyerid, productid, name, sellingprice, price,estimatedprice, offers.date AS dateO"+
-					" FROM offers JOIN products ON productid = refid WHERE sellerid = '"+ MainControleur.getUtilisateur() +"' AND refid = "+ produit.getRefId()+";";
-			
+
+			String querySellerOffers = "SELECT offerid,  getUserFullName(buyerid) AS buyername , buyerid, productid, name, sellingprice, price,estimatedprice, offers.date AS dateO"
+					+ " FROM offers JOIN products ON productid = refid WHERE sellerid = '"
+					+ MainControleur.getUtilisateur() + "' AND refid = " + produit.getRefId() + ";";
+
 			setTableOffres(querySellerOffers);
-			
+
 		});
 	}
-	
+
 	private void creatTablecolmnsAnnonces() {
-		
+
 		nbOffre.setCellValueFactory(new PropertyValueFactory("nbOffre"));
 		produits.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		prix.setCellValueFactory(new PropertyValueFactory("prix"));
@@ -216,13 +211,14 @@ public class AnnoncesController {
 	 * Mise en place du tableau contenant les annonces de l'utilisateur authentifié
 	 */
 	public void setTableAnnonces() {
-		QueriesItr qt = new QueriesItr(" SELECT getOffersCount(refid) as nboffers, refid, name, description ,sellingprice, getUserFullName(sellerid) AS sellername, "
-										+"date, getMaxOfferValue(refid) AS maxoffer, estimatedprice, categoryid "
-										+"FROM products WHERE sellerid = '"+MainControleur.getUtilisateur()+"';");
+		QueriesItr qt = new QueriesItr(
+				" SELECT getOffersCount(refid) as nboffers, refid, name, description ,sellingprice, getUserFullName(sellerid) AS sellername, "
+						+ "date, getMaxOfferValue(refid) AS maxoffer, estimatedprice, categoryid "
+						+ "FROM products WHERE sellerid = '" + MainControleur.getUtilisateur() + "';");
 		creatTablecolmnsAnnonces();
 		creatTableAnnonces(QueriesItr.iteratorProduitV(qt));
 	}
-	
+
 	/**
 	 * Creer une table contenant la liste d'offres passée en paramètre.
 	 * 
@@ -235,12 +231,12 @@ public class AnnoncesController {
 		}
 
 		offreView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
-		    
+
 			offre = offreView.getSelectionModel().getSelectedItem();
 
 		});
 	}
-	
+
 	private void creatTablecolmnsOffres() {
 		produitO.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		acheteurO.setCellValueFactory(new PropertyValueFactory("buyer"));
@@ -249,22 +245,23 @@ public class AnnoncesController {
 		estimationO.setCellValueFactory(new PropertyValueFactory("estimation"));
 		dateO.setCellValueFactory(new PropertyValueFactory("date"));
 	}
+
 	/**
-	 * Mise en place du tableau contenant les offres faites pour les produits de l'utilisateur authentifié
+	 * Mise en place du tableau contenant les offres faites pour les produits de
+	 * l'utilisateur authentifié
 	 */
 	public void setTableOffres(String query) {
 		QueriesItr qt = new QueriesItr(query);
 		creatTablecolmnsOffres();
 		creatTableOffres(QueriesItr.iteratorOffre(qt));
 	}
-	
-	
+
 	/**
 	 * Ouvre la fenetre de creation d'annonce pour l'utilisateur authentifié
 	 */
 	@FXML
 	void creerAnnonce() {
-	
+
 		try {
 
 			// recuperer la stage, change la scene
@@ -277,14 +274,14 @@ public class AnnoncesController {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Nouvelle annonce");
 			primaryStage.showAndWait();
-			
+
 			setTableAnnonces();
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+
 	/**
 	 * Creer une table contenant la liste des achats effectués passer en paramettre.
 	 * 
@@ -292,17 +289,19 @@ public class AnnoncesController {
 	 */
 	public void creatTableVente(Iterable<Achat> table) {
 		venteView.getItems().clear();
-		
+
 		for (Achat o : table) {
-			venteView.getItems().add(o);
+			if (o != null) {
+				venteView.getItems().add(o);
+			}
 		}
 		venteView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
-			System.out.println(venteView.getSelectionModel().getSelectedItem().getVendeur()); 
+			System.out.println(venteView.getSelectionModel().getSelectedItem().getVendeur());
 		});
 	}
-	
+
 	private void creatTablecolmnsVente() {
-		
+
 		produitV.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		acheteurV.setCellValueFactory(new PropertyValueFactory("acheteur"));
 		prixV.setCellValueFactory(new PropertyValueFactory("prixVente"));
@@ -310,16 +309,17 @@ public class AnnoncesController {
 	}
 
 	/**
-	 * Mise en place du tableau des achats effectués par l'utilisateur.
-	 * Produits pour lesquels les offres ont été acceptées.
+	 * Mise en place du tableau des achats effectués par l'utilisateur. Produits
+	 * pour lesquels les offres ont été acceptées.
 	 */
 	public void setTableVente() {
-		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername ,getUserFullName(buyerid) AS buyername, soldprice, datetransaction FROM soldproducts WHERE sellerid =" + MainControleur.getUtilisateur()+ ";");
+		QueriesItr qt = new QueriesItr(
+				"SELECT name, getUserFullName(sellerid) AS sellername ,getUserFullName(buyerid) AS buyername, soldprice, datetransaction FROM soldproducts WHERE sellerid ="
+						+ MainControleur.getUtilisateur() + ";");
 		creatTablecolmnsVente();
 		creatTableVente(QueriesItr.iteratorAchat(qt));
 	}
-	
-	
+
 	/**
 	 * Popup validant la vente d'un produit.
 	 * 
@@ -330,13 +330,13 @@ public class AnnoncesController {
 		Alert alert = new Alert(AlertType.CONFIRMATION);
 		alert.setTitle("Vente");
 		alert.setHeaderText("ARTICLE VENDU");
-		alert.setContentText("Vous avez vendu : " + offre.getNomProduit() + " pour "+ offre.getPrixO() +" à " + offre.getBuyer()+".");
+		alert.setContentText("Vous avez vendu : " + offre.getNomProduit() + " pour " + offre.getPrixO() + " à "
+				+ offre.getBuyer() + ".");
 
 		ButtonType accepter = new ButtonType("OK", ButtonData.CANCEL_CLOSE);
 
 		alert.getButtonTypes().setAll(accepter);
 		alert.showAndWait();
 	}
-	
-	
+
 }
