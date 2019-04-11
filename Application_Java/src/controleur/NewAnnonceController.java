@@ -132,7 +132,7 @@ public class NewAnnonceController {
 			prix = prixTF.getText();
 			catID = categoriesCB.getSelectionModel().getSelectedIndex() + 1;
 
-			if (nom.length() == 0 || description.length() == 0 || prix.length() == 0) {
+			if (nom.length() == 0 || description.length() == 0 || prix.length() == 0 || catID == 0) {
 				errorPopup("Données manquante", "Vous n'avez pas rempli tous les champs.");
 				return false;
 			}
