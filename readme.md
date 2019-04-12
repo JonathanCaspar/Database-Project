@@ -207,7 +207,7 @@ SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) A
 FROM soldproducts WHERE sellerid = 18;
 ~~~~
 
-* Accepter l'offre de l'acheteur (id=12) de 125.5$ sur le produit d'id = 34 classé dans la catégorie "Femmes-Haut" (catid=14) vendu par le vendeur d'id=18 . On insère le produit vendu dans la table **soldproducts** et on supprime le produit de la table **products** (ainsi que ses autres offres grâce au ON DELETE CASCADE)
+* Accepter l'offre de l'acheteur (id=12) de 125.5$ sur le produit d'id = 34 vendu par le vendeur d'id=18 . On insère le produit vendu dans la table **soldproducts** et on supprime le produit de la table **products** (ainsi que ses autres offres grâce au ON DELETE CASCADE)
 ~~~~sql
 
 INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) SELECT name, description, '18', '12', categoryid, estimatedprice, sellingprice, '125.5' FROM products WHERE refid = 34
