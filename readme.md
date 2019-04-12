@@ -202,7 +202,7 @@ SELECT getOffersCount(refid) as nboffers, refid, name, description ,sellingprice
 SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO FROM offers JOIN products ON productid = refid WHERE sellerid = 18;
 ~~~~
 
-* Afficher les offres liées à l'objet selectionné pour un utilisateur donné (exemple produitid = 18, refid = 34)
+* Afficher les offres liées à l'objet selectionné pour un utilisateur donné (exemple userid = 18, refid = 34)
 ~~~~sql
 SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO FROM offers JOIN products ON productid = refid WHERE sellerid = 18 AND refid = 34;
 ~~~~
