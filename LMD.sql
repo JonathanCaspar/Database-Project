@@ -35,8 +35,9 @@ SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, nam
 FROM offers JOIN products ON productid = refid WHERE sellerid = 18;
 
 
---Afficher les offres liées à l'objet selectionné (exemple produitid = 21)
-SELECT * FROM offers WHERE productid = 21;
+--Afficher les offres liées à l'objet selectionné pour un utilisateur donné (exemple userid = 18, refid = 34)
+SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO 
+FROM offers JOIN products ON productid = refid WHERE sellerid = 18 AND refid = 34;
 
 --Retourne la liste détaillée des produits déjà vendus par l'utilisateur (pour lesquels il a accepté une offre)
 SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) AS buyername ,soldprice, datetransaction 
