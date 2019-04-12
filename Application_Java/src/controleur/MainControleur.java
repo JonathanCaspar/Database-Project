@@ -1,6 +1,5 @@
 package controleur;
 
-import application.User;
 import controleur.CatalogueController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,12 +10,17 @@ import javafx.scene.control.Tab;
 import javafx.scene.control.TabPane;
 import javafx.stage.Stage;
 
+/**
+ * Classe MainControleur, definit les menus en haut
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class MainControleur {
-	
-	private User utilisateur = null;
+
 	private static int userID = -1;
 
-	private boolean userLoged = false;
 	@FXML
 	private MenuItem inscription;
 	@FXML
@@ -31,7 +35,7 @@ public class MainControleur {
 	private Tab annoncesT;
 	@FXML
 	private Tab achatsT;
-	
+
 	@FXML
 	private CatalogueController catalogueController;
 	@FXML
@@ -42,63 +46,56 @@ public class MainControleur {
 	private InscriptionController inscriptionController;
 	@FXML
 	private AchatsController achatsController;
-	
-	@FXML
-	public void initialize() {
-		//this.catalogueController.setStage();
-	}
-	
+
 	/**
-	 * Verifie si l'utilisateur est authentifié pour accéder à ses annonces.
-	 * Si non connecté, propose de d'authentifié
+	 * Verifie si l'utilisateur est authentifié pour accéder à ses annonces. Si non
+	 * connecté, propose de d'authentifié
 	 */
 	@FXML
 	void toAnnonces() {
-		
-		if(userID < 0) {
+
+		if (userID < 0) {
 			goToLogin();
 			mainPane.getSelectionModel().select(catalogueT);
-		}
-		else {
+		} else {
 			annoncesController.initialize();
 		}
 	}
-	
+
 	/**
-	 * Verifie si l'utilisateur est authentifié pour accéder à ses achats
-	 * Si non connecté, propose de d'authentifié
+	 * Verifie si l'utilisateur est authentifié pour accéder à ses achats Si non
+	 * connecté, propose de d'authentifié
 	 */
 	@FXML
 	void toAchats() {
-		
-		if(userID < 0) {
+
+		if (userID < 0) {
 			goToLogin();
 			mainPane.getSelectionModel().select(catalogueT);
-		}else {
+		} else {
 			achatsController.setTableOffre();
 			achatsController.setTableAchat();
 		}
 	}
-	
+
 	/**
-	 * Deconnecte l'utilisateur en mettant le userID à -1
-	 * Retourne au catalogue
+	 * Deconnecte l'utilisateur en mettant le userID à -1 Retourne au catalogue
 	 */
 	@FXML
 	void deconnexion() {
-		
+
 		mainPane.getSelectionModel().select(catalogueT);
 		setUtilisateur(-1);
 		deconnexion.setVisible(false);
 		connexion.setVisible(true);
 		inscription.setVisible(true);
-	
+
 		this.catalogueController.initialize();
 	}
-	
+
 	/**
-	 * Ouvre la page permettant à l'utilisateur de s'authentifier
-	 * Récupère le nouvel userID
+	 * Ouvre la page permettant à l'utilisateur de s'authentifier Récupère le nouvel
+	 * userID
 	 */
 	@FXML
 	void goToLogin() {
@@ -112,33 +109,31 @@ public class MainControleur {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("AUTHENTIFICATION");
 			primaryStage.showAndWait();
-			
-			
-			//recupère ici l'ID de l'utilisateur authentifié
-			if(connexionController.isLoged()) {
+
+			// recupère ici l'ID de l'utilisateur authentifié
+			if (connexionController.isLoged()) {
 				setUtilisateur(connexionController.getUserID());
 				System.out.println("userID in MAIN = " + userID);
-				
+
 				deconnexion.setVisible(true);
 				connexion.setVisible(false);
 				inscription.setVisible(false);
 			}
-			
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	public static void setUtilisateur(int userid) {
 		userID = userid;
 	}
-	
+
 	public static int getUtilisateur() {
 
 		return userID;
 	}
-	
+
 	@FXML
 	void inscription() {
 		try {
@@ -151,17 +146,8 @@ public class MainControleur {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Inscription");
 			primaryStage.showAndWait();
-			
-			//recupère ici l'utilisateur authentifié
-//			setUtilisateur(connexionController.getUser());
-//			userLoged = true;
-		
-//			deconnexion.setVisible(true);
-//			connexion.setVisible(false);
-//			inscription.setVisible(false);
-			
-			
-		
+
+
 		} catch (Exception e) {
 			e.printStackTrace();
 

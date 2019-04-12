@@ -29,12 +29,25 @@ WITH allProducts AS
 SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice
 FROM allProducts JOIN categories ON categoryid = catid;
 
---Afficher les offres liées à l'objet selectionné (exemple produitid = 21)
-SELECT * FROM offers WHERE productid = 21;
 
---Accepter l'offre de l'acheteur (id=25) de 33$ sur le produit "Robe Blanche" (description = nom) classé dans la catégorie "Femmes-Haut" (catid=14) vendu par le vendeur d'id=100 au prix initial de 38.69$ et estimé à 38.69$. On insère le produit vendu dans la table soldproducts et on supprime le produit de la table products (ainsi que ses autres offres grâce au ON DELETE CASCADE)
-INSERT INTO soldproducts(name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) 
-VALUES ('Robe blanche', 'Robe blanche', 100, 25, 14, 38.69, 38.69, 33);
+--Afficher les offres liées à l'objet pour un utilisateur donné (exemple userid = 18)
+SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO 
+FROM offers JOIN products ON productid = refid WHERE sellerid = 18;
+
+
+--Afficher les offres liées à l'objet selectionné pour un utilisateur donné (exemple userid = 18, refid = 34)
+SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO 
+FROM offers JOIN products ON productid = refid WHERE sellerid = 18 AND refid = 34;
+
+--Retourne la liste détaillée des produits déjà vendus par l'utilisateur (pour lesquels il a accepté une offre)
+SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) AS buyername ,soldprice, datetransaction 
+FROM soldproducts WHERE sellerid = 18;
+
+--Accepter l'offre de l'acheteur (id=12) de 125.5$ sur le produit d'id=34 classé vendu par le vendeur d'id=18 . 
+--On insère le produit vendu dans la table **soldproducts** et on supprime le produit de la table **products** (ainsi que ses autres offres grâce au ON DELETE CASCADE)
+
+INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) 
+  SELECT name, description, '18', '12', categoryid, estimatedprice, sellingprice, '125.5' FROM products WHERE refid = 34;
 
 --3) Mes achats
 --Retourne la liste détaillée des offres actives de l'utilisateur connecté
@@ -42,7 +55,7 @@ SELECT name, getUserFullName(sellerid) AS sellername, sellingprice, price ,offer
 FROM products JOIN offers ON productid = refid WHERE buyerid = 18;
 
 --Retourne la liste détaillée des produits déjà achetés par l'utilisateur (pour lesquels son offre a été acceptée)
-SELECT name, getUserFullName(sellerid) AS sellername, soldprice, datetransaction 
+SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) AS buyername ,soldprice, datetransaction 
 FROM soldproducts WHERE buyerid =18;
 
 --4) Autres requêtes spéficiques

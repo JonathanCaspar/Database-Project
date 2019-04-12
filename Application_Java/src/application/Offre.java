@@ -9,21 +9,29 @@ import dbstuff.DbAdapter;
 import dbstuff.QueriesItr;
 import javafx.stage.Stage;
 
+/**
+ * Classe Offre, definit une offre pour "Mes anonces"
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class Offre {
 
 	private int produitID, offreID, buyerID;
-	
+
 	private float prix, prixO, estimation;
 	private Date date;
 	private String buyer, nomProduit;
-	
+
 	/**
 	 * Constructeur d'une Offre pour "Mes Annonces"
-	 * @param temp
+	 * 
+	 * @param temp Le resulset avec les attributs d'une offre.
 	 */
 	public Offre(ResultSet temp) {
 		try {
-			
+
 			this.offreID = temp.getInt("offerid");
 			this.buyer = temp.getString("buyername");
 			this.buyerID = temp.getInt("buyerid");
@@ -33,28 +41,26 @@ public class Offre {
 			this.prixO = temp.getFloat("price");
 			this.estimation = temp.getFloat("estimatedprice");
 			this.date = temp.getDate("dateO");
-						
+
 		} catch (SQLException e) {
-			
+
 			e.printStackTrace();
 		}
-		
+
 	}
 
-	
 	public String getPrixO() {
 		return String.format("%.2f", prixO) + " $";
 	}
-	
+
 	public float getValuePrixO() {
 		return prixO;
 	}
 
-
 	public String getPrix() {
 		return String.format("%.2f", prix) + " $";
 	}
-	
+
 	public int getProduitID() {
 		return produitID;
 	}
@@ -67,14 +73,14 @@ public class Offre {
 		return buyerID;
 	}
 
-	public float getEstimation() {
-		return estimation;
+	public String getEstimation() {
+		return String.format("%.2f", estimation) + " $";
 	}
 
 	public String getDate() {
 		return date.toString();
 	}
-	
+
 	public String getBuyer() {
 		return buyer;
 	}
@@ -82,5 +88,5 @@ public class Offre {
 	public String getNomProduit() {
 		return nomProduit;
 	}
-	
+
 }

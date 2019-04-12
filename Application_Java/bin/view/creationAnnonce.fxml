@@ -23,8 +23,10 @@
       <ButtonBar layoutX="7.0" prefHeight="40.0" prefWidth="200.0" />
       <Button fx:id="soumettre" layoutX="263.0" layoutY="341.0" mnemonicParsing="false" onAction="#soumettre" style="-fx-background-color: #081a94;" text="Soumettre" textFill="WHITE" />
       <Label layoutX="148.0" layoutY="118.0" text="Description :" />
-      <ComboBox fx:id="categoriesCB" layoutX="298.0" layoutY="259.0" prefHeight="27.0" prefWidth="154.0" />
-      <Label layoutX="300.0" layoutY="237.0" text="Catégories : " />
+      <ComboBox fx:id="categoriesCB" disable="true" layoutX="298.0" layoutY="308.0" prefHeight="27.0" prefWidth="154.0" />
+      <Label layoutX="300.0" layoutY="286.0" text="Catégories : " />
       <TextArea fx:id="descriptionTA" layoutX="148.0" layoutY="138.0" prefHeight="93.0" prefWidth="304.0" />
+      <ComboBox fx:id="mainCategoriesCB" layoutX="298.0" layoutY="259.0" prefHeight="27.0" prefWidth="154.0" />
+      <Label layoutX="300.0" layoutY="237.0" text="Catégories principales : " />
    </children>
 </AnchorPane>

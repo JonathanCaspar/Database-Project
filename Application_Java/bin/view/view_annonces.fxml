@@ -40,7 +40,8 @@
                               <TableColumn fx:id="date" prefWidth="98.0" text="Date" />
                           </columns>
                         </TableView>
-                        <Button fx:id="annoncer" layoutX="227.0" layoutY="12.0" mnemonicParsing="false" onAction="#creerAnnonce" style="-fx-background-color: #081a94;" text="Annoncer un produit" textFill="WHITE" />
+                        <Button fx:id="annoncer" layoutX="152.0" layoutY="12.0" mnemonicParsing="false" onAction="#creerAnnonce" style="-fx-background-color: #081a94;" text="Annoncer un produit" textFill="WHITE" />
+                        <Button fx:id="retirer" layoutX="299.0" layoutY="12.0" mnemonicParsing="false" onAction="#retirerProduit" style="-fx-background-color: #081a94;" text="Retirer de la vente" textFill="WHITE" />
               </children>
             </AnchorPane>
           </content>
@@ -58,7 +59,7 @@
                         <TableColumn fx:id="dateO" prefWidth="88.0" text="Date" />
                      </columns>
                   </TableView>
-                  <Button fx:id="accepter" layoutX="259.0" layoutY="12.0" mnemonicParsing="false" onAction="#accepterOffre" style="-fx-background-color: #081a94#081a94;" text="Accepter" textFill="WHITE" />
+                  <Button fx:id="accepter" layoutX="221.0" layoutY="12.0" mnemonicParsing="false" onAction="#accepterOffre" style="-fx-background-color: #081a94#081a94;" text="Accepter" textFill="WHITE" />
                   <TableView fx:id="venteView" layoutX="-1.0" layoutY="333.0" prefHeight="230.0" prefWidth="592.0">
                     <columns>
                       <TableColumn fx:id="produitV" prefWidth="176.0" text="Produit" />
@@ -75,6 +76,7 @@
                         <Color blue="0.624" green="0.624" red="0.624" fx:id="x21" />
                      </textFill>
                   </Label>
+                  <Button fx:id="refuser" layoutX="296.0" layoutY="12.0" mnemonicParsing="false" onAction="#refuserOffre" style="-fx-background-color: #081a94;" text="Refuser" textFill="WHITE" />
           </children>
         </AnchorPane>
       </items>

@@ -14,6 +14,14 @@ import application.Achat;
 import controleur.CatalogueController;
 import controleur.MainControleur;
 
+/**
+ * Classe QueriesItr, instancie des liens vers la base de donnee selon les
+ * queries, gere les erreur et creer des ietrable pour la creation des table
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class QueriesItr {
 	private Statement stmt = null;
 	private ResultSet rs = null;
@@ -86,8 +94,8 @@ public class QueriesItr {
 	}
 
 	/**
-	 * Creer une "liste" iterable de produit sans sauvegarder tous les produits en
-	 * memoire.
+	 * Cree une "liste" iterable de produit sans sauvegarder tous les produits en
+	 * memoire retourne null comme dernier element.
 	 * 
 	 * @param qt La querry a iterer
 	 * @return Un iterable de produits
@@ -126,10 +134,10 @@ public class QueriesItr {
 			}
 		};
 	}
-	
+
 	/**
-	 * Creer une "liste" iterable de produit (côté acheteur) sans sauvegarder tous les produits en
-	 * memoire.
+	 * Creer une "liste" iterable de produit (côté acheteur) sans sauvegarder tous
+	 * les produits en memoire.
 	 * 
 	 * @param qt La querry a iterer
 	 * @return Un iterable de produits
@@ -302,7 +310,8 @@ public class QueriesItr {
 	 * @param mainCatActuelle   La categorie superieur actuelle null si on est dans
 	 *                          toutes les categorie.
 	 * @param catActuelle       La categorie souhaitee actuelle.
-	 * @param recherche
+	 * @param recherche         La string a chercher (on cherche tout les mots de
+	 *                          longueur > 2 dans la phrase)
 	 * @param prixMinimum       Le prix affiche minimum null s'il y en a pas
 	 * @param prixMaximum       Le prix affiche maximum null s'il n'y en a pas
 	 * @param prixOffertMinimum Le prix offert minimum null s'il n'y en a pas
@@ -323,9 +332,13 @@ public class QueriesItr {
 
 		String like = "";
 		if (recherche != null) {
+			// split la recherche en mots
 			String[] words = recherche.split("[\\p{Punct}\\s]+");
 			int i = 0;
+			// Pour chaque mots de la recherche
 			for (String w : words) {
+				// Si la longueur du mot est plus grand que 2 on cherche s'il dans le nom ou la
+				// description
 				if (w.length() > 2) {
 					w = w.toLowerCase();
 					like += " LOWER( name ) LIKE '%" + w + "%' OR";
@@ -339,6 +352,7 @@ public class QueriesItr {
 			}
 		}
 
+		// Ajoute un prix min et max s'ils sont pas null
 		String prixMin = "";
 		if (prixMinimum != null) {
 			prixMin = " sellingprice >= " + prixMinimum + " AND";
@@ -347,6 +361,8 @@ public class QueriesItr {
 		if (prixMaximum != null) {
 			prixMax = " sellingprice <= " + prixMaximum + " AND";
 		}
+
+		// Ajoute une contrainte sur l'offre maximale s'ils ne sont pas null
 		String prixOffertWhere = "";
 		String prixOffertAnd = "";
 		String prixOffertMin = "";
@@ -354,7 +370,6 @@ public class QueriesItr {
 			prixOffertWhere = " WHERE ";
 			prixOffertMin = " maxoffer >= " + prixOffertMinimum;
 		}
-
 		String prixOffertMax = "";
 		if (prixOffertMaximum != null) {
 			if (prixOffertWhere.isEmpty()) {
@@ -364,6 +379,8 @@ public class QueriesItr {
 			}
 			prixOffertMax = " maxoffer <= " + prixOffertMaximum;
 		}
+
+		// Ajoute des contrainte sur les dates s'ils ne sont pas null
 		String dateMin = "";
 		if (minDate != null) {
 			dateMin = " date >='" + minDate.toString() + "' AND";
@@ -373,6 +390,7 @@ public class QueriesItr {
 			dateMax = " date <='" + maxDate.toString() + "' AND";
 		}
 
+		// N'affiche pas les annonce du user si un user est connecte.
 		String user = "";
 		if (MainControleur.getUtilisateur() >= 0) {
 			user = " sellerid <> " + MainControleur.getUtilisateur() + " AND";
@@ -388,20 +406,25 @@ public class QueriesItr {
 			allProducts += dateMin;
 			allProducts += dateMax;
 			allProducts += user;
+
+			// Si la recherche de mots est vide on enleve le denier et sinon on le garde
 			if (like.isEmpty()) {
 				allProducts = allProducts.substring(0, allProducts.length() - 3) + ")";
-			}
-			else {
+			} else {
 				allProducts += like + ")";
 			}
 
 		}
 
+		// Contraint les categories si elles ne sont pas null
 		if (mainCatActuelle != null) {
-			
+
+			// S'assure de ne pas avoir de bug d'apostrophe
 			mainCatActuelle = mainCatActuelle.replace("'", "''");
 			catActuelle = catActuelle.replace("'", "''");
-			
+
+			// Si on est dans une categorie principale on regarde toutes ses enfants
+			// sinon on se limite a la categorie
 			if (mainCatActuelle == CatalogueController.parent) {
 				allCategorie = ",\n mainCatActuelle AS (SELECT maincatid FROM maincategories WHERE maincatname = '"
 						+ catActuelle + "')";
@@ -417,7 +440,7 @@ public class QueriesItr {
 		}
 
 		String query = allProducts + allCategorie
-				+ "\n SELECT refid, name, description, sellingprice, sellername, date, maxoffer, catname, date, estimatedprice  FROM allProducts"
+				+ "\n SELECT refid, name, description, sellingprice, sellername, date, maxoffer, categoryid, catname, date, estimatedprice  FROM allProducts"
 				+ joinCategorie;
 		query += prixOffertWhere;
 		query += prixOffertMin;
@@ -425,7 +448,7 @@ public class QueriesItr {
 		query += prixOffertMax;
 		query += ";";
 		QueriesItr t = new QueriesItr(query);
-		System.out.println("Requ�te cr�ee = " + query);
+		System.out.println("Requête crée = " + query);
 		return t;
 	}
 }

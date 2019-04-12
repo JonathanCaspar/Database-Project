@@ -9,9 +9,16 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Classe Achats controlleur, definit le controleur pour la vue Mes Achats
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class AchatsController {
 
-	//Tableau de gauche, les offres faites par l'utilisateur
+	// Tableau de gauche, les offres faites par l'utilisateur
 	@FXML
 	private TableView<OffreA> offreAView;
 	@FXML
@@ -24,8 +31,8 @@ public class AchatsController {
 	private TableColumn<OffreA, String> prixDemande;
 	@FXML
 	private TableColumn<OffreA, String> date;
-	
-	//Tableau de droite, achats effectués par l'utilisateur
+
+	// Tableau de droite, achats effectués par l'utilisateur
 	@FXML
 	private TableView<Achat> achatView;
 	@FXML
@@ -36,26 +43,27 @@ public class AchatsController {
 	private TableColumn<Achat, String> prixA;
 	@FXML
 	private TableColumn<Achat, String> dateA;
-	
-	
+
 	/**
 	 * Creer une table contenant la liste des offres passer en paramettre.
 	 * 
-	 * @param table La table de produit.
+	 * @param table La table d'offre.
 	 */
 	public void creatTableOffre(Iterable<OffreA> table) {
 		offreAView.getItems().clear();
-		
+
 		for (OffreA o : table) {
-			offreAView.getItems().add(o);
+			if (o != null) {
+				offreAView.getItems().add(o);
+			}
 		}
 //		offreAView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
 //			
 //		});
 	}
-	
+
 	private void creatTablecolmnsOffre() {
-		
+
 		produit.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		vendeur.setCellValueFactory(new PropertyValueFactory("vendeur"));
 		prix.setCellValueFactory(new PropertyValueFactory("prix"));
@@ -67,32 +75,34 @@ public class AchatsController {
 	 * Mise en place du tableau contenant les offres faites par l'utilisateur.
 	 */
 	public void setTableOffre() {
-		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername, sellingprice, price ,offers.date AS dateO "
-										+"FROM products JOIN offers ON productid = refid WHERE buyerid = " + MainControleur.getUtilisateur()+ ";");
+		QueriesItr qt = new QueriesItr(
+				"SELECT name, getUserFullName(sellerid) AS sellername, sellingprice, price ,offers.date AS dateO "
+						+ "FROM products JOIN offers ON productid = refid WHERE buyerid = "
+						+ MainControleur.getUtilisateur() + ";");
 		creatTablecolmnsOffre();
 		creatTableOffre(QueriesItr.iteratorOffreA(qt));
 	}
-	
-	
-	
+
 	/**
 	 * Creer une table contenant la liste des achats effectués passer en paramettre.
 	 * 
-	 * @param table La table de produit.
+	 * @param table La table d'achats.
 	 */
 	public void creatTableAchat(Iterable<Achat> table) {
 		achatView.getItems().clear();
-		
+
 		for (Achat o : table) {
-			achatView.getItems().add(o);
+			if (o != null) {
+				achatView.getItems().add(o);
+			}
 		}
 		achatView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
-			System.out.println(achatView.getSelectionModel().getSelectedItem().getVendeur()); 
+			System.out.println(achatView.getSelectionModel().getSelectedItem().getVendeur());
 		});
 	}
-	
+
 	private void creatTablecolmnsAchat() {
-		
+
 		produitA.setCellValueFactory(new PropertyValueFactory("nomProduit"));
 		vendeurA.setCellValueFactory(new PropertyValueFactory("vendeur"));
 		prixA.setCellValueFactory(new PropertyValueFactory("prixVente"));
@@ -100,14 +110,16 @@ public class AchatsController {
 	}
 
 	/**
-	 * Mise en place du tableau des achats effectués par l'utilisateur.
-	 * Produits pour lesquels les offres ont été acceptées.
+	 * Mise en place du tableau des achats effectués par l'utilisateur. Produits
+	 * pour lesquels les offres ont été acceptées.
 	 */
 	public void setTableAchat() {
-		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(" + MainControleur.getUtilisateur()+ ") AS buyername, soldprice, datetransaction FROM soldproducts WHERE buyerid =" + MainControleur.getUtilisateur()+ ";");
+		QueriesItr qt = new QueriesItr("SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName("
+				+ MainControleur.getUtilisateur()
+				+ ") AS buyername, soldprice, datetransaction FROM soldproducts WHERE buyerid ="
+				+ MainControleur.getUtilisateur() + ";");
 		creatTablecolmnsAchat();
 		creatTableAchat(QueriesItr.iteratorAchat(qt));
 	}
-	
-	
+
 }

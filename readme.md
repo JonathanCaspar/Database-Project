@@ -196,15 +196,29 @@ SELECT getOffersCount(refid) as nboffers, refid, name, description ,sellingprice
 	FROM products WHERE sellerid = 18;
 ~~~~
 
-* Afficher les offres liées à l'objet selectionné (exemple produitid = 21)
+
+* Afficher les offres liées à l'objet pour un utilisateur donné (exemple userid = 18)
 ~~~~sql
-SELECT * FROM offers WHERE productid = 21;
+SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO FROM offers JOIN products ON productid = refid WHERE sellerid = 18;
 ~~~~
 
-* Accepter l'offre de l'acheteur (id=25) de 33$ sur le produit "Robe Blanche" (description = nom) classé dans la catégorie "Femmes-Haut" (catid=14) vendu par le vendeur d'id=100 au prix initial de 38.69$ et estimé à 38.69$. On insère le produit vendu dans la table **soldproducts** et on supprime le produit de la table **products** (ainsi que ses autres offres grâce au ON DELETE CASCADE)
+* Afficher les offres liées à l'objet selectionné pour un utilisateur donné (exemple userid = 18, refid = 34)
 ~~~~sql
-INSERT INTO soldproducts(name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) 
-VALUES ('Robe blanche', 'Robe blanche', 100, 25, 14, 38.69, 38.69, 33);
+SELECT offerid,  getUserFullName(buyerid) AS buyername, buyerid , productid, name, sellingprice, price ,estimatedprice, offers.date AS dateO FROM offers JOIN products ON productid = refid WHERE sellerid = 18 AND refid = 34;
+~~~~
+
+* Retourne la liste détaillée des produits déjà vendus par l'utilisateur (pour lesquels il a accepté une offre)
+~~~~sql
+SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) AS buyername ,soldprice, datetransaction 
+FROM soldproducts WHERE sellerid = 18;
+~~~~
+
+* Accepter l'offre de l'acheteur (id=12) de 125.5$ sur le produit d'id = 34 vendu par le vendeur d'id=18 . On insère le produit vendu dans la table **soldproducts** et on supprime le produit de la table **products** (ainsi que ses autres offres grâce au ON DELETE CASCADE)
+~~~~sql
+
+INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) 
+    SELECT name, description, '18', '12', categoryid, estimatedprice, sellingprice, '125.5' FROM products WHERE refid = 34;
+
 ~~~~
 
 #### 3) Mes achats
@@ -217,8 +231,8 @@ FROM products JOIN offers ON productid = refid WHERE buyerid = 18;
 
 * Retourne la liste détaillée des produits déjà achetés par l'utilisateur (pour lesquels son offre a été acceptée)
 ~~~~sql
-SELECT name, getUserFullName(sellerid) AS sellername, soldprice, datetransaction 
-FROM soldproducts WHERE buyerid =18;
+SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) AS buyername ,soldprice, datetransaction 
+FROM soldproducts WHERE buyerid = 18;
 ~~~~
 
 #### 4) Autres requêtes spéficiques
@@ -266,12 +280,13 @@ Lorsque l’inscription est réussie, l’usager a, désormais, accès à toutes
 
 Pour faire une offre sur un produit en vente, il suffit de suivre la procédure indiquée dans la section `Usage général` et indiquer le prix prêt à offrir dans l’espace prévu à cet effet. Une offre supérieure au prix proposé par le vendeur conclura automatiquement la vente du produit. Une offre inférieure au prix de vente enverra une offre au vendeur qui a le choix d’accepter ou non le prix proposé par l’usager. Lorsque la vente est concluante, une fenêtre confirmant l’achat sera affichée à l’usager.
 
-### Vendre un produit
+### Vendre/Supprimer un produit
 
 À la suite de la connexion à l’application, il faut cliquer sur l’onglet `Mes annonces` de l’interface principal pour accéder aux options de vente. La boîte `Mes Produits` indique les produits mis en vente par l’usager et la boîte `Propositions` affiche les offres reçues par différents clients potentiels. 
 Pour mettre un objet en vente, cliquer sur `Annoncer un produit`. Une nouvelle fenêtre s’ouvre où les informations de l’objet devront être entrées. Une fois les espaces comblés, l’usager recevra un prix proposé par l’expert selon le marché. Libre à l’usager d’accepter ou non la proposition. Si le prix de l’expert est accepté, l’objet sera mis en vente au prix proposé par ce-dernier. Sinon, l’objet ne sera pas mis en vente. 
-Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte `Propositions` et cliquer sur `Accepter`. Les détails de la vente seront indiqués dans la boîte `Mes ventes`. 
+Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte `Propositions` et cliquer sur `Accepter`. De la même façon, pour refuser une offre, il suffit de cliquer sur `Refuser`. Les détails de la vente seront indiqués dans la boîte `Mes ventes`. 
 Une offre acceptée entraînera un refus automatique de toutes les autres offres en attente du même produit. 
+Pour annuler la mise en vente d'un objet, cliquer sur `Retirer de la vente`. L'objet sera retiré de la liste des produits annoncés, ainsi que toutes les offres reçues le concernant.
 
 ### Achats effectués
 

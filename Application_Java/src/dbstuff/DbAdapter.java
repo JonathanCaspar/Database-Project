@@ -2,6 +2,13 @@ package dbstuff;
 
 import java.sql.*;
 
+/**
+ * Classe DbAdapteur, definit la connnection au serveur sql.
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class DbAdapter {
 	public static final String[] DB_TABLES = { "users", "maincategories", "categories", "products", "offers",
 			"soldproducts" };
@@ -28,18 +35,18 @@ public class DbAdapter {
 
 			stt = con.createStatement();
 			stt.execute("set search_path to casparjo ;");
-			
-	}catch(SQLException e){
-		e.printStackTrace();
-	} finally {
-		if (stt != null) {
-			try {
-				stt.close();
-			} catch (SQLException e) {
-				e.printStackTrace();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		} finally {
+			if (stt != null) {
+				try {
+					stt.close();
+				} catch (SQLException e) {
+					e.printStackTrace();
+				}
 			}
 		}
-	}
 
 	}
 
