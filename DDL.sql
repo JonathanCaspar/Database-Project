@@ -85,7 +85,7 @@ CREATE OR REPLACE FUNCTION getUserFullName(id integer)
     DECLARE
     userfullname varchar(60);
 BEGIN
-    userfullname := (SELECT CONCAT(firstname, ', ', lastname) FROM users WHERE userid = id);
+    userfullname := (SELECT CONCAT(firstname, ' ', lastname) FROM users WHERE userid = id);
     RETURN userfullname;
 END; $$
 LANGUAGE plpgsql;
