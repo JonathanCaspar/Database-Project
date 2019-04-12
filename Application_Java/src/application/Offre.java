@@ -73,8 +73,8 @@ public class Offre {
 		return buyerID;
 	}
 
-	public float getEstimation() {
-		return estimation;
+	public String getEstimation() {
+		return String.format("%.2f", estimation) + " $";
 	}
 
 	public String getDate() {

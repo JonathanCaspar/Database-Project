@@ -19,8 +19,6 @@ import javafx.stage.Stage;
 public class App extends Application {
 
 	@FXML
-	private CatalogueController ctlPageTitre = null;
-	@FXML
 	private MainControleur mainCntrl = null;
 
 	public static void main(String[] args) {

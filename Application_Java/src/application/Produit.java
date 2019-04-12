@@ -57,16 +57,8 @@ public class Produit {
 		return nomProduit;
 	}
 
-	public void setNomProduit(String produit) {
-		nomProduit = produit;
-	}
-
 	public String getDescription() {
 		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getPrix() {
@@ -81,9 +73,6 @@ public class Produit {
 		return prix;
 	}
 
-	public void setPrix(float prix) {
-		this.prix = prix;
-	}
 
 	public String getOMax() {
 		return String.format("%.2f", oMax) + " $";
@@ -91,10 +80,6 @@ public class Produit {
 
 	public float getValueOMax() {
 		return oMax;
-	}
-
-	public void setOMax(float oMax) {
-		this.oMax = oMax;
 	}
 
 	public String getDate() {
@@ -105,16 +90,8 @@ public class Produit {
 		return categorie;
 	}
 
-	public void setCategorie(String categorie) {
-		this.categorie = categorie;
-	}
-
 	public String getVendeur() {
 		return vendeur;
-	}
-
-	public void setVendeur(String vendeur) {
-		this.vendeur = vendeur;
 	}
 
 	public int getRefId() {
@@ -125,11 +102,6 @@ public class Produit {
 		return estimation;
 	}
 
-	/**
-	 * Fonction qui retourne l'id de la categorie contenant le produit
-	 * 
-	 * @return L'id de la categorie contenant le produit.
-	 */
 	public int getCatID() {
 		return this.catID;
 	}

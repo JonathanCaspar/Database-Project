@@ -7,7 +7,6 @@ import javafx.scene.input.KeyCode;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import application.User;
 import dbstuff.DbAdapter;
 import dbstuff.QueriesItr;
 import javafx.event.ActionEvent;
@@ -37,8 +36,7 @@ public class ConnexionController {
 
 	@FXML
 	private AnchorPane loginPane;
-	private User utilisateur;
-
+	
 	private int userID;
 
 	private boolean isloged = false;
@@ -130,9 +128,6 @@ public class ConnexionController {
 		alert.showAndWait();
 	}
 
-	public User getUser() {
-		return this.utilisateur;
-	}
 
 	public int getUserID() {
 		return this.userID;

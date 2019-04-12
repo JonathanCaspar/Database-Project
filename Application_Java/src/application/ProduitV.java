@@ -54,16 +54,9 @@ public class ProduitV {
 		return nomProduit;
 	}
 
-	public void setNomProduit(String produit) {
-		nomProduit = produit;
-	}
 
 	public String getDescription() {
 		return description;
-	}
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	public String getPrix() {
@@ -78,20 +71,12 @@ public class ProduitV {
 		return prix;
 	}
 
-	public void setPrix(float prix) {
-		this.prix = prix;
-	}
-
 	public String getOMax() {
 		return String.format("%.2f", oMax) + " $";
 	}
 
 	public float getValueOMax() {
 		return oMax;
-	}
-
-	public void setOMax(float oMax) {
-		this.oMax = oMax;
 	}
 
 	public String getDate() {
@@ -102,16 +87,13 @@ public class ProduitV {
 		return vendeur;
 	}
 
-	public void setVendeur(String vendeur) {
-		this.vendeur = vendeur;
-	}
-
+	
 	public int getRefId() {
 		return refid;
 	}
 
-	public float getEstimation() {
-		return estimation;
+	public String getEstimation() {
+		return String.format("%.2f", estimation) + " $";
 	}
 
 	public int getCatID() {

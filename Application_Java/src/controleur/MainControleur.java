@@ -1,6 +1,5 @@
 package controleur;
 
-import application.User;
 import controleur.CatalogueController;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -20,10 +19,8 @@ import javafx.stage.Stage;
  */
 public class MainControleur {
 
-	private User utilisateur = null;
 	private static int userID = -1;
 
-	private boolean userLoged = false;
 	@FXML
 	private MenuItem inscription;
 	@FXML
@@ -150,13 +147,6 @@ public class MainControleur {
 			primaryStage.setTitle("Inscription");
 			primaryStage.showAndWait();
 
-			// recupère ici l'utilisateur authentifié
-//			setUtilisateur(connexionController.getUser());
-//			userLoged = true;
-
-//			deconnexion.setVisible(true);
-//			connexion.setVisible(false);
-//			inscription.setVisible(false);
 
 		} catch (Exception e) {
 			e.printStackTrace();
