@@ -273,7 +273,7 @@ La boîte `options` permet un filtrage encore plus précis pour l’usager. Il e
  
  ### Inscription et connexion au site
 
-Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le numéro de téléphone est facultatif. 
+Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le nom et le numéro de téléphone sont facultatifs. 
 ![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/inscription.png)
 
 Lorsque l’inscription est réussie, l’usager a, désormais, accès à toutes les fonctionnalités du site. Cliquez sur connexion, entrez vos informations d’utilisateur et cliquez sur `Se Connecter`.
