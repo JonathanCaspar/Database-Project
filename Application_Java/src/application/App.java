@@ -10,28 +10,28 @@ import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Classe App
- *
- * @author La Classe Manteau (Frédérick Bonnelly, Tanahel Huot-Roberge, Vincent
- *         Boulet et Tommy Montreuil)
+ * Classe Principale
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
  *
  */
 public class App extends Application {
-	
+
 	@FXML
 	private CatalogueController ctlPageTitre = null;
 	@FXML
 	private MainControleur mainCntrl = null;
-	
 
 	public static void main(String[] args) {
-		DbAdapter db = new DbAdapter("jdbc:postgresql://postgres.iro.umontreal.ca:5432/casparjo", "casparjo_app", "projetdb2935");
-		
+		DbAdapter db = new DbAdapter("jdbc:postgresql://postgres.iro.umontreal.ca:5432/casparjo", "casparjo_app",
+				"projetdb2935");
+
 		db.connecter();
 		launch(args);
 		db.deconnecter();
 	}
-	
+
 	@Override
 	public void start(Stage primaryStage) throws Exception {
 		try {
@@ -50,4 +50,3 @@ public class App extends Application {
 
 	}
 }
-
