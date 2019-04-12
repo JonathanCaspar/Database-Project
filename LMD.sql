@@ -36,9 +36,11 @@ SELECT * FROM offers WHERE productid = 21;
 SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) AS buyername ,soldprice, datetransaction 
 FROM soldproducts WHERE sellerid = 18;
 
---Accepter l'offre de l'acheteur (id=25) de 33$ sur le produit "Robe Blanche" (description = nom) classé dans la catégorie "Femmes-Haut" (catid=14) vendu par le vendeur d'id=100 au prix initial de 38.69$ et estimé à 38.69$. On insère le produit vendu dans la table soldproducts et on supprime le produit de la table products (ainsi que ses autres offres grâce au ON DELETE CASCADE)
-INSERT INTO soldproducts(name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) 
-VALUES ('Robe blanche', 'Robe blanche', 100, 25, 14, 38.69, 38.69, 33);
+--Accepter l'offre de l'acheteur (id=12) de 125.5$ sur le produit d'id=34 classé vendu par le vendeur d'id=18 . 
+--On insère le produit vendu dans la table **soldproducts** et on supprime le produit de la table **products** (ainsi que ses autres offres grâce au ON DELETE CASCADE)
+
+INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) 
+  SELECT name, description, '18', '12', categoryid, estimatedprice, sellingprice, '125.5' FROM products WHERE refid = 34;
 
 --3) Mes achats
 --Retourne la liste détaillée des offres actives de l'utilisateur connecté
