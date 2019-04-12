@@ -32,6 +32,10 @@ FROM allProducts JOIN categories ON categoryid = catid;
 --Afficher les offres liées à l'objet selectionné (exemple produitid = 21)
 SELECT * FROM offers WHERE productid = 21;
 
+--Retourne la liste détaillée des produits déjà vendus par l'utilisateur (pour lesquels il a accepté une offre)
+SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) AS buyername ,soldprice, datetransaction 
+FROM soldproducts WHERE sellerid = 18;
+
 --Accepter l'offre de l'acheteur (id=25) de 33$ sur le produit "Robe Blanche" (description = nom) classé dans la catégorie "Femmes-Haut" (catid=14) vendu par le vendeur d'id=100 au prix initial de 38.69$ et estimé à 38.69$. On insère le produit vendu dans la table soldproducts et on supprime le produit de la table products (ainsi que ses autres offres grâce au ON DELETE CASCADE)
 INSERT INTO soldproducts(name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) 
 VALUES ('Robe blanche', 'Robe blanche', 100, 25, 14, 38.69, 38.69, 33);
@@ -42,7 +46,7 @@ SELECT name, getUserFullName(sellerid) AS sellername, sellingprice, price ,offer
 FROM products JOIN offers ON productid = refid WHERE buyerid = 18;
 
 --Retourne la liste détaillée des produits déjà achetés par l'utilisateur (pour lesquels son offre a été acceptée)
-SELECT name, getUserFullName(sellerid) AS sellername, soldprice, datetransaction 
+SELECT name, getUserFullName(sellerid) AS sellername, getUserFullName(buyerid) AS buyername ,soldprice, datetransaction 
 FROM soldproducts WHERE buyerid =18;
 
 --4) Autres requêtes spéficiques
