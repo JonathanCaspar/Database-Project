@@ -284,7 +284,7 @@ Pour faire une offre sur un produit en vente, il suffit de suivre la procédure 
 
 À la suite de la connexion à l’application, il faut cliquer sur l’onglet `Mes annonces` de l’interface principal pour accéder aux options de vente. La boîte `Mes Produits` indique les produits mis en vente par l’usager et la boîte `Propositions` affiche les offres reçues par différents clients potentiels. 
 Pour mettre un objet en vente, cliquer sur `Annoncer un produit`. Une nouvelle fenêtre s’ouvre où les informations de l’objet devront être entrées. Une fois les espaces comblés, l’usager recevra un prix proposé par l’expert selon le marché. Libre à l’usager d’accepter ou non la proposition. Si le prix de l’expert est accepté, l’objet sera mis en vente au prix proposé par ce-dernier. Sinon, l’objet ne sera pas mis en vente. 
-Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte `Propositions` et cliquer sur `Accepter`. Les détails de la vente seront indiqués dans la boîte `Mes ventes`. 
+Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte `Propositions` et cliquer sur `Accepter`. De la même façon, pour refuser une offre, il suffit de cliquer sur `Refuser`. Les détails de la vente seront indiqués dans la boîte `Mes ventes`. 
 Une offre acceptée entraînera un refus automatique de toutes les autres offres en attente du même produit. 
 
 ### Achats effectués
