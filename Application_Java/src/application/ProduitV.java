@@ -4,12 +4,13 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import controleur.ControleurOffrir;
-import dbstuff.QueriesItr;
-import javafx.fxml.FXMLLoader;
-import javafx.scene.Scene;
-import javafx.stage.Stage;
-
+/**
+ * Classe ProduitV, definit un produit non vendu du cote de la vue du vendeur
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class ProduitV {
 	private String nomProduit = null;
 	private String description = "description";
@@ -17,7 +18,7 @@ public class ProduitV {
 	private float prix = 0;
 	private float oMax = 0;
 	private float estimation = 0;
-	
+
 	private int refid = 0;
 	private int catID = 0;
 	private int nbOffre = 0;
@@ -25,10 +26,14 @@ public class ProduitV {
 	private Date date = null;
 	private String vendeur = null;
 
-	
-	public ProduitV (ResultSet temp) {
+	/**
+	 * Constructeur de produit vendu du cote du vendeur selon un resultat de requete
+	 * 
+	 * @param temp Le ResultSet a la position du produit actuelle a creer
+	 */
+	public ProduitV(ResultSet temp) {
 		try {
-			
+
 			nbOffre = temp.getInt("nbOffers");
 			nomProduit = temp.getString("name");
 			description = temp.getString("description");
@@ -42,9 +47,9 @@ public class ProduitV {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
-	
+
 	public String getNomProduit() {
 		return nomProduit;
 	}
@@ -64,10 +69,11 @@ public class ProduitV {
 	public String getPrix() {
 		return String.format("%.2f", prix) + " $";
 	}
+
 	public float getPrixF() {
 		return prix;
 	}
-	
+
 	public float getValuePrix() {
 		return prix;
 	}
@@ -83,7 +89,7 @@ public class ProduitV {
 	public float getValueOMax() {
 		return oMax;
 	}
-	
+
 	public void setOMax(float oMax) {
 		this.oMax = oMax;
 	}
@@ -99,22 +105,22 @@ public class ProduitV {
 	public void setVendeur(String vendeur) {
 		this.vendeur = vendeur;
 	}
-	
+
 	public int getRefId() {
 		return refid;
 	}
-	
+
 	public float getEstimation() {
 		return estimation;
 	}
-	
+
 	public int getCatID() {
-		
+
 		return this.catID;
 	}
-	
+
 	public int getNbOffre() {
-		
+
 		return this.nbOffre;
 	}
 

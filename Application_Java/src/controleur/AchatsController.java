@@ -9,6 +9,13 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+/**
+ * Classe Achats controlleur, definit le controleur pour la vue Mes Achats
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class AchatsController {
 
 	// Tableau de gauche, les offres faites par l'utilisateur
@@ -40,7 +47,7 @@ public class AchatsController {
 	/**
 	 * Creer une table contenant la liste des offres passer en paramettre.
 	 * 
-	 * @param table La table de produit.
+	 * @param table La table d'offre.
 	 */
 	public void creatTableOffre(Iterable<OffreA> table) {
 		offreAView.getItems().clear();
@@ -79,7 +86,7 @@ public class AchatsController {
 	/**
 	 * Creer une table contenant la liste des achats effectués passer en paramettre.
 	 * 
-	 * @param table La table de produit.
+	 * @param table La table d'achats.
 	 */
 	public void creatTableAchat(Iterable<Achat> table) {
 		achatView.getItems().clear();

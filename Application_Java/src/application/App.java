@@ -43,7 +43,6 @@ public class App extends Application {
 			primaryStage.setScene(scene);
 			primaryStage.setTitle("Spend money");
 			primaryStage.show();
-			mainCntrl.initialize();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

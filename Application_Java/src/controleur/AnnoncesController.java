@@ -24,6 +24,13 @@ import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Stage;
 
+/**
+ * Classe AnnoncesController, definit le controleur pour la vue Mes annonces
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class AnnoncesController {
 
 	@FXML
@@ -110,34 +117,38 @@ public class AnnoncesController {
 	@FXML
 	void retirerProduit() {
 		Statement stmt = null;
-		try {
+		if (produit != null) {
+			try {
 
-			stmt = DbAdapter.con.createStatement();
+				stmt = DbAdapter.con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM products WHERE refid = " + produit.getRefId());
-			stmt.close();
+				stmt.executeUpdate("DELETE FROM products WHERE refid = " + produit.getRefId());
+				stmt.close();
 
-			this.initialize();
+				this.initialize();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	@FXML
 	void refuserOffre() {
 		Statement stmt = null;
-		try {
+		if (offre != null) {
+			try {
 
-			stmt = DbAdapter.con.createStatement();
+				stmt = DbAdapter.con.createStatement();
 
-			stmt.executeUpdate("DELETE FROM offers WHERE offerid = " + offre.getOffreID());
-			stmt.close();
+				stmt.executeUpdate("DELETE FROM offers WHERE offerid = " + offre.getOffreID());
+				stmt.close();
 
-			this.initialize();
+				this.initialize();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
@@ -149,23 +160,25 @@ public class AnnoncesController {
 	public void accepterOffre() {
 
 		Statement stmt = null;
-		try {
+		if (offre != null) {
+			try {
 
-			stmt = DbAdapter.con.createStatement();
-			stmt.executeUpdate(
-					"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) "
-							+ "SELECT name, description, '" + MainControleur.getUtilisateur() + "', '"
-							+ offre.getBuyerID() + "', categoryid, estimatedprice, sellingprice, '"
-							+ offre.getValuePrixO() + "'" + " FROM products WHERE refid = " + offre.getProduitID());
-			stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID());
-			stmt.close();
+				stmt = DbAdapter.con.createStatement();
+				stmt.executeUpdate(
+						"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) "
+								+ "SELECT name, description, '" + MainControleur.getUtilisateur() + "', '"
+								+ offre.getBuyerID() + "', categoryid, estimatedprice, sellingprice, '"
+								+ offre.getValuePrixO() + "'" + " FROM products WHERE refid = " + offre.getProduitID());
+				stmt.executeUpdate("DELETE FROM products WHERE refid = " + offre.getProduitID());
+				stmt.close();
 
-			ventePopup();
+				ventePopup();
 
-			this.initialize();
+				this.initialize();
 
-		} catch (SQLException e) {
-			e.printStackTrace();
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 
 	}
@@ -227,7 +240,9 @@ public class AnnoncesController {
 	public void creatTableOffres(Iterable<Offre> table) {
 		offreView.getItems().clear();
 		for (Offre o : table) {
-			offreView.getItems().add(o);
+			if (o != null) {
+				offreView.getItems().add(o);
+			}
 		}
 
 		offreView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {

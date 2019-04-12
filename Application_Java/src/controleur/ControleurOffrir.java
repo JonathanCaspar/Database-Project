@@ -19,6 +19,13 @@ import javafx.scene.control.Alert.AlertType;
 import javafx.scene.control.ButtonBar.ButtonData;
 import javafx.stage.Stage;
 
+/**
+ * Class ControleurOffrir, definit le controleur de la vue pour faire une offre
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class ControleurOffrir {
 
 	private Produit produit = null;
@@ -68,12 +75,10 @@ public class ControleurOffrir {
 								+ MainControleur.getUtilisateur() + ", " + produit.getRefId() + ", '" + prix + "')");
 						stmt.close();
 						acceptPopup(prix, "L'offre a été ajoutée à la liste.");
-
 					}
 
 					else {
-						
-						
+
 						// Si l'offre est plus grande ou egale a l'estimation la vente est automatique
 						stmt.executeUpdate(
 								"INSERT INTO soldproducts (name, description, sellerid, buyerid, categoryid, estimatedprice, sellingprice, soldprice) "

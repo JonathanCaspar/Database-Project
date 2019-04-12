@@ -23,6 +23,14 @@ import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.scene.control.TextInputDialog;
 
+/**
+ * Classe NewAnnonceController, definit le controleur pour la vue de creation
+ * d'annonce
+ * 
+ * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
+ *         Huot-Roberge
+ *
+ */
 public class NewAnnonceController {
 
 	@FXML

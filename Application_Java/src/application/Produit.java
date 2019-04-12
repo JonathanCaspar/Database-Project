@@ -4,13 +4,12 @@ import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import controleur.ControleurOffrir;
-import dbstuff.QueriesItr;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
 /**
- * Classe produit, defnit un produit non vendu
+ * Classe produit, definit un produit non vendu
  * 
  * @author Jonathan Caspar, Jules Cohen, Jean-Francois Blanchette et Tanahel
  *         Huot-Roberge
@@ -47,6 +46,7 @@ public class Produit {
 			vendeur = temp.getString("sellername");
 			categorie = temp.getString("catname");
 			oMax = temp.getFloat("maxoffer");
+			catID = temp.getInt("categoryid");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -106,7 +106,7 @@ public class Produit {
 	}
 
 	public void setCategorie(String categorie) {
-		categorie = categorie;
+		this.categorie = categorie;
 	}
 
 	public String getVendeur() {
@@ -131,19 +131,6 @@ public class Produit {
 	 * @return L'id de la categorie contenant le produit.
 	 */
 	public int getCatID() {
-
-		QueriesItr qt = new QueriesItr("SELECT categoryid from products WHERE refid = " + refid + ";");
-		ResultSet rs = qt.getResultSet();
-
-		try {
-			if (rs.next()) {
-				this.catID = rs.getInt("categoryid");
-			}
-		} catch (SQLException e) {
-			qt.quitter();
-			e.printStackTrace();
-		}
-
 		return this.catID;
 	}
 
@@ -151,8 +138,6 @@ public class Produit {
 	 * Ouvre la fenetre pour faire une offre a un produit et attend sa fermeture.
 	 */
 	public void OpenWindow() {
-		Float offre = null;
-
 		try {
 			Stage primaryStage = new Stage();
 			FXMLLoader loader = new FXMLLoader(getClass().getResource("/view/view_Item.fxml"));
