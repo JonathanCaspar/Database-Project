@@ -295,11 +295,11 @@ Pour mettre un objet en vente, cliquer sur `Annoncer un produit`. Une nouvelle f
 Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte `Propositions` et cliquer sur `Accepter`. De la même façon, pour refuser une offre, il suffit de cliquer sur `Refuser`. Les détails de la vente seront indiqués dans la boîte `Mes ventes`. 
 Une offre acceptée entraînera un refus automatique de toutes les autres offres en attente du même produit. 
 Pour annuler la mise en vente d'un objet, cliquer sur `Retirer de la vente`. L'objet sera retiré de la liste des produits annoncés, ainsi que toutes les offres reçues le concernant.
-![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/mesAnnonces.PNG)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/mesAnnonces.png)
 
-![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/annoncerProduit.PNG)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/annoncer.png)
 
-![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/propositions.PNG)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/propositions.png)
 
 
 ### Achats effectués
