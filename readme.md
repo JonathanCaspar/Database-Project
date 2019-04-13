@@ -283,6 +283,9 @@ Lorsque l’inscription est réussie, l’usager a, désormais, accès à toutes
 ### Faire une offre/acheter un produit
 
 Pour faire une offre sur un produit en vente, il suffit de suivre la procédure indiquée dans la section `Usage général` et indiquer le prix prêt à offrir dans l’espace prévu à cet effet. Une offre supérieure au prix proposé par le vendeur conclura automatiquement la vente du produit. Une offre inférieure au prix de vente enverra une offre au vendeur qui a le choix d’accepter ou non le prix proposé par l’usager. Lorsque la vente est concluante, une fenêtre confirmant l’achat sera affichée à l’usager.
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/offre.png)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/offre2.png)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/validationOffre.png)
 
 ### Vendre/Supprimer un produit
 
@@ -291,7 +294,14 @@ Pour mettre un objet en vente, cliquer sur `Annoncer un produit`. Une nouvelle f
 Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte `Propositions` et cliquer sur `Accepter`. De la même façon, pour refuser une offre, il suffit de cliquer sur `Refuser`. Les détails de la vente seront indiqués dans la boîte `Mes ventes`. 
 Une offre acceptée entraînera un refus automatique de toutes les autres offres en attente du même produit. 
 Pour annuler la mise en vente d'un objet, cliquer sur `Retirer de la vente`. L'objet sera retiré de la liste des produits annoncés, ainsi que toutes les offres reçues le concernant.
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/mesAnnonces.png)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/annoncerProduit.png)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/propositions.png)
+
 
 ### Achats effectués
 
 L’onglet `Mes achats` de l’interface principal permet de conserver l’historique des achats de l’usager. Ils y sont indiqués en ordre chronologique et contiennent les informations pertinentes de l’achat. Dans la boîte de gauche, les offres en suspens y sont affichées. Une offre en suspens n’est pas refusée, mais bien en attente de confirmation par le vendeur. 
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/mesAchats.png)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/mesAchats2.png) 
+
