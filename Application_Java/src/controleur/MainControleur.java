@@ -113,7 +113,6 @@ public class MainControleur {
 			// recupère ici l'ID de l'utilisateur authentifié
 			if (connexionController.isLoged()) {
 				setUtilisateur(connexionController.getUserID());
-				System.out.println("userID in MAIN = " + userID);
 
 				deconnexion.setVisible(true);
 				connexion.setVisible(false);

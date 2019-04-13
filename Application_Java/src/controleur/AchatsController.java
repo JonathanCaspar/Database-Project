@@ -97,7 +97,6 @@ public class AchatsController {
 			}
 		}
 		achatView.getSelectionModel().selectedItemProperty().addListener((observable, old_val, new_val) -> {
-			System.out.println(achatView.getSelectionModel().getSelectedItem().getVendeur());
 		});
 	}
 

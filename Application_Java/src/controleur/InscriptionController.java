@@ -117,35 +117,10 @@ public class InscriptionController {
 		query += end;
 		query += values;
 
-		System.out.println(query);
 
 		return query;
 	}
-
-//    public void setNewMaxId() {
-//    	try {
-//			
-//			Statement stmt = DbAdapter.con.createStatement();
-//			
-//			if (stmt != null) {
-//				ResultSet rs = stmt.executeQuery("SELECT MAX(userid) AS max FROM users;");
-//				if(rs.next()) {
-//					
-//					this.userID = rs.getInt("max") + 1;
-//				}
-//				stmt.close();
-//				
-//				System.out.println(" ID = "+ this.userID);
-//			}
-//		} catch (SQLException e) {
-//			errorPopup("Probleme Base de Données", "Requête non effectuée.");
-//			e.printStackTrace();
-//		}
-//		
-//    }
-//    
-//    
-//    
+  
 
 	/**
 	 * Insertion d'un nouvel utilisateur dans la base de données.

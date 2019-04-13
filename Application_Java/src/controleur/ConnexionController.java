@@ -90,7 +90,6 @@ public class ConnexionController {
 			try {
 
 				if (rs.next()) {
-					System.out.println("userID = " + rs.getInt("userid"));
 					userID = rs.getInt("userid");
 					this.isloged = true;
 
