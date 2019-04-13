@@ -270,11 +270,15 @@ L’usager peut sélectionner la catégorie générale d’un objet qu’il rech
 Les objets en vente sont indiqués dans la boîte `Objets` et son filtrables selon le choix de l’usager. Donc, pour faire une recherche en ordre alphabétique, l’usager n’a qu’à cliquer sur `Produit` pour que les objets soient dans l’ordre approprié. Il en va de même pour le reste des colonnes. 
 Pour afficher les détails d’une annonce, il suffit de double-cliquer sur celle qui intéresse l’usager. Une nouvelle fenêtre s’ouvrira avec les détails et les commentaires de l’article. Il sera possible de faire une offre sur l’objet que lorsque l’usager sera inscrit dans la base de données (voir volet `Inscription au site`).
 La boîte `options` permet un filtrage encore plus précis pour l’usager. Il est possible d’entrer les prix minimum et maximum qu’il désire payer, ainsi que les dates d’affichage d’un produit en appuyant sur `Mettre à jour`.
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/catalogue/Client.png)
  
  ### Inscription et connexion au site
 
-Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le numéro de téléphone est facultatif. 
+Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le nom et le numéro de téléphone sont facultatifs. 
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/inscription.png)
+
 Lorsque l’inscription est réussie, l’usager a, désormais, accès à toutes les fonctionnalités du site. Cliquez sur connexion, entrez vos informations d’utilisateur et cliquez sur `Se Connecter`.
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/authentification.png)
 
 ### Faire une offre/acheter un produit
 
