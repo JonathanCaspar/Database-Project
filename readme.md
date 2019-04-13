@@ -270,15 +270,23 @@ L’usager peut sélectionner la catégorie générale d’un objet qu’il rech
 Les objets en vente sont indiqués dans la boîte `Objets` et son filtrables selon le choix de l’usager. Donc, pour faire une recherche en ordre alphabétique, l’usager n’a qu’à cliquer sur `Produit` pour que les objets soient dans l’ordre approprié. Il en va de même pour le reste des colonnes. 
 Pour afficher les détails d’une annonce, il suffit de double-cliquer sur celle qui intéresse l’usager. Une nouvelle fenêtre s’ouvrira avec les détails et les commentaires de l’article. Il sera possible de faire une offre sur l’objet que lorsque l’usager sera inscrit dans la base de données (voir volet `Inscription au site`).
 La boîte `options` permet un filtrage encore plus précis pour l’usager. Il est possible d’entrer les prix minimum et maximum qu’il désire payer, ainsi que les dates d’affichage d’un produit en appuyant sur `Mettre à jour`.
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/catalogue_Client.png)
  
  ### Inscription et connexion au site
 
-Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le numéro de téléphone est facultatif. 
+Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le nom et le numéro de téléphone sont facultatifs. 
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/inscription.png)
+
 Lorsque l’inscription est réussie, l’usager a, désormais, accès à toutes les fonctionnalités du site. Cliquez sur connexion, entrez vos informations d’utilisateur et cliquez sur `Se Connecter`.
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/authentification.png)
 
 ### Faire une offre/acheter un produit
 
 Pour faire une offre sur un produit en vente, il suffit de suivre la procédure indiquée dans la section `Usage général` et indiquer le prix prêt à offrir dans l’espace prévu à cet effet. Une offre supérieure au prix proposé par le vendeur conclura automatiquement la vente du produit. Une offre inférieure au prix de vente enverra une offre au vendeur qui a le choix d’accepter ou non le prix proposé par l’usager. Lorsque la vente est concluante, une fenêtre confirmant l’achat sera affichée à l’usager.
+
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/offre.png)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/offre2.PNG)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/validationOffre.png)
 
 ### Vendre/Supprimer un produit
 
@@ -287,7 +295,16 @@ Pour mettre un objet en vente, cliquer sur `Annoncer un produit`. Une nouvelle f
 Pour accepter une offre reçue d’un acheteur, il suffit de sélectionner celle-ci dans la boîte `Propositions` et cliquer sur `Accepter`. De la même façon, pour refuser une offre, il suffit de cliquer sur `Refuser`. Les détails de la vente seront indiqués dans la boîte `Mes ventes`. 
 Une offre acceptée entraînera un refus automatique de toutes les autres offres en attente du même produit. 
 Pour annuler la mise en vente d'un objet, cliquer sur `Retirer de la vente`. L'objet sera retiré de la liste des produits annoncés, ainsi que toutes les offres reçues le concernant.
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/mesAnnonces.PNG)
+
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/annoncerProduit.PNG)
+
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/propositions.PNG)
+
 
 ### Achats effectués
 
 L’onglet `Mes achats` de l’interface principal permet de conserver l’historique des achats de l’usager. Ils y sont indiqués en ordre chronologique et contiennent les informations pertinentes de l’achat. Dans la boîte de gauche, les offres en suspens y sont affichées. Une offre en suspens n’est pas refusée, mais bien en attente de confirmation par le vendeur. 
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/mesAchats.png)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/mesAchats2.png) 
+
