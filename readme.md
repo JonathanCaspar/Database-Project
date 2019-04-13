@@ -272,7 +272,7 @@ Pour afficher les détails d’une annonce, il suffit de double-cliquer sur cell
 La boîte `options` permet un filtrage encore plus précis pour l’usager. Il est possible d’entrer les prix minimum et maximum qu’il désire payer, ainsi que les dates d’affichage d’un produit en appuyant sur `Mettre à jour`.
 ![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/catalogue_Client.png)
  
-### Inscription et connexion au site
+ ### Inscription et connexion au site
 
 Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le nom et le numéro de téléphone sont facultatifs. 
 ![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/inscription.png)
@@ -284,8 +284,7 @@ Lorsque l’inscription est réussie, l’usager a, désormais, accès à toutes
 
 Pour faire une offre sur un produit en vente, il suffit de suivre la procédure indiquée dans la section `Usage général` et indiquer le prix prêt à offrir dans l’espace prévu à cet effet. Une offre supérieure au prix proposé par le vendeur conclura automatiquement la vente du produit. Une offre inférieure au prix de vente enverra une offre au vendeur qui a le choix d’accepter ou non le prix proposé par l’usager. Lorsque la vente est concluante, une fenêtre confirmant l’achat sera affichée à l’usager.
 
-![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/offre.png)
-![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/offre2.PNG)
+![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/faireOffre.png)
 ![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/validationOffre.png)
 
 ### Vendre/Supprimer un produit
