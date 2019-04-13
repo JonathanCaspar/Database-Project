@@ -272,7 +272,7 @@ Pour afficher les détails d’une annonce, il suffit de double-cliquer sur cell
 La boîte `options` permet un filtrage encore plus précis pour l’usager. Il est possible d’entrer les prix minimum et maximum qu’il désire payer, ainsi que les dates d’affichage d’un produit en appuyant sur `Mettre à jour`.
 ![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/catalogue_Client.png)
  
- ### Inscription et connexion au site
+### Inscription et connexion au site
 
 Pour accéder aux fonctionnalités de vente, l’usager doit être inscrit dans la base de données du site et se connecter à l’application. En premier lieu, il faut s’inscrire en cliquant sur l’onglet `Client` et sélectionner `Inscription`.  Une nouvelle fenêtre s’ouvrira en invitant l’usager à entrer ses informations personnelles et à choisir un nom d’utilisateur avec lequel il sera identifié sur l’application. Le nom et le numéro de téléphone sont facultatifs. 
 ![](https://raw.githubusercontent.com/JonathanCaspar/ProjetFinalBD/master/screenshots/inscription.png)
